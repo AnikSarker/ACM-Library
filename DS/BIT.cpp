@@ -12,7 +12,6 @@ int sum(int indx){
 
 //2D BIT
 int BIT[MAX][MAX];
-
 void update(int x,int y,int val){ //A[x][y]+=val
     int xx=x;
     while(xx<MAX){
