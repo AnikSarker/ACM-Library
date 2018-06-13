@@ -1,8 +1,10 @@
+//Slow, but short FFT
+//Using STL Complex Class
+
 typedef vector<int> VI;
 typedef complex<double> CN;
 VI a,b,res;
 
-//Slow, but short FFT
 double PI=acos(-1);
 void FFT(vector<CN>&a,bool invert){
     int n=a.size();
