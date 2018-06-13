@@ -1,6 +1,5 @@
 //Treap
 #define gn(o, d) node[node[o].c[d]]
-
 struct Treap {int c[2]; int v,s,r,f;};
 Treap node[MAX];
 int sz;
