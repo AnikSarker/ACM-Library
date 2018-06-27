@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define MAX 100005
+#define MAX 1000005
 
 int wa[MAX],wb[MAX],wv[MAX],Ws[MAX];
 int cmp(int *r,int a,int b,int l) {return r[a]==r[b] && r[a+l]==r[b+l];}
