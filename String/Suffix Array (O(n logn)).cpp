@@ -11,6 +11,7 @@ int cmp(int *r,int a,int b,int l) {return r[a]==r[b] && r[a+l]==r[b+l];}
 int sa[MAX],Rank[MAX],LCP[MAX];
 
 //Suffix Array (O(nlogn))
+//m = maximum possible ASCII value of a string character
 void buildSA(string s,int* sa,int n,int m){
     int i,j,p,*x=wa,*y=wb,*t;
     for(i=0; i<m; i++) Ws[i]=0;
@@ -42,7 +43,7 @@ void buildLCP(string s,int *sa,int n){
 int main(){
     string s="abababab";
     int n=s.size();
-    buildSA(s,sa,n+1,130);
+    buildSA(s,sa,n+1,130); //Important
     buildLCP(s,sa,n);
     for(int i=1;i<=n;i++) cout<<sa[i]<<" "; cout<<endl;
     for(int i=0;i<n;i++) cout<<Rank[i]<<" "; cout<<endl;
