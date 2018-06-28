@@ -9,8 +9,8 @@ struct node{
     int Next[26];
     int Len;        //Length of the maximum palindrome of current node
     int Count;      //Number of palindromic substrings ending in current node
-    int SuffLink;   //Links such node w such that the palindrome of node w is the largest
-                    //palindrome which is a proper suffix of the palindrome of current node
+    int SuffLink;   //Links such node w such that the palindrome represented by node w is the largest
+                    //palindrome which is a proper suffix of the palindrome represented by current node
 };
 
 string s;
