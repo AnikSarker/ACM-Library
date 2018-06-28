@@ -12,7 +12,7 @@ int Nnode;               //Total node count
 int Link[MAX];           //failure links
 pii Level[MAX];          //Level[i] = Depth of node i
 int Len[MAX];            //Len[i] = length of i-th query string
-vector<int>End[MAX];     //End[i] = indices of strings End end in node i
+vector<int>End[MAX];     //End[i] = indices of strings those end in node i
 vector<int>Occ[MAX];     //Occ[i] = occurrences of i-th query string
 
 void init(){
