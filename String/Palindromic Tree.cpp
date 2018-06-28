@@ -7,8 +7,8 @@ using namespace std;
 
 struct node{
     int Next[26];
-    int Len;        //Length of the maximum palindrome of current node
-    int Count;      //Number of palindromic substrings ending in current node
+    int Len;        //Length of the palindrome represented by current node
+    int Count;      //Number of palindromic suffixes of the palindrome represented by current node 
     int SuffLink;   //Links such node w such that the palindrome represented by node w is the largest
                     //palindrome which is a proper suffix of the palindrome represented by current node
 };
@@ -17,8 +17,8 @@ string s;
 node Tree[MAX];
 int Suff;           // Points to Current (initially previous) node in palindromic tree
 int num;            // num = Total number of node in palindromic tree
-                    // num = 1 means node 1 (root with Len -1)
-                    // num = 2 means node 2 (root with Len  0)
+                    // num = 1 denotes node 1 (root with Len -1)
+                    // num = 2 denotes node 2 (root with Len  0)
 bool addLetter(int pos){
     int Cur=Suff;
     int CurLen=0;
