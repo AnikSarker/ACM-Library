@@ -11,7 +11,8 @@ int cmp(int *r,int a,int b,int l) {return r[a]==r[b] && r[a+l]==r[b+l];}
 int sa[MAX],Rank[MAX],LCP[MAX];
 
 //Suffix Array (O(nlogn))
-//m = maximum possible ASCII value of a string character
+//m = maximum possible ASCII value of a string character (alphabet size)
+//also, m = maximum number of distinct character in string (when compressed)
 void buildSA(string s,int* sa,int n,int m){
     int i,j,p,*x=wa,*y=wb,*t;
     for(i=0; i<m; i++) Ws[i]=0;
