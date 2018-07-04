@@ -16,10 +16,9 @@ bool Bad(Line &P,Line &C,Line &N){
 
 struct ConvexHull{
     vector<Line>hull;
-
-    //Add lines 
-    void Add(ll m,ll c){
-
+    
+    //Add lines in decreasing order of m
+    void Add(ll m,ll c)
         
         //always maintaining the minimum c in case multiple equal m
         if(hull.size()>0 && hull.back().m==m) {
