@@ -1,6 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define MAX 100005
 #define ll long long int
 #define pii pair<ll,int>
 
@@ -70,56 +67,3 @@ void factorize(ll n,vector<ll> &x) {
 }
 
 vector<ll>factorize(ll n) {vector<ll>x; factorize(n, x); return x;}
-
-vector<pii>Factors;
-vector<ll>Divisors;
-void findDiv(int pos,ll val){
-    if(pos<0) {Divisors.push_back(val); return;}
-    ll Now=1;
-    for(int i=0;i<=Factors[pos].second;i++){
-        findDiv(pos-1,val*Now);
-        Now=Now*Factors[pos].first;
-    }
-}
-
-void findAllDiv(ll n){
-    vector<ll>now=factorize(n);
-    sort(now.begin(),now.end());
-
-    Factors.clear();
-    Divisors.clear();
-    int Count=1;
-    for(int i=1;i<now.size();i++){
-        if(now[i]==now[i-1]) Count++;
-        else {Factors.push_back({now[i-1],Count}); Count=1;}
-    }
-    Factors.push_back({now.back(),Count});
-    findDiv(Factors.size()-1,1);
-}
-
-ll a[MAX];
-set<ll>SET;
-
-int main(){
-    int n,k;
-    scanf("%d %d",&n,&k);
-
-    for(int i=1;i<=n;i++) scanf("%lld",&a[i]);
-
-    random_shuffle(a+1,a+n+1);
-    for(int i=1;i<=min(n,10);i++){
-        if(a[i]==1) SET.insert(1);
-        else{findAllDiv(a[i]); for(ll xx: Divisors) SET.insert(xx);}
-    }
-
-    ll Ans=1;
-    for(ll now : SET){
-        int Count=0;
-        for(int i=n;i>=1;i--){
-            if(a[i]%now!=0) Count++;
-            if(Count>k) break;
-        }
-        if(Count<=k) Ans=now;
-    }
-    cout<<Ans<<endl;
-}
