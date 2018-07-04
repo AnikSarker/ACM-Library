@@ -17,7 +17,7 @@ struct ConvexHull{
         //For Max Query : Add(-m,-c)
         //For Min Query : Add(m,c)
         if(hull.size()>0 && hull.back().m==m) {
-            if(hull.back().c<c) hull.pop_back();
+            if(hull.back().c>c) hull.pop_back();
             else return;
         }
 
