@@ -37,6 +37,5 @@ struct ConvexHull{
             else hi=mid;
         }
         return hull[hi].Get(x);
-        //For Max Query : return -hull[hi].Get(x);
     }
 };
