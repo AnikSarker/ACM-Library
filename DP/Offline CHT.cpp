@@ -10,16 +10,15 @@ bool Bad(Line &P,Line &C,Line &N){
     return 1.0*(P.c-C.c)*(N.m-P.m) > 1.0*(P.c-N.c)*(C.m - P.m);
 }
 
-//This Convex Hull always maintains lower convex hull (Minimum Query)
+//This Convex Hull always maintains lower convex hull
+//m1 >= m2 >= m3 .... >= mk
 //For Min Query : Add(m,c)
 //For Max Query : Add(-m,-c)
 
 struct ConvexHull{
     vector<Line>hull;
     
-    //Add lines in decreasing order of m
-    void Add(ll m,ll c)
-        
+    void Add(ll m,ll c)        
         //always maintaining the minimum c in case multiple equal m
         if(hull.size()>0 && hull.back().m==m) {
             if(hull.back().c>c) hull.pop_back();
