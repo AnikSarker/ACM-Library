@@ -67,4 +67,5 @@ int main(){
     //InitTree();
     //for(int i=0;i<n;i++) AddLetter(i);
     //distinct palindrome count = Size - 2
+    //For(i=Size;i>=1;i--) Tree[Tree[i].SuffLink].Occurrence+=Tree[i].Occurrence;
 }
