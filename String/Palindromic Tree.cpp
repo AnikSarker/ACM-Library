@@ -7,9 +7,10 @@ using namespace std;
 
 struct node{
     int Next[26];
+    int MinPos;     //Position in string where this node first occurs
+    int Occurrence; //Total number of occurrence of this node
     int Len;        //Length of the palindrome represented by current node
     int Count;      //Number of palindromic suffixes of the palindrome represented by current node
-    int Occurrence; //Total number of occurrence of this node
     int SuffLink;   //Links such node w such that the palindrome represented by node w is the largest
                     //palindrome which is a proper suffix of the palindrome represented by current node
 };
@@ -27,15 +28,17 @@ bool AddLetter(int pos){
 
     while(true){
         CurLen=Tree[Cur].Len;
-        if(pos-1 >= CurLen && s[pos-1-CurLen]==s[pos]) break;
+        if(pos-1>=CurLen && s[pos-1-CurLen]==s[pos]) break;
         Cur=Tree[Cur].SuffLink;
     }
     Tree[Cur].Occurrence++;
 
     if(Tree[Cur].Next[Let]) {Suff=Tree[Cur].Next[Let]; return false;}
+
     Size++;
     Suff=Size;
-    Tree[Size].Len=Tree[Cur].Len + 2;
+    Tree[Size].MinPos=pos;
+    Tree[Size].Len=Tree[Cur].Len+2;
     Tree[Cur].Next[Let]=Size;
 
     if(Tree[Size].Len==1) {Tree[Size].SuffLink=2; Tree[Size].Count=1; return true;}
@@ -43,7 +46,7 @@ bool AddLetter(int pos){
     while(true){
         Cur=Tree[Cur].SuffLink;
         CurLen=Tree[Cur].Len;
-        if(pos-1 >= CurLen && s[pos-1-CurLen]==s[pos]){
+        if(pos-1>=CurLen && s[pos-1-CurLen]==s[pos]){
             Tree[Size].SuffLink=Tree[Cur].Next[Let];
             break;
         }
