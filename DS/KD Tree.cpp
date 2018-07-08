@@ -1,4 +1,4 @@
-// Solution to 'Cybercrime Donut Investigation'.
+// Solution to codeforces.com/gym/101561 - problem C
 // Abel Molina Prieto
 #include <queue>
 #include <algorithm>
