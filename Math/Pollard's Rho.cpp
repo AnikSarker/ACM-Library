@@ -1,11 +1,27 @@
 #define ll long long int
 #define pii pair<ll,int>
+using namespace std;
+
+vector<bool>v;
+ll Mul(ll a,ll b,ll Mod){
+    v.clear();
+    while(b) {v.push_back(b&1LL); b>>=1;}
+    reverse(v.begin(),v.end());
+
+    ll Ans=0;
+    for(int i=0;i<v.size();i++){
+        Ans+=Ans; Ans%=Mod;
+        if(v[i]) Ans+=a; Ans%=Mod;
+    }
+    return Ans;
+}
+
 
 ll bigMod(ll n,ll r,ll Mod){
     if(r==0) return 1LL;
     ll ret=bigMod(n,r/2,Mod);
-    ret=(ret*ret)%Mod;
-    if(r%2==1) ret=(ret*n)%Mod;
+    ret=Mul(ret,ret,Mod);
+    if(r%2==1) ret=Mul(ret,n,Mod);
     return ret;
 }
 
@@ -20,7 +36,7 @@ bool witness(ll wit,ll n){
   if(wit==1 || wit==n-1) return false;
 
   for(int i=1;i<s;i++){
-    wit=(wit*wit)%n;
+    wit=Mul(wit,wit,n);
     if(wit==1) return true;
     if(wit==n - 1) return false;
   }
@@ -40,13 +56,14 @@ bool miller(ll n){
 // returns a divisor, a proper one when succeeded, equal to n if failed
 // in case of failure, change a
 ll rho(ll n,ll a) {
-  auto f=[&](ll x) {return ((x*x)%n+a)%n; };
+  auto f=[&](ll x) {return (Mul(x,x,n)+a)%n; };
   ll x=2,y=2;
-  while(true){
+  for(int i=1;;i++){
     x=f(x); y=f(f(y));
     ll d=__gcd(n,abs(x-y));
     if(d!=1) return d;
   }
+  return n;
 }
 
 ll get_factor(ll n){
@@ -58,12 +75,17 @@ ll get_factor(ll n){
     ll d=rho(n,a);
     if(d!=n) return d;
   }
+  return n;
 }
 
 void factorize(ll n,vector<ll> &x) {
   if(n==1) return;
   else if(miller(n)) x.push_back(n);
-  else {ll d=get_factor(n); factorize(d,x); factorize(n/d,x);}
+  else{
+    ll d=get_factor(n);
+    factorize(d,x);
+    factorize(n/d,x);
+  }
 }
 
 vector<ll>factorize(ll n) {vector<ll>x; factorize(n, x); return x;}
