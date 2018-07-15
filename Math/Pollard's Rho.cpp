@@ -2,16 +2,11 @@
 #define pii pair<ll,int>
 using namespace std;
 
-vector<bool>v;
 ll Mul(ll a,ll b,ll Mod){
-    v.clear();
-    while(b) {v.push_back(b&1LL); b>>=1;}
-    reverse(v.begin(),v.end());
-
     ll Ans=0;
-    for(int i=0;i<v.size();i++){
+    for(int i=62;i>=0;i--){
         Ans+=Ans; Ans%=Mod;
-        if(v[i]) Ans+=a; Ans%=Mod;
+        if((b>>i)&1) Ans+=a; Ans%=Mod;
     }
     return Ans;
 }
