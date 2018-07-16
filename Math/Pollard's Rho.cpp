@@ -4,13 +4,13 @@ using namespace std;
 
 ll Mul(ll a,ll b,ll Mod){
     ll Ans=0;
-    for(int i=62;i>=0;i--){
-        Ans+=Ans; Ans%=Mod;
-        if((b>>i)&1) Ans+=a; Ans%=Mod;
+    while(b){
+        if(b&1) {Ans+=a; if(Ans>=Mod) Ans-=Mod;}
+        a+=a; if(a>=Mod) a-=Mod;
+        b>>=1;
     }
     return Ans;
 }
-
 
 ll bigMod(ll n,ll r,ll Mod){
     if(r==0) return 1LL;
