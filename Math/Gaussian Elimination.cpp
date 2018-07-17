@@ -31,9 +31,8 @@ ll modinverse(ll x,ll y) {ll a,b; gcdExtended(x,y,a,b); return a;}
 int gauss(VVL &a,ll k){
       int n = a.size(), m = a[0].size(), r=0;
       for(int c=0 ; c<m-1 && r<n ; c ++ ) {
-            int j = r;
-            for(int i= j+1; i < n; i ++) if(a[i][c]>a[r][c]) swap(a[i],a[r]);
-            if(a[j][c] == 0 ) continue;
+            for(int i= r+1; i < n; i ++) if(a[i][c]>a[r][c]) swap(a[i],a[r]);
+            if(a[r][c] == 0 ) continue;
 
             ll s = modinverse(a[r][c],k);
             for(int i=0;i<n;i++) if(i!=r){
