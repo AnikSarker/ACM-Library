@@ -13,6 +13,10 @@ struct node{
     int Count;      //Number of palindromic suffixes of the palindrome represented by current node
     int SuffLink;   //Links such node w such that the palindrome represented by node w is the largest
                     //palindrome which is a proper suffix of the palindrome represented by current node
+    void nodeClear(){
+        Len = Count = MinPos = Occurrence = SuffLink = 0;
+        memset(Next, 0, sizeof(Next));
+    }
 };
 
 string s;
@@ -21,6 +25,8 @@ int Suff;           // Points to Current (initially previous) node in palindromi
 int Size;           // Size = Total number of node in palindromic tree
                     // Size = 1 denotes node 1 (root with Len -1)
                     // Size = 2 denotes node 2 (root with Len  0)
+
+
 bool AddLetter(int pos){
     int Cur=Suff;
     int CurLen=0;
@@ -36,6 +42,8 @@ bool AddLetter(int pos){
     if(Tree[Cur].Next[Let]) {Suff=Tree[Cur].Next[Let]; return false;}
 
     Size++;
+    Tree[Size].nodeClear();
+
     Suff=Size;
     Tree[Size].MinPos=pos;
     Tree[Size].Len=Tree[Cur].Len+2;
@@ -63,7 +71,6 @@ void InitTree(){
 }
 
 int main(){
-    //memset(Tree,0,sizeof(Tree));
     //InitTree();
     //for(int i=0;i<n;i++) AddLetter(i);
     //distinct palindrome count = Size - 2
