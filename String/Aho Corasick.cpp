@@ -72,6 +72,7 @@ void traverse(string s){
 
 int main(){
     //init();
+    //Must clear Occ vector before starting every test case
     //insert identical query strings only once and handle others keeping map
     //push_links();
     //traverse(s);
