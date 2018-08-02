@@ -1,7 +1,6 @@
 ///Taken from Rezwan Arefin
 const int maxn = 1e5 + 10;
 int n, m, a[maxn], prv[maxn], ans[maxn], block;
-
 struct query {
 	int l, r, id, t, blcl, blcr; 
 	query(int _a, int _b, int _c, int _d) {
@@ -21,7 +20,6 @@ struct update {
 	int pos, pre, now; 
 }; vector<update> u;
 
-
 struct lol {
 	void add(int x) {} 
 	void remove(int x) {}
@@ -31,10 +29,8 @@ struct lol {
 int l, r, t; 
 int cnt[maxn * 2];
 
-void add(int x) { // Add a[x] to ds
-}
-void remove(int x) { // Remove a[x] from ds
-}
+void add(int x) { // Add a[x] to ds}
+void remove(int x) { // Remove a[x] from ds}
 void apply(int i, int x) { // Change a[i] to x 
 	if(l <= i && i <= r) {
 		remove(i);
@@ -47,11 +43,8 @@ int main(int argc, char const *argv[]) {
 	read(n); read(m);
 	block = pow(n, 0.6667);
 
-	for(int i = 0; i < n; ++i) 
-		read(a[i]), last[i] = a[i];
-
+	for(int i = 0; i < n; ++i) read(a[i]), last[i] = a[i];
 	u.push_back({-1, -1, -1});
-
 	for(int i = 0; i < m; ++i) {
 		int t, l, r; 
 		read(t); read(l); read(r); 
