@@ -1,6 +1,7 @@
-/*2D Segment Tree
-Needs O(16nm) memory!!!
-Be carefull writing lx, rx, ly, ry!*/
+// 2D Segment Tree
+// Memory Complexity : O(16nm)
+// Be careful writing lx, rx, ly, ry
+// Taken from Rezwan Arefin
 #include<bits/stdc++.h>
 using namespace std;
 
