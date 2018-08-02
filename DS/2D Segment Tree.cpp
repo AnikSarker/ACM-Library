@@ -1,6 +1,6 @@
 // 2D Segment Tree
 // Memory Complexity : O(16nm)
-// Be careful writing lx, rx,  ly, ry
+// Be careful writing lx, rx, ly, ry
 // Taken from Rezwan Arefin
 #include<bits/stdc++.h>
 using namespace std;
