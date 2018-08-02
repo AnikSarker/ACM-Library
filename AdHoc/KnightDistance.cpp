@@ -9,10 +9,7 @@ struct point {
 ll kdist(point p, point q) {
 	ll dx = abs(p.x - q.x);
 	ll dy = abs(p.y - q.y);
-	ll cnt = max({(dx+1)/2, 
-				  (dy+1)/2, 
-				  (dx+dy+2)/3}
-				);
+	ll cnt = max({(dx+1)/2, (dy+1)/2, (dx+dy+2)/3});
 	while((cnt%2) != (dx+dy)%2) cnt++;
 	if(dx == 1 && !dy) return 3; 
 	if(dy == 1 && !dx) return 3;
