@@ -34,9 +34,7 @@ void Gauss(int n,int m,int k){
         x[i]=A[i][m];
         for(int j=i+1;j<m;j++) {x[i]-=(A[i][j]*x[j])%k; x[i]%=k; if(x[i]<0) x[i]+=k;}
 
-        int x1=0,y1=0 ;
-        int d=gcdExtended(A[i][i], k,x1,y1);
-        x1=((x1%k)+k)% k;
-        x[i]=x[i]*x1%k;
+        int inv=modinverse(A[i][i],k);
+        x[i]=(x[i]*inv)%k; if(x[i]<0) x[i]+=k;
     }
 }
