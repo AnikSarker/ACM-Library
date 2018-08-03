@@ -1,6 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-
 //Taken from Rezwan Arefin
 int bigMod(int n, int k, int mod){
     if(k == 0) return 1;
