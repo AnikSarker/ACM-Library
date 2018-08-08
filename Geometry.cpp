@@ -1,11 +1,6 @@
-#include <cstdio>  
-#include <cstring>  
-#include <cmath>  
-#include <vector>  
-#include <complex>  
-#include <algorithm>  
- 
+#include <bits/stdc++.h>
 using namespace std;  
+
 typedef pair<int,int> pii;  
 const double pi = 4 * atan(1);  
 const double eps = 1e-6;  
