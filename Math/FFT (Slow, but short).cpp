@@ -3,9 +3,10 @@
 
 typedef vector<int> VI;
 typedef complex<double> CN;
-VI a,b,res;
 
-double PI=acos(-1);
+const double PI = acos(-1);
+const double eps = 1e-6;
+
 void FFT(vector<CN>&a,bool invert){
     int n=a.size();
     for(int i=1,j=0;i<n;i++){
@@ -32,7 +33,7 @@ void FFT(vector<CN>&a,bool invert){
 
 }
 
-void Multiply(){
+void Multiply(vector<int>& a,vector<int>& b, vector<int>& res){
     vector<CN>fa(a.begin(),a.end());
     vector<CN>fb(b.begin(),b.end());
     int n=1;
@@ -43,5 +44,8 @@ void Multiply(){
     for(int i=0;i<n;i++) fa[i]*=fb[i];
     FFT(fa,true);
     res.resize(n);
-    for(int i=0;i<n;i++) res[i]=fa[i].real()/abs(fa[i].real())*(int)(abs(fa[i].real())+0.5);
+    for(int i=0;i<n;i++){
+        if(abs(fa[i].real())<eps) res[i]=0;
+        else res[i]=fa[i].real()/abs(fa[i].real())*(int)(abs(fa[i].real())+0.5);
+    }
 }
