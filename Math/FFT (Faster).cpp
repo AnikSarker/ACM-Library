@@ -1,5 +1,7 @@
 //Fast FFT
 //Complex Class Hard Coded
+#include<bits/stdc++.h>
+using namespace std;
 
 #define op operator
 typedef long double ld;
@@ -50,7 +52,8 @@ void fft(base *a, int k) {
        }
    }
 }
-void Multiply() {
+
+void Multiply(vector<int>& a, vector<int>& b,vector<int>& res) {
    int k = 1;
    while( (1<<k) < (a.size() + b.size()) ) ++k;
    int n = (1<<k);
