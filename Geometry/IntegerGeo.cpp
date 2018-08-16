@@ -8,8 +8,8 @@ struct Fraction{
     Fraction(ll x,ll y) {ll g=__gcd(x,y); m=x/g; n=y/g; if(n<0) {m=-m,n=-n;} }
     Fraction operator + (const Fraction& u) const {return Fraction(m*u.n+u.m*n,n*u.n); }
     Fraction operator - (const Fraction& u) const {return Fraction(m*u.n-u.m*n,n*u.n); }
-    Fraction operator * (const Fraction& u) {return Fraction(m*u.m,n*u.n); }
-    Fraction operator / (const Fraction& u) {return Fraction(m*u.n,n*u.m); }
+    Fraction operator * (const Fraction& u) const {return Fraction(m*u.m,n*u.n); }
+    Fraction operator / (const Fraction& u) const {return Fraction(m*u.n,n*u.m); }
 };
 
 struct Line {
