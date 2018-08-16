@@ -4,6 +4,8 @@
 using namespace std;
 
 #define op operator
+#define eps 1e-6
+
 typedef long double ld;
 struct base {
    typedef double T; T re, im;
@@ -75,6 +77,7 @@ void Multiply(vector<int>& a, vector<int>& b,vector<int>& res) {
    res.resize(a.size() + b.size());
 
    for(int i=0;i<res.size();i++) {
-       res[i] = int (f1[i].re / n + 0.5);
+       if(fabs(f1[i].re) < eps) res[i]=0;
+       else res[i] = f1[i].re / fabs(f1[i].re) * int (abs(f1[i].re / n) + 0.5);
    }
 }
