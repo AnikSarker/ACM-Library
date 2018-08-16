@@ -43,5 +43,5 @@ void Multiply(){
     for(int i=0;i<n;i++) fa[i]*=fb[i];
     FFT(fa,true);
     res.resize(n);
-    for(int i=0;i<n;i++) res[i]=int(fa[i].real()+0.5);
+    for(int i=0;i<n;i++) res[i]=fa[i].real()/abs(fa[i].real())*(int)(abs(fa[i].real())+0.5);
 }
