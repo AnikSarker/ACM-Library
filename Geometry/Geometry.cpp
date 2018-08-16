@@ -60,6 +60,8 @@ struct Circle {
     void read () { o.read(), scanf("%lf", &r); }
     Point point(double rad) { return Point(o.x + cos(rad)*r, o.y + sin(rad)*r); }
     double getArea (double rad) { return rad * r * r / 2; }
+    //area of the circular sector cut by a chord with central angle alpha
+    double sector(double alpha) {return r * r * 0.5 * (alpha - sin(alpha));}
 };
 
 
@@ -329,6 +331,7 @@ namespace Circular {
         return fabs(res);
     }
 
+
     int getCircleCircleIntersection (Circle o1, Circle o2, vector<Point>& sol) {
         double d = getLength(o1.o - o2.o);
 
@@ -350,6 +353,19 @@ namespace Circular {
         sol.push_back(p2);
         return 2;
     }
+
+    double areaCircleCircle(Circle o1, Circle o2){
+        Vector AB = o2.o - o1.o;
+        double d = getLength(AB);
+        if(d >= o1.r + o2.r) return 0;
+        if(d + o1.r <= o2.r) return pi * o1.r * o1.r;
+        if(d + o2.r <= o1.r) return pi * o2.r * o2.r;
+
+        double alpha1 = acos((o1.r * o1.r + d * d - o2.r * o2.r) / (2.0 * o1.r * d));
+        double alpha2 = acos((o2.r * o2.r + d * d - o1.r * o1.r) / (2.0 * o2.r * d));
+        return o1.sector(2*alpha1) + o2.sector(2*alpha2);
+    }
+
 
     int getTangents (Point p, Circle o, Vector* v) {
         Vector u = o.o - p;
