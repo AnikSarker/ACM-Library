@@ -10,6 +10,16 @@ int sum(int indx){
     return ans;
 }
 
+int LowerBound(int v){
+	int sum=0,pos=0;
+	for(int i=LOGN;i>=0;i--){
+        int nPos=pos+(1<<i);
+		if(nPos<MAX && sum+bit[nPos]<v) {sum+=bit[nPos]; pos=nPos;}
+	}
+	//pos = maximal x such that Sum(x) < v
+	return pos+1; //+1 for LowerBound
+}
+
 //2D BIT
 int BIT[MAX][MAX];
 void update(int x,int y,int val){  //A[x][y]+=val
