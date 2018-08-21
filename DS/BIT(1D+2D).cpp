@@ -11,13 +11,13 @@ int sum(int indx){
 }
 
 int LowerBound(int v){
-	int sum=0,pos=0;
-	for(int i=LOGN;i>=0;i--){
-        int nPos=pos+(1<<i);
-		if(nPos<MAX && sum+bit[nPos]<v) {sum+=bit[nPos]; pos=nPos;}
-	}
-	//pos = maximal x such that Sum(x) < v
-	return pos+1; //+1 for LowerBound
+    int sum=0,indx=0;
+    for(int i=LOGN;i>=0;i--){
+        int nPos=indx+(1<<i);
+        if(nPos<MAX && sum+BIT[nPos]<v) {sum+=BIT[nPos]; indx=nPos;}
+    }
+    //pos = maximal x such that Sum(x) < v
+    return indx+1; //+1 for LowerBound
 }
 
 //2D BIT
