@@ -1,5 +1,6 @@
 //Lagrange Polynomial
 //lagrange(n,k) = 1^k + 2^k + 3^k + ... + n^k
+//Complexity : O(k log (MOD))
 
 #include <bits/stdc++.h>
 using namespace std;
