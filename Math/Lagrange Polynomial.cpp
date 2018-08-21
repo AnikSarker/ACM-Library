@@ -1,5 +1,5 @@
 //Lagrange Polynomial
-//lagrange(n,k) = 1^k + 2^k + 3^k + ... + n^k
+//lagrange(n,k) = 1^k + 2^k + 3^k + ... + n^k modulo Prime
 //Complexity : O(k log (MOD))
 
 #include <bits/stdc++.h>
