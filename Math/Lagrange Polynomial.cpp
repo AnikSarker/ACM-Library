@@ -4,7 +4,7 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX 1000010
+#define MAX 1000010     //Upper Limit of k
 #define MOD 1000000007
 #define ll long long int
 
