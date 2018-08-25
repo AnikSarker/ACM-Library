@@ -1,6 +1,7 @@
 //Dynamic CHT
-const ll is_query = LLONG_MIN;
-struct Line{
+const ll is_query = -(1LL<<62);
+const ll INF = 1LL << 60;
+struct Line{ // y=m*x+b
     ll m,b;
     mutable function<const Line*()> succ;
     bool operator<(const Line& rhs) const{
@@ -31,27 +32,8 @@ struct HullDynamic : public multiset<Line> {// will maintain upper hull for maxi
         while (y != begin() && bad(prev(y))) erase(prev(y));
     }
     ll Query(ll x) {
-        auto l = *lower_bound((Line) { x, is_query });
-        return l.m * x + l.b;
+        auto l = lower_bound((Line){x,is_query});
+        if (l == end()) return -inf;
+        return l->m * x + l->b;
     }
 };
-
-ll m[MAX];
-ll cIA[MAX];
-ll cA[MAX];
-int main(){
-    int n;
-    scanf("%d",&n);
-    for(int i=1;i<=n;i++) cin>>m[i];
-    for(int i=1;i<=n;i++) cA[i]=cA[i-1]+m[i];
-    for(int i=1;i<=n;i++) cIA[i]=cIA[i-1]+i*m[i];
-
-    ll Max=0;
-    HullDynamic ch;
-    ch.Add(0,0);
-    for(int i=1;i<=n;i++){
-        Max=max(Max,ch.Query(cA[i])+cIA[i]);
-        ch.Add(-i,-cIA[i]+i*cA[i]);
-    }
-    cout<<Max<<endl;
-}
