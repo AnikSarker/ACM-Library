@@ -18,7 +18,7 @@ bool Bad(Line &P,Line &C,Line &N){
 struct ConvexHull{
     vector<Line>hull;
     
-    void Add(ll m,ll c)        
+    void Add(ll m,ll c){   
         //always maintaining the minimum c in case multiple equal m
         if(hull.size()>0 && hull.back().m==m) {
             if(hull.back().c>c) hull.pop_back();
