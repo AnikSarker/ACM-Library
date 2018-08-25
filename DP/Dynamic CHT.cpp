@@ -1,4 +1,8 @@
 //Dynamic CHT
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
 const ll is_query = -(1LL<<62);
 const ll INF = 1LL << 60;
 struct Line{ // y=m*x+b
@@ -33,7 +37,7 @@ struct HullDynamic : public multiset<Line> {// will maintain upper hull for maxi
     }
     ll Query(ll x) {
         auto l = lower_bound((Line){x,is_query});
-        if (l == end()) return -inf;
+        if (l == end()) return -INF;
         return l->m * x + l->b;
     }
 };
