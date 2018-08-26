@@ -1,10 +1,12 @@
+typedef long long ll;
+
 struct node {
     int prior, size;
-    ll val, sum, lazy;
+    ll val, sum, lazy, rev;
     node *l, *r;
     node(int v = 0) {
         val = sum = v;
-        lazy = 0;
+        lazy = 0; rev = 0;
         prior = rand();
         size = 1;
         l = r = NULL;
@@ -21,14 +23,25 @@ void upd_sz(pnode t) {
 }
 
 void push(pnode t) {
-    if(!t || !t -> lazy) return;
-    t -> val += t -> lazy;
-    t -> sum += t -> lazy * sz(t);
-    if(t -> l) t -> l -> lazy += t -> lazy;
-    if(t -> r) t -> r -> lazy += t -> lazy;
-    t -> lazy = 0;
+    if(!t) return;
+
+    if(t->lazy){
+        t -> val += t -> lazy;
+        t -> sum += t -> lazy * sz(t);
+        if(t -> l) t -> l -> lazy += t -> lazy;
+        if(t -> r) t -> r -> lazy += t -> lazy;
+        t -> lazy = 0;
+    }
+    //Reverse
+    if(t->rev){
+        swap(t->l,t->r);
+        if(t -> l) t -> l -> rev ^= t -> rev;
+        if(t -> r) t -> r -> rev ^= t -> rev;
+        t -> rev = 0;
+    }
 }
-void combine(pnode t) { 
+
+void combine(pnode t) {
     // Note: This function should reset datas of t first (MUST!!)
     // Then update datas from l and r.
     if(!t) return;
@@ -52,7 +65,8 @@ void split(pnode t, pnode &l, pnode &r, int pos, int add = 0) {
 
 void merge(pnode &t, pnode l, pnode r) {
     push(l), push(r);
-    if(!l || !r) t = l ? l : r;
+    if(!l || !r)
+        t = l ? l : r;
     else if(l -> prior > r -> prior)
         merge(l -> r, l -> r, r), t = l;
     else merge(r -> l, l, r -> l), t = r;
@@ -93,4 +107,23 @@ void Del(pnode &t, int pos) {
     pnode tmp = t;
     merge(t, L, R);
     free(tmp);
+}
+
+void Reverse(pnode t, int l, int r) {
+    pnode L, mid, R;
+    split(t, L, mid, l - 1);
+    split(mid, t, R, r - l);
+    t -> rev ^= 1;
+    merge(mid, L, t);
+    merge(t, mid, R);
+}
+
+int GetVal(pnode o,int x){
+    pnode L, mid, R;
+    split(o,L,mid,x);
+    split(L,o,R,x-1);
+    ll ret=R->val;
+    merge(L,o,R);
+    merge(o,L,mid);
+    return ret;
 }
