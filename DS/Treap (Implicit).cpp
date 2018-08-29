@@ -114,13 +114,3 @@ void Reverse(pnode t, int l, int r) {
     merge(mid, L, t);
     merge(t, mid, R);
 }
-
-int GetVal(pnode o,int x){
-    pnode L, mid, R;
-    split(o,L,mid,x);
-    split(L,o,R,x-1);
-    ll ret=R->val;
-    merge(L,o,R);
-    merge(o,L,mid);
-    return ret;
-}
