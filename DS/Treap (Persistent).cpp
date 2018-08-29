@@ -90,7 +90,7 @@ int main(){
     root[0]=new node();
 
     int version=0;
-    for(int i=1;i<=n;i++){
+    for(int i=1;i<=n;i++){//set A[version]=A[ID] and insert(pos,v)
         int tp; scanf("%d",&tp);
         if(tp==1){
             int ID,pos,v;
@@ -98,12 +98,12 @@ int main(){
             root[++version]=root[ID];
             insert(root[version],pos,v);
         }
-        else if(tp==2){
+        else if(tp==2){//set A[ID][pos]=v;
             int ID,pos,v;
             scanf("%d %d %d",&ID,&pos,&v);
             Replace(root[ID],pos,v);
         }
-        else if(tp==3){
+        else if(tp==3){//print A[version]
             int ID;
             scanf("%d",&ID);
             for(int i=1;i<root[ID]->size;i++) printf("%d ",Query(root[ID],i,i));
