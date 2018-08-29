@@ -16,13 +16,8 @@ struct node {
 ///Otherwise it will be 0 based indexing, so decide carefully
 typedef node* pnode;
 
-int sz(pnode t) {
-    return t ? t -> size : 0;
-}
-
-void upd_sz(pnode t) {
-    if(t) t -> size = sz(t -> l) + 1 + sz(t -> r);
-}
+int sz(pnode t) { return t ? t -> size : 0;}
+void upd_sz(pnode t) { if(t) t -> size = sz(t -> l) + 1 + sz(t -> r);}
 
 void push(pnode t) {
     if(!t) return;
