@@ -63,3 +63,12 @@ int queryRange(item* node,int lo,int hi,int i,int j){
     int p2=queryRange(node->Right,mid+1,hi,i,j);
     return p1+p2;
 }
+
+//Free each node of the tree after each test case
+void Free(item* node){
+    if(node->Left) Free(node->Left);
+    if(node->Right) Free(node->Right);
+    free(node);
+}
+
+int main() {root=new item();}
