@@ -1,10 +1,8 @@
 #define mid ((lo+hi)/2)
 
 struct item{
-    int value;
-    int lazy;
-    item* Left ;
-    item* Right ;
+    int value, lazy;
+    item *Left, *Right ;
     item(){value=0; lazy=0; Left=Right=NULL;}
 };
 item* root;
