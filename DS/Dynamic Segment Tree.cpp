@@ -5,7 +5,7 @@ struct item{
     int lazy;
     item* Left ;
     item* Right ;
-    item(){value=0; Left=Right=NULL;}
+    item(){value=0; lazy=0; Left=Right=NULL;}
 };
 item* root;
 
