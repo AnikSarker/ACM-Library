@@ -4,7 +4,7 @@ using namespace std;
 #define MAX 1000005
 typedef long long ll;
 
-struct node {
+struct node{
     int prior, size;
     ll val, sum;
     node *l, *r;
@@ -16,7 +16,7 @@ struct node {
     }
 };
 
-node* root[1000005];
+node* root[MAX];
 typedef node* pnode;
 
 int sz(pnode t) {return t ? t -> size : 0;}
@@ -56,8 +56,10 @@ void merge(pnode &t, pnode l, pnode r) {
     combine(t);
 }
 
-//Important to use pnode &t here
-//Because this is a non-persistent operation
+//Use pnode &t for non-persistent operation (will update original t)
+//Use pnode t for persistent operation (will not update the original one)
+//No need to merge back to retrieve the original node after split in persistent operation
+
 void insert(pnode &t, int pos, int v){
     pnode L, R, tmp, y = new node(v);
     split(t, L, R, pos - 1);
@@ -65,24 +67,47 @@ void insert(pnode &t, int pos, int v){
     merge(t, tmp, R);
 }
 
-//Important to use pnode &t here
-//Because this is a non-persistent operation
 void Replace(pnode &t,int x, int val){
     pnode L, R, mid;
     split(t,L,mid,x);
     split(L,t,R,x-1);
-
     R->val = R->sum = val;
-
     merge(L,t,R);
     merge(t,L,mid);
 }
 
-//Important to use pnode t here (no &)
-//Because this is a persistent operation
 ll Query(pnode t, int pos1, int pos2){
     pnode L, R, mid, tmp;
     split(t, L, R, pos2);
     split(L, mid, tmp, pos1 - 1);
+    assert(tmp!=NULL);
     return tmp->sum;
+}
+
+int main(){
+    int n;
+    scanf("%d",&n);
+    root[0]=new node();
+
+    int version=0;
+    for(int i=1;i<=n;i++){
+        int tp; scanf("%d",&tp);
+        if(tp==1){
+            int ID,pos,v;
+            scanf("%d %d %d",&ID,&pos,&v);
+            root[++version]=root[ID];
+            insert(root[version],pos,v);
+        }
+        else if(tp==2){
+            int ID,pos,v;
+            scanf("%d %d %d",&ID,&pos,&v);
+            Replace(root[ID],pos,v);
+        }
+        else if(tp==3){
+            int ID;
+            scanf("%d",&ID);
+            for(int i=1;i<root[ID]->size;i++) printf("%d ",Query(root[ID],i,i));
+            printf("\n");
+        }
+    }
 }
