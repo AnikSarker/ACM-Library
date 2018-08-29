@@ -18,8 +18,8 @@ int query(item* node, int lo, int hi, int i, int j){
 void update(item* node, int lo, int hi, int i, int val){
     if (i>hi || i<lo) return;
     if (lo==hi) {node->value=val; return;}
-    if(!node->Left) node->Left=new item();
-    if(!node->Right) node->Right=new item();
+    if(lo!=hi && !node->Left) node->Left=new item();
+    if(lo!=hi && !node->Right) node->Right=new item();
 
     update(node->Left,lo,mid,i,val);
     update(node->Right,mid+1,hi,i,val);
@@ -52,8 +52,8 @@ void updateRange(item* node, int lo, int hi, int i, int j, int val){
 int queryRange(item* node,int lo,int hi,int i,int j){
     if(lo>hi) return 0;
     else if(lo>j || hi<i) return 0;
-    if(!node->Left) node->Left=new item();
-    if(!node->Right) node->Right=new item();
+    if(lo!=hi && !node->Left) node->Left=new item();
+    if(lo!=hi && !node->Right) node->Right=new item();
 
     lazyPropagation(node,lo,hi);
     if(lo>=i && hi <= j) return node->value;
