@@ -12,6 +12,8 @@ struct node {
         l = r = NULL;
     }
 } *root;
+///If you initialize the root (root = new node()) then treap will be 1 based indexing
+///Otherwise it will be 0 based indexing
 typedef node* pnode;
 
 int sz(pnode t) {
