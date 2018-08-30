@@ -1,5 +1,5 @@
 #define MAX 1000000005
-#define mid (((long long)lo+hi)/2)
+#define mid (lo+(hi-lo)/2) //Be careful about overflow
 
 struct item{
     int value, lazy;
