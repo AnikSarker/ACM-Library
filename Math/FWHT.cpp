@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define MOD 30011
+#define MOD 1000000007
 #define ll long long int
 
 #define MAX (1 << 16)
@@ -9,7 +9,7 @@ using namespace std;
 #define XOR 2
 
 // Fast Walsh-Hadamard Transformation in n log n
-struct fwht{ // hash = 840614;
+struct fwht{
     ll P1[MAX], P2[MAX];
 
     void walsh_transform(ll* ar,int n,int flag = XOR){
@@ -32,7 +32,7 @@ struct fwht{ // hash = 840614;
         inverse_walsh_transform(ar, m, flag);
         inverse_walsh_transform(ar + m, m, flag);
 
-        for (i = 0; i < m; i++){  //Don't forget modulo if required
+        for (i = 0; i < m; i++){  //Don't forget MOD if required
             ll x = ar[i], y = ar[i + m];
             if (flag == OR) ar[i] = x, ar[i + m] = y - x;
             if (flag == AND) ar[i] = x - y, ar[i + m] = y;
