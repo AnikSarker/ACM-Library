@@ -1,4 +1,5 @@
-#define mid ((lo+hi)/2)
+#define MAX 1000000005
+#define mid (((long long)lo+hi)/2)
 
 struct item{
     int value, lazy;
