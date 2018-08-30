@@ -74,5 +74,7 @@ vector<ll>multiply(vector<ll> v1, vector<ll> v2){
 }
 
 int main(){
-    //Size of vector must be power of 2 with additional 0 padding
+    //Size of vector must be - 
+    //1. Greater than input vector size
+    //2. Power of 2 with additional 0 padding (2 --> 4,  3 --> 4, 4 --> 8)
 }
