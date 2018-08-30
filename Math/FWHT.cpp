@@ -3,10 +3,10 @@ using namespace std;
 #define MOD 1000000007
 #define ll long long int
 
-#define MAX (1 << 16)
 #define OR 0
 #define AND 1
 #define XOR 2
+#define MAX (1 << 16)
 
 // Fast Walsh-Hadamard Transformation in n log n
 struct fwht{
