@@ -1,4 +1,3 @@
-
 #define MAXP 9767550
 #define ll long long int
 #define pii pair<int,int>
