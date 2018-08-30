@@ -20,8 +20,8 @@ namespace crt{
 
     ll chinese_remainder(vector <ll> ar, vector <ll> mods){
         ll x, y, res = 0, M = 1;
-        for (int i = 0; i < ar.size(); i++) M *= mods[i];
-        for (int i = 0; i < ar.size(); i++){
+        for(int i = 0; i < ar.size(); i++) M *= mods[i];
+        for(int i = 0; i < ar.size(); i++){
             x = M / mods[i], y = inv(x, mods[i]);
             res = (res + (((x * ar[i]) % M) * y)) % M;
         }
@@ -34,13 +34,13 @@ namespace binomial{
 
     ll trailing(ll x, ll p){
         ll res = 0;
-        while (x) {x /= p; res += x;}
+        while(x) {x /= p; res += x;}
         return res;
     }
 
     ll expo(ll a, ll b, ll m){
         ll res = 1;
-        while (b){
+        while(b){
             if (b & 1) res = res * a % m;
             a = (a * a) % m, b >>= 1;
         }
@@ -49,18 +49,18 @@ namespace binomial{
 
     vector<pii> factorize(ll m){
         vector <pii> factors;
-        for (ll i = 2; i * i <= m; i++){
+        for(ll i = 2; i * i <= m; i++){
             int c = 0;
             while (m % i == 0)  {c++; m /= i;}
             if (c) factors.push_back({i, c});
         }
-        if (m > 1) factors.push_back({m, 1});
+        if(m > 1) factors.push_back({m, 1});
         return factors;
     }
 
     ll spf(ll x, ll p, ll mod){
         ll res = expo(dp[mod - 1], x / mod, mod);
-        if (x >= p) res = res * spf(x / p, p, mod) % mod;
+        if(x >= p) res = res * spf(x / p, p, mod) % mod;
         return res * dp[x % mod] % mod;
     }
 
@@ -74,20 +74,20 @@ namespace binomial{
         assert(mod < MAXP);
 
         ll t = trailing(n, p) - trailing(k, p) - trailing(n - k, p);
-        if (t >= q) return 0;
+        if(t >= q) return 0;
 
         dp[0] = 1;
-        for (int i = 1; i < mod; i++) dp[i] = (ll)dp[i - 1] * ((i % p) ? i : 1) % mod;
+        for(int i = 1; i < mod; i++) dp[i] = (ll)dp[i - 1] * ((i % p) ? i : 1) % mod;
         
-
         ll res = spf(n, p, mod) * inv(spf(k, p, mod) * spf(n - k, p, mod) % mod, mod) % mod;
         res = (res * expo(p,t, mod))% mod;
         return res;
     }
 
+    //find C(n,k) in O(mod) time
     ll C(ll n, ll k, ll m){
-        if (k > n || m == 1 || k < 0) return 0;
-        if (n == k || k == 0) return 1;
+        if(k > n || m == 1 || k < 0) return 0;
+        if(n == k || k == 0) return 1;
 
         vector<pii> factors = factorize(m);
         vector <ll> ar, mods;
@@ -99,18 +99,18 @@ namespace binomial{
         return crt::chinese_remainder(ar, mods);
     }
     
-//check whether C(n,k) is greater than Lim
+    //check whether C(n,k) is greater than Lim
     bool isGreater(ll n, ll k, ll Lim){
-        if (k < 0 || k > n) return false;
+        if(k < 0 || k > n) return false;
 
         k = min(k, n - k);
         ll u = n, v = 1;
         pair <ll, long double> x = make_pair(1, 1);
 
-        for (int i = 0; i < k; i++, u--, v++){
+        for(int i = 0; i < k; i++, u--, v++){
             x = make_pair(x.first * u, x.second * u);
             x = make_pair(x.first / v, x.second / v);
-            if (x.first >= Lim || x.second >= (2.0 * Lim)) return true;
+            if(x.first >= Lim || x.second >= (2.0 * Lim)) return true;
         }
         return false;
     }
