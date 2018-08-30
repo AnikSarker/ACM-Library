@@ -4,7 +4,6 @@ using namespace std;
 #define ll long long int
 
 #define MAX (1 << 16)
-#define clr(A) memset(A,0,sizeof(A))
 #define OR 0
 #define AND 1
 #define XOR 2
@@ -37,7 +36,7 @@ struct fwht{ // hash = 840614;
             ll x = ar[i], y = ar[i + m];
             if (flag == OR) ar[i] = x, ar[i + m] = y - x;
             if (flag == AND) ar[i] = x - y, ar[i + m] = y;
-            if (flag == XOR) ar[i] = (x + y) >> 1, ar[i + m] = (x - y) >> 1; //modular inverse if required here
+            if (flag == XOR) ar[i] = (x + y) / 2, ar[i + m] = (x - y) / 2; //modular inverse if required here
         }
     }
 
