@@ -80,7 +80,6 @@ ll Query(pnode t, int pos1, int pos2){
     pnode L, R, mid, tmp;
     split(t, L, R, pos2);
     split(L, mid, tmp, pos1 - 1);
-    assert(tmp!=NULL);
     return tmp->sum;
 }
 
