@@ -77,9 +77,8 @@ namespace binomial{
         if (t >= q) return 0;
 
         dp[0] = 1;
-        for (int i = 1; i < mod; i++){
-            dp[i] = (ll)dp[i - 1] * ((i % p) ? i : 1) % mod;
-        }
+        for (int i = 1; i < mod; i++) dp[i] = (ll)dp[i - 1] * ((i % p) ? i : 1) % mod;
+        
 
         ll res = spf(n, p, mod) * inv(spf(k, p, mod) * spf(n - k, p, mod) % mod, mod) % mod;
         res = (res * expo(p,t, mod))% mod;
@@ -98,5 +97,21 @@ namespace binomial{
             mods.push_back(x), ar.push_back(C_mod_p_q(n, k, f.first, f.second));
         }
         return crt::chinese_remainder(ar, mods);
+    }
+    
+//check whether C(n,k) is greater than Lim
+    bool isGreater(ll n, ll k, ll Lim){
+        if (k < 0 || k > n) return false;
+
+        k = min(k, n - k);
+        ll u = n, v = 1;
+        pair <ll, long double> x = make_pair(1, 1);
+
+        for (int i = 0; i < k; i++, u--, v++){
+            x = make_pair(x.first * u, x.second * u);
+            x = make_pair(x.first / v, x.second / v);
+            if (x.first >= Lim || x.second >= (2.0 * Lim)) return true;
+        }
+        return false;
     }
 }
