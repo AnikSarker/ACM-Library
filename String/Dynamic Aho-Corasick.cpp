@@ -1,6 +1,3 @@
-//Aho-Corasick
-//Complexity : |Text| + Sum of all |Pattern| + O(number of Occurrences)
-//Worst Case Complexity : (SumLen) Root (SumLen)
 #include <bits/stdc++.h>
 using namespace std;
 #define pii pair<int,int>
@@ -9,6 +6,9 @@ const int LOG = 19;
 typedef long long ll;
 
 struct Aho{
+//Aho-Corasick
+//Complexity : |Text| + Sum of all |Pattern| + O(number of Occurrences)
+//Worst Case Complexity : (SumLen) Root (SumLen)
     int Size;
     map<char,int>node[MAX];
     int Root;                //AC automaton Root
@@ -91,6 +91,7 @@ struct Aho{
 
 };
 
+//Complexity : (Complexity of Aho-Corasick) * LOG
 struct DynamicAho{
     Aho aho[LOG];
     DynamicAho() {init();}
