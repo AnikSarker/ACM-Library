@@ -2,16 +2,14 @@
 using namespace std;
 #define MAX 100005
 
+// Gaussian Elimination Online
 struct maxxor{
     int best[32], msb;
     maxxor(){memset(best, -1, sizeof best);}
     void add(int x){
         while(x > 0){
             msb = 31 - __builtin_clz(x); // clzll for ll
-            if(best[msb] == -1){
-                best[msb] = x;
-                break;
-            }
+            if(best[msb] == -1) {best[msb] = x; break;}
             else x = x ^ best[msb];
         }
     }
@@ -21,10 +19,9 @@ struct maxxor{
         }
         return ret;
     }
-} ds;
+}ds;
 
 // Gaussian Elimination Offline
-
 int a[MAX], n;
 int maxxor(){
     int r = 0, ret = 0;
@@ -39,4 +36,5 @@ int maxxor(){
         r++;
     }
     for(int i = 0; i < n; i++) ret = max(ret, ret ^ a[i]);
+    return ret;
 }
