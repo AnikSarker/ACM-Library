@@ -85,7 +85,7 @@ namespace binomial{
 
     //Calculate C(n,k) % M
     //Works when M = p1^q1 * p2^q1 * .... px^qx, such that pi^qi < MAXP
-    //Running time : O(MAXP * x)
+    //Running time : O(MAXP)
     ll C(ll n, ll k, ll m){
         if(k > n || m == 1 || k < 0) return 0;
         if(n == k || k == 0) return 1;
