@@ -1,6 +1,6 @@
 //Aho-Corasick
 //Complexity : |Text| + Sum of all |Pattern| + O(number of Occurrences)
-//Worst Case Complexity : (SumLen) Root (SumLen)
+//if occurrence positions needed, Worst Case Complexity : (SumLen) Root (SumLen)
 #include <bits/stdc++.h>
 using namespace std;
 #define pii pair<int,int>
