@@ -8,7 +8,7 @@ typedef long long ll;
 struct Aho{
 //Aho-Corasick
 //Complexity : |Text| + Sum of all |Pattern| + O(number of Occurrences)
-//Worst Case Complexity : (SumLen) Root (SumLen)
+//if occurrence positions needed, Worst Case Complexity : (SumLen) Root (SumLen)
     int Size;
     map<char,int>node[MAX];
     int Root;                //AC automaton Root
@@ -112,9 +112,7 @@ struct DynamicAho{
 
     ll getCount(string s){
         ll ans = 0;
-        for(ll i = 0; i < LOG; i++){
-            ans += aho[i].traverse(s);
-        }
+        for(ll i = 0; i < LOG; i++) ans += aho[i].traverse(s);
         return ans;
     }
 };
