@@ -15,3 +15,25 @@ int Stirling1(int n, int r) {
     }
     return v[0][r];
 }
+
+NTT ntt(mod);
+vector<ll>a,b,res;
+
+//Stirling2 (n,k) = co-eff of x^k in product of polynomials A & B
+//where A(i) = (-1)^i / i!  and B(i) = i^n / i!
+int Stirling2(int n, int r) {
+    a.resize(n+1); b.resize(n+1);
+    for(int i = 0; i <= n; i++){
+        a[i] = invfct[i];
+        if(i % 2 == 1) a[i] = mod - a[i];
+    }
+
+    for(int i = 0; i <= n; i++){
+        b[i] = bigMod(i, n, mod);
+        b[i] = (b[i] * invfct[i]) % mod;
+    }
+
+    NTT ntt(mod);
+    ntt.multiply(a,b,res);
+    return res[r];
+}
