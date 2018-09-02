@@ -11,9 +11,7 @@ int Stirling1(int n, int r) {
 
     for(int j = nn; j > 1; j >>= 1) {
         int hn = j >> 1;
-        for(int i = 0; i < hn; ++i) {
-            ntt.multiply(v[i], v[i + hn], v[i]);
-        }
+        for(int i = 0; i < hn; ++i) ntt.multiply(v[i], v[i + hn], v[i]);
     }
     return v[0][r];
 }
