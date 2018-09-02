@@ -1,7 +1,7 @@
 NTT ntt(mod);
 vector<ll>v[MAX];
 
-//Stirling (n,k) = co-eff of x^k in x*(x+1)*(x+2)*....(x+n-1)
+//Stirling1 (n,k) = co-eff of x^k in x*(x+1)*(x+2)*....(x+n-1)
 int Stirling1(int n, int r) {
     int nn = 1;
     while(nn < n) nn <<= 1;
