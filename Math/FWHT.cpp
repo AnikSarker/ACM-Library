@@ -9,7 +9,8 @@ using namespace std;
 #define LOG 17
 #define MAX (1 << 17)
 
-// Fast Walsh-Hadamard Transformation in n log n
+//Fast Walsh-Hadamard Transformation
+//Complexity : O(n log n)
 struct fwht{
     ll P1[MAX], P2[MAX];
     inline ll cMOD(ll x)     {return x>=MOD ? x-MOD : (x<=-MOD ? x+MOD : x);}
