@@ -18,31 +18,25 @@ struct fwht{
     inline ll Half(ll a)     {return (a & 1) ? (a+MOD)/2 : a/2;}
 
     void walsh_transform(ll* ar,int n,int flag = XOR){
-        if (n == 0) return;
-        int i, m = n / 2;
-        walsh_transform(ar, m, flag);
-        walsh_transform(ar + m, m, flag);
-
-        for (i = 0; i < m; i++){  //Don't forget MOD if required
-            ll x = ar[i], y = ar[i + m];
-            if (flag == OR) ar[i] = x, ar[i + m] = Add(x,y);
-            if (flag == AND) ar[i] = Add(x,y), ar[i + m] = y;
-            if (flag == XOR) ar[i] = Add(x,y), ar[i + m] = Sub(x,y);
-        }
+        for(int m=1; m<n; m<<=1)
+            for(int k=0; k<n; k+=m<<1)
+                for(int i=k; i<k+m; i++){
+                    ll x = ar[i], y = ar[i + m];
+                    if (flag == OR) ar[i] = x, ar[i + m] = Add(x,y);
+                    if (flag == AND) ar[i] = Add(x,y), ar[i + m] = y;
+                    if (flag == XOR) ar[i] = Add(x,y), ar[i + m] = Sub(x,y);
+                }
     }
 
     void inverse_walsh_transform(ll* ar, int n, int flag = XOR){
-        if (n == 0) return;
-        int i, m = n / 2;
-        inverse_walsh_transform(ar, m, flag);
-        inverse_walsh_transform(ar + m, m, flag);
-
-        for (i = 0; i < m; i++){
-            ll x = ar[i], y = ar[i + m];
-            if (flag == OR) ar[i] = x, ar[i + m] = Sub(y,x);
-            if (flag == AND) ar[i] = Sub(x,y), ar[i + m] = y;
-            if (flag == XOR) ar[i] = Half(Add(x,y)), ar[i + m] = Half(Sub(x, y));
-        }
+        for(int m=1; m<n; m<<=1)
+            for(int k=0; k<n; k+=m<<1)
+                for(int i=k; i<k+m; i++){
+                    ll x = ar[i], y = ar[i + m];
+                    if (flag == OR) ar[i] = x, ar[i + m] = Sub(y,x);
+                    if (flag == AND) ar[i] = Sub(x,y), ar[i + m] = y;
+                    if (flag == XOR) ar[i] = Half(Add(x,y)), ar[i + m] = Half(Sub(x, y));
+                }
     }
 
     vector<ll> convolution(int n, ll* A, ll* B, int flag = XOR){
