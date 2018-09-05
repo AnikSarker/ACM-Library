@@ -1,6 +1,6 @@
 struct Pyramid{
-    int n;    // number of side of the pyramid
-    double l; // length of each side
+    int n;     //number of side of the pyramid
+    double l;  //length of each side
     double ang;
 
     Pyramid(int n, double l) {this->n=n; this->l=l; ang=pi/n;}
