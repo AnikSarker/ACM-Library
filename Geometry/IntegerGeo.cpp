@@ -68,5 +68,4 @@ namespace Linear {
         c1=sign(c1); c2=sign(c2); c3=sign(c3); c4=sign(c4);
         return dcmp(c1)*dcmp(c2) <= 0 && dcmp(c3)*dcmp(c4) <= 0;
     }
-
 }
