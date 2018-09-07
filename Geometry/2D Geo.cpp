@@ -83,7 +83,6 @@ namespace Punctual {
     double getDistance (Point a, Point b) { double x=a.x-b.x, y=a.y-b.y; return sqrt(x*x + y*y); }
 };
 
-
 namespace Vectorial {
     double getDot (Vector a, Vector b) { return a.x * b.x + a.y * b.y; }
     double getCross (Vector a, Vector b) { return a.x * b.y - a.y * b.x; }
@@ -345,7 +344,6 @@ namespace Circular {
         return fabs(res);
     }
 
-
     int getCircleCircleIntersection (Circle o1, Circle o2, vector<Point>& sol) {
         double d = getLength(o1.o - o2.o);
 
@@ -379,7 +377,6 @@ namespace Circular {
         double alpha2 = acos((o2.r * o2.r + d * d - o1.r * o1.r) / (2.0 * o2.r * d));
         return o1.sector(2*alpha1) + o2.sector(2*alpha2);
     }
-
 
     int getTangents (Point p, Circle o, Vector* v) {
         Vector u = o.o - p;
