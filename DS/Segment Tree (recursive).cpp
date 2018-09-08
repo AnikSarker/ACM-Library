@@ -32,7 +32,7 @@ int lazy[MAX*5];
 void lazyPropagation(int node,int lo,int hi){
     if(lazy[node]){
         tree[node]+=(hi-lo+1)*lazy[node];
-        if(lo != hi) {lazy[node*2] += lazy[node]; lazy[node*2+1] += lazy[node];}
+        if(lo != hi) {lazy[Left] += lazy[node]; lazy[Right] += lazy[node];}
         lazy[node] = 0;
     }
 }
