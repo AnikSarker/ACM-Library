@@ -1,20 +1,28 @@
 //1D BIT
-int BIT[MAX];
-void update(int indx,int val){
-    while(indx<MAX) {BIT[indx]+=val; indx+=(indx&-indx);}
+ll BIT[2][MAX];
+void update(int cs,int indx,ll val){
+    while(indx<MAX) {BIT[cs][indx]+=val; indx+=(indx&-indx);}
 }
 
-int sum(int indx){
-    int ans=0;
-    while(indx!=0) {ans+=BIT[indx];indx-=(indx&-indx);}
+ll sum(int cs,int indx){
+    ll ans=0;
+    while(indx!=0) {ans+=BIT[cs][indx];indx-=(indx&-indx);}
     return ans;
 }
 
-int LowerBound(int v){
-    int sum=0,indx=0;
+void updateRange(int l, int r,ll val){
+    update(0,l,val);       update(0,r+1,-val);
+    update(1,l,val*(l-1)); update(1,r+1,-val*r);
+}
+
+ll sumRange(int indx) {return sum(0,indx)*indx - sum(1,indx);}
+ll QueryRange(int l,int r) {return sumRange(r)-sumRange(l-1);}
+
+int LowerBound(int cs,ll v){
+    ll sum=0; int indx=0;
     for(int i=LOGN;i>=0;i--){
         int nPos=indx+(1<<i);
-        if(nPos<MAX && sum+BIT[nPos]<v) {sum+=BIT[nPos]; indx=nPos;}
+        if(nPos<MAX && sum+BIT[cs][nPos]<v) {sum+=BIT[cs][nPos]; indx=nPos;}
     }
     //pos = maximal x such that Sum(x) < v
     return indx+1; //+1 for LowerBound
