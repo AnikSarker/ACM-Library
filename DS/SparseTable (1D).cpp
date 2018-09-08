@@ -6,7 +6,7 @@ int M[MAX][MAXlogN];
 
 void buildSparse(){
     for(int i=1;i<=n;i++) M[i][0]=A[i];
-    for(int i=2;i<=n;i++) Log[i]=Log[i-1] + ((i&(i-1)) == 0);
+    for(int i=2;i<=n;i++) Log[i]=Log[i-1] + !(i&(i-1));
     
     for(int j=1; (1<<j)<=n ;j++){
         for(int i=1; (i+ (1<<j)-1) <=n; i++)
