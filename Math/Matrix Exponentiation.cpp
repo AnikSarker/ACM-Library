@@ -23,8 +23,7 @@ Matrix Multiply(Matrix A,Matrix B){
                 sm+=(A.m[i][k]*B.m[k][j]);
                 if(sm >= mod2) sm -= mod2;
                 ans.m[i][j]+=A.m[i][k]*B.m[k][j];
-//                ans.m[i][j] = ans.m[i][j] % mod;
-
+//              ans.m[i][j] = ans.m[i][j] % mod;
             }
             ans.m[i][j] = sm % mod;
         }
