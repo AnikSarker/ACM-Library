@@ -1,8 +1,8 @@
-//Complexity : O(sqrt(Smallest Prime Factor of n)) = n^(1/4)
-
+//Complexity : O(sqrt(Smallest Prime Factor of n)) = O(n^(1/4))
+#include<bits/stdc++.h>
+using namespace std;
 #define ll long long int
 #define pii pair<ll,int>
-using namespace std;
 
 ll Mul(ll a,ll b,ll Mod){
     ll Ans=0;
