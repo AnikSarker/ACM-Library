@@ -1,3 +1,5 @@
+//Complexity : O(sqrt(Smallest Prime Factor of n)) = n^(1/4)
+
 #define ll long long int
 #define pii pair<ll,int>
 using namespace std;
