@@ -1,3 +1,6 @@
+#include<bits/stdc++.h>
+using namespace std;
+
 #define MAXP 10000000
 #define ll long long int
 #define pii pair<int,int>
@@ -30,6 +33,11 @@ namespace crt{
 
 namespace binomial{
     ll dp[MAXP];
+
+    void build(ll p,ll mod){
+        dp[0] = 1;
+        for(int i = 1; i < mod; i++) dp[i] = (ll)dp[i - 1] * ((i % p) ? i : 1) % mod;
+    }
 
     ll trailing(ll x, ll p){
         ll res = 0;
@@ -75,9 +83,9 @@ namespace binomial{
         ll t = trailing(n, p) - trailing(k, p) - trailing(n - k, p);
         if(t >= q) return 0;
 
-        dp[0] = 1;
-        for(int i = 1; i < mod; i++) dp[i] = (ll)dp[i - 1] * ((i % p) ? i : 1) % mod;
-        
+        build(p,mod); //Complexity : O(mod)
+        //This part can be optimized processing same mods at once.
+
         ll res = spf(n, p, mod) * inv(spf(k, p, mod) * spf(n - k, p, mod) % mod, mod) % mod;
         res = (res * expo(p,t, mod))% mod;
         return res;
@@ -99,7 +107,7 @@ namespace binomial{
         }
         return crt::chinese_remainder(ar, mods);
     }
-    
+
     //check whether C(n,k) is greater than Lim
     bool isGreater(ll n, ll k, ll Lim){
         if(k < 0 || k > n) return false;
