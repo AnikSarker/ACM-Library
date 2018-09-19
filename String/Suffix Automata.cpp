@@ -19,12 +19,11 @@ int sz, last;
 void sa_init() {
     sz = last = 0;
     st[0].Clear();
-    ++sz;
 }
 
 void sa_extend (char c) {
 
-    int cur = sz++;
+    int cur = ++sz;
     st[cur].Clear();
 
     st[cur].len = st[last].len + 1;
@@ -38,7 +37,7 @@ void sa_extend (char c) {
         if (st[p].len + 1 == st[q].len)
             st[cur].link = q;
         else {
-            int clone = sz++;
+            int clone = ++sz;
             st[clone].len = st[p].len + 1;
             st[clone].next = st[q].next;
             st[clone].link = st[q].link;
