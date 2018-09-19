@@ -21,7 +21,7 @@ struct maxxor{
         }
     }
 
-    ll getMax(){    //returns max subset xor
+    ll getMax(){     //returns max subset xor
         ll ans=0;
         for(ll i = 0; i < sz; i++) ans ^= b[i];
         return ans;
