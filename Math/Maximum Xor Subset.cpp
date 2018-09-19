@@ -22,13 +22,13 @@ struct maxxor{
         }
     }
 
-    ll getMax(){
+    ll getMax(){    //returns max subset xor
         ll ans=0;
         for(ll i = 0; i < sz; i++) ans ^= b[i];
         return ans;
     }
 
-    ll getKth(ll k){
+    ll getKth(ll k){ //returns k-th smallest distinct subset xor
         k--; ll ans = 0;
         for(ll i = 0; i < sz; i++)
             if((k >> i) & 1) ans ^= b[i];
