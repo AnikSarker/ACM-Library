@@ -1,40 +1,45 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define MAX 100005
+#define ll long long int
 
 // Gaussian Elimination Online
 struct maxxor{
-    int best[32], msb;
-    maxxor(){memset(best, -1, sizeof best);}
-    
-    void add(int x){
-        while(x > 0){
-            msb = 31 - __builtin_clz(x); // clzll for ll
-            if(best[msb] == -1) {best[msb] = x; break;}
-            else x = x ^ best[msb];
+    ll b[64];
+    ll sz;
+    void init() {sz = 0;}
+
+    void add(ll x){
+        for(ll i = 0; i < sz; i++)
+            if((x ^ b[i]) < x) x ^= b[i];
+        for(ll i = 0; i < sz; i++)
+            if((x ^ b[i]) < b[i]) b[i] ^= x;
+        if(x){
+            b[sz++] = x;
+            for(ll i = sz - 1; i>=0 ; i--)
+                if(b[i] < b[i - 1])
+                    swap(b[i], b[i - 1]);
         }
-    }
-    
-    int getMax(){
-        int ret = 0;
-        for(int i = 31; i >= 0; i--){
-            if(best[i] != -1) ret = max(ret, ret ^ best[i]);
-        }
-        return ret;
     }
 
-    int getkth(int k){//k-th smallest subset xor
-        k--; int ans = 0;
-        for(int i = 0; i < 32; i++) if((k >> i) & 1)
-            if(best[i] != -1) ans ^= best[i];
+    ll getMax(){
+        ll ans=0;
+        for(ll i = 0; i < sz; i++) ans ^= b[i];
+        return ans;
+    }
+
+    ll getKth(ll k){
+        k--; ll ans = 0;
+        for(ll i = 0; i < sz; i++)
+            if((k >> i) & 1) ans ^= b[i];
         return ans;
     }
 }ds;
 
 // Gaussian Elimination Offline
-int a[MAX], n;
-int maxxor(){
-    int r = 0, ret = 0;
+ll a[MAX], n;
+ll maxxor(){
+    int r = 0; ll ret = 0;
     for(int c = 31; c >= 0; c--){
         int idx = -1;
         for(int i = r; i < n && idx < 0; i++)
