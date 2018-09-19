@@ -6,6 +6,7 @@ using namespace std;
 struct maxxor{
     int best[32], msb;
     maxxor(){memset(best, -1, sizeof best);}
+    
     void add(int x){
         while(x > 0){
             msb = 31 - __builtin_clz(x); // clzll for ll
@@ -13,11 +14,20 @@ struct maxxor{
             else x = x ^ best[msb];
         }
     }
-    int get(int ret = 0){
+    
+    int getMax(){
+        int ret = 0;
         for(int i = 31; i >= 0; i--){
             if(best[i] != -1) ret = max(ret, ret ^ best[i]);
         }
         return ret;
+    }
+
+    int getkth(int k){//k-th smallest subset xor
+        k--; int ans = 0;
+        for(int i = 0; i < 32; i++) if((k >> i) & 1)
+            if(best[i] != -1) ans ^= best[i];
+        return ans;
     }
 }ds;
 
