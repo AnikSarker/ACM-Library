@@ -17,8 +17,7 @@ struct maxxor{
         if(x){
             b[sz++] = x;
             for(ll i = sz - 1; i>=0 ; i--)
-                if(b[i] < b[i - 1])
-                    swap(b[i], b[i - 1]);
+                if(b[i] < b[i - 1]) swap(b[i], b[i - 1]);
         }
     }
 
