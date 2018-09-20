@@ -66,6 +66,7 @@ namespace binomial{
     }
 
     ll spf(ll x, ll p, ll mod){
+        //Referrence : http://e-maxx.ru/algo/modular_factorial
         ll res = expo(dp[mod - 1], x / mod, mod);
         if(x >= p) res = res * spf(x / p, p, mod) % mod;
         return res * dp[x % mod] % mod;
