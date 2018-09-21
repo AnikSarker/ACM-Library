@@ -21,6 +21,7 @@ inline int Div(ll a,ll b) {return Mul(a,inv(b));}
 struct Matrix{
     int row, col;
     ll m[MAX][MAX];
+    Matrix(){}
     Matrix(int r,int c) {row = r; col = c;}
 };
 
@@ -85,4 +86,31 @@ int Det(Matrix mat){
     }
     if (ret < 0) ret += MOD;
     return ret;
+}
+
+//Freivalds algorithm : check whether AB = C
+//Complexity : O(iteration * n^2)
+int p[MAX],q[MAX],r[MAX];
+bool Freivalds(Matrix A,Matrix B,Matrix C){
+    srand(time(NULL));
+    int n=A.row;
+    int iteration=15;
+
+    int Yes=0;
+    for(int i=1;i<=iteration;i++){
+        for(int i=1;i<=n;i++) r[i] = rand()%2;
+        for(int i=1;i<=n;i++) p[i] = q[i] = 0;
+
+        for(int i=1;i<=n;i++) for(int j=1;j<=n;j++)
+                p[i] += r[j] * A.m[i][j];
+        for(int i=1;i<=n;i++) for(int j=1;j<=n;j++)
+                q[i] += p[j] * B.m[i][j];
+        for(int i=1;i<=n;i++) for(int j=1;j<=n;j++)
+                q[i] -= r[j] * C.m[i][j];
+        
+        bool All = true;
+        for(int i=1;i<=n;i++) if(q[i]) All=false;
+        if(All) Yes++;
+    }
+    return Yes == iteration;
 }
