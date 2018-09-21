@@ -33,9 +33,7 @@ pii DP[MAX];
 node Tree[MAX];
 int Suff;           // Points to Current (initially previous) node in palindromic tree
 int Size;           // Size = Total number of node in palindromic tree
-                    // Size = 1 denotes node 1 (root with Len -1)
-                    // Size = 2 denotes node 2 (root with Len  0)
-
+                    // Size = 1 --> root 1 (Len -1),  Size = 2 ---> root 2 (Len  0)
 
 bool AddLetter(int pos){
     int Cur=Suff;
