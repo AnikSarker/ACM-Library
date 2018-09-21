@@ -2,11 +2,7 @@ struct state {
     int len, link;
     map<char,int>next;
     ll pathCount;
-
-    void Clear(){
-        len = pathCount = 0;
-        link = -1; next.clear();
-    }
+    void Clear(){len = pathCount = 0; link= -1; next.clear();}
 };
 
 const int MAXLEN = 100000;
@@ -22,8 +18,9 @@ void sa_extend (char c) {
 
     st[cur].len = st[last].len + 1;
     int p;
-    for (p=last; p!=-1 && !st[p].next.count(c); p=st[p].link)
+    for(p=last; p!=-1 && !st[p].next.count(c); p=st[p].link)
         st[p].next[c] = cur;
+    
     if(p == -1) st[cur].link = 0;
     else{
         int q = st[p].next[c];
