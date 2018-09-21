@@ -45,5 +45,5 @@ ll pathCalc(int pos){
     if(st[pos].pathCount != 0) return st[pos].pathCount;
     ll re = 1;
     for(auto to : st[pos].next) re += pathCalc(to.second);
-    return re = st[pos].pathCount;
+    return st[pos].pathCount = re;
 }
