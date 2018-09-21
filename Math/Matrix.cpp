@@ -18,7 +18,6 @@ inline int inv(ll n) {return bigMod(n,MOD-2);}
 inline int Mul(ll a,ll b) {return (a*b)%MOD;}
 inline int Div(ll a,ll b) {return Mul(a,inv(b));}
 
-//Gaussian Elimination
 struct Matrix{
     int row, col;
     ll m[MAX][MAX];
