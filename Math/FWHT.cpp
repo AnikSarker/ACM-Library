@@ -11,11 +11,12 @@ using namespace std;
 
 //Fast Walsh-Hadamard Transformation
 //Complexity : O(n log n)
+//OR, AND works for any modulo, XOR works for only prime
 struct fwht{
     ll P1[MAX], P2[MAX];
-    inline ll cMOD(ll x)     {return x>=MOD ? x-MOD : (x<=-MOD ? x+MOD : x);}
+    inline ll cMOD(ll x)     {return x>=MOD ? x-MOD : x;}
     inline ll Add(ll a,ll b) {return cMOD(a+b);}
-    inline ll Sub(ll a,ll b) {return cMOD(a-b);}
+    inline ll Sub(ll a,ll b) {return Add(a,MOD-b);}
     inline ll Half(ll a)     {return (a & 1) ? (a+MOD)/2 : a/2;}
 
     void walsh_transform(ll* ar,int n,int flag = XOR){
