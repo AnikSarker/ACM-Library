@@ -1,7 +1,7 @@
-// Calculates Partition Function(x) for all x <= n 
-// p(n) = number of distinct ways of representing n
-// as sum of natural numbers (with order irrelevant).
-// Complexity : O(n sqrt(n))
+# Calculates Partition Function(x) for all x <= n 
+# p(n) = number of distinct ways of representing n
+# as sum of natural numbers (with order irrelevant).
+# Complexity : O(n sqrt(n))
 
 def PartitionFunction(n) :
     p = []
