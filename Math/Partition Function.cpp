@@ -1,9 +1,10 @@
-# Calculates Partition Function(x) for all x <= n 
-# p(n) = number of distinct ways of representing n
-# as sum of natural numbers (with order irrelevant).
-# Complexity : O(n sqrt(n))
-#define MOD 1000000007
+// Calculates Partition Function(x) for all x <= n 
+// p(n) = number of distinct ways of representing n
+// as sum of natural numbers (with order irrelevant).
+// Complexity : O(n sqrt(n))
+
 #define MAX 60005
+#define MOD 1000000007
 int p[MAX];
 inline int Add(int a,int b){return (a+b)%MOD;}
 
