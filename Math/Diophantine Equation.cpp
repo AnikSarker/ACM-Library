@@ -15,7 +15,6 @@ inline ll Ceil(ll p,ll q)  {return p<0 ? p/q : p/q + !!(p%q);}
 
 // Number of solutions of Diophantine Eqn : Ax + By = C
 // A,B,C,x,y integers and X1 <= x <= X2 and Y1 <= y <= Y2
-
 inline ll solve(ll A,ll B,ll C,ll X1,ll X2,ll Y1,ll Y2){
     if(A<0) {A=-A;B=-B;C=-C;}
     ll G=__gcd(A,B);
