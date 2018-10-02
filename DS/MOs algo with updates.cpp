@@ -1,76 +1,122 @@
-///Taken from Rezwan Arefin
-const int maxn = 1e5 + 10;
-int n, m, a[maxn], prv[maxn], ans[maxn], block;
-struct query {
-	int l, r, id, t, blcl, blcr; 
-	query(int _a, int _b, int _c, int _d) {
-		l = _a, r = _b; 
-		id = _c, t = _d;
-		blcl = l / block;
-		blcr = r / block;
-	}
-	bool operator < (const query &p) const {
-		if(blcl != p.blcl) return l < p.l; 
-		if(blcr != p.blcr) return r < p.r; 
-		return t < p.t;
-	}
-}; vector<query> q; 
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+#define MAX 300005
+ll m, n, x, y, z, block, currAns, currR, currL, currUPDT;
 
-struct update {
-	int pos, pre, now; 
-}; vector<update> u;
+typedef struct _info{
+    ll L, R;
+    ll BeforeUpd;
+    ll IDx;
+}QUERY;
 
-struct lol {
-	void add(int x) {} 
-	void remove(int x) {}
-	int get() {}
-} ds;
+QUERY OnlyQry[MAX];
 
-int l, r, t; 
-int cnt[maxn * 2];
+unordered_map < ll, ll > ID;
 
-void add(int x) { // Add a[x] to ds}
-void remove(int x) { // Remove a[x] from ds}
-void apply(int i, int x) { // Change a[i] to x 
-	if(l <= i && i <= r) {
-		remove(i);
-		a[i] = x;
-		add(i); 
-	} else a[i] = x;
+vector < ll > forsort;
+
+pair < ll, pair < ll, ll > > AllQ[MAX], OnlyUpd[MAX];
+
+ll A[MAX], Count[MAX], vis[MAX], ans[MAX], dummy[MAX], ValBeforeUpd[MAX];
+
+bool cmp(const QUERY &a, const QUERY &b){
+    if((a.L / block) != (b.L / block)) return (a.L / block) < (b.L / block);
+    if((a.R / block) != (b.R / block)) return (a.R / block) < (b.R / block);
+    return a.BeforeUpd < b.BeforeUpd;
 }
 
-int main(int argc, char const *argv[]) {
-	read(n); read(m);
-	block = pow(n, 0.6667);
+void DoUpdate(ll IDx){
+    ll i = OnlyUpd[IDx].second.first;
+    ll Prv = OnlyUpd[IDx].second.second;
+    ll New = A[i]; A[i] = Prv;
 
-	for(int i = 0; i < n; ++i) read(a[i]), last[i] = a[i];
-	u.push_back({-1, -1, -1});
-	for(int i = 0; i < m; ++i) {
-		int t, l, r; 
-		read(t); read(l); read(r); 
-		if(t == 1) { --r;
-			q.push_back(query(l, r, q.size(), u.size() - 1));
-		} else {
-			u.push_back({l, prv[l], r});
-			prv[l] = r;
-		}
-	} 
+    if(i < currL || i >= currR) return;
+    if(New != -1) {Count[New]--;  if(Count[New] == 0) currAns -= forsort[New - 1];}
+    if(Prv != -1) {Count[Prv]++;  if(Count[Prv] == 1) currAns += forsort[Prv - 1];}
+}
 
-	sort(q.begin(), q.end()); 
-	l = 0, r = -1, t = 0;
+void UndoUpdate(ll IDx){
+    ll i = OnlyUpd[IDx].second.first;
+    ll Prv = ValBeforeUpd[IDx];
+    ll New = A[i]; A[i] = Prv;
 
-	for(int i = 0; i < q.size(); i++) {
-		while(t < q[i].t) ++t, apply(u[t].pos, u[t].now); 
-		while(t > q[i].t) apply(u[t].pos, u[t].pre), --t;
+    if(i < currL || i >= currR) return;
+    if(New != -1) {Count[New]--; if(Count[New] == 0) currAns -= forsort[New - 1];}
+    if(Prv != -1) {Count[Prv]++; if(Count[Prv] == 1) currAns += forsort[Prv - 1];}
+}
 
-		while(r < q[i].r) add(++r);
-		while(l > q[i].l) add(--l);
-		while(r > q[i].r) remove(r--);
-		while(l < q[i].l) remove(l++);
+void Add(int x){
+    if(A[x]==-1) return;
+    if(Count[A[x]]==0) currAns+=forsort[A[x]-1]; Count[A[x]]++;
+}
 
-		ans[q[i].id] = ds.get(); 
-	}
+void Remove(int x){
+    if(A[x]==-1) return;
+    Count[A[x]]--; if(Count[A[x]]==0) currAns-=forsort[A[x]-1];
+}
 
-	for(int i = 0; i < q.size(); i++) 
-		printf("%d\n", ans[i]);
+int main(){
+    cin >> n >> m;
+    block = n/cbrt(n);
+
+    for(int i = 1; i <= n; i++) {
+        scanf("%lld", &A[i]);
+        dummy[i] = A[i];
+        if(ID[A[i]]) continue;
+        ID[A[i]] = 1;
+        forsort.push_back(A[i]);
+    }
+
+    ll updtno = 0, qu = 0;
+    for(int i = 1; i <= m; i++){
+        scanf("%lld %lld %lld", &AllQ[i].first, &AllQ[i].second.first, &AllQ[i].second.second);
+
+        if(AllQ[i].first == 0){
+            OnlyUpd[updtno] = AllQ[i]; updtno++;
+            if(ID[AllQ[i].second.second])continue;
+            ID[AllQ[i].second.second] = 1;
+            forsort.push_back(AllQ[i].second.second);
+        }
+        else{
+            OnlyQry[qu].BeforeUpd = updtno;
+            OnlyQry[qu].L = AllQ[i].second.first;
+            OnlyQry[qu].R = AllQ[i].second.second;
+            OnlyQry[qu].IDx = qu;
+            qu++;
+        }
+    }
+
+    sort(forsort.begin(), forsort.end());
+
+    for(ll i = 0; i < forsort.size(); i++){
+        if(forsort[i] % 3) ID[forsort[i]] = -1;
+        else ID[forsort[i]] = i + 1;
+    }
+
+    for(ll i = 1; i <= n; i++) A[i] = ID[A[i]], dummy[i] = A[i];
+    for(ll i = 1; i <= m; i++) if(AllQ[i].first == 0) AllQ[i].second.second = ID[AllQ[i].second.second];
+    for(ll i = 0; i < updtno; i++) OnlyUpd[i].second.second = ID[OnlyUpd[i].second.second];
+
+    for(ll i = 0; i < updtno; i++){
+        ValBeforeUpd[i] = dummy[OnlyUpd[i].second.first];
+        dummy[OnlyUpd[i].second.first] = OnlyUpd[i].second.second;
+    }
+    sort(OnlyQry, OnlyQry + qu, cmp);
+
+    currR = 0, currL = 0, currUPDT = 0;
+
+    for(ll i = 0; i < qu; i++){
+        ll L = OnlyQry[i].L, R = OnlyQry[i].R, UPDT = OnlyQry[i].BeforeUpd;
+
+        while(currUPDT < UPDT) DoUpdate(currUPDT++);
+        while(currUPDT > UPDT) UndoUpdate(--currUPDT);
+
+        while(currL<L)   Remove(currL++);
+        while(currL>L)   Add(--currL);
+        while(currR<=R)  Add(currR++);
+        while(currR>R+1) Remove(--currR);
+        ans[OnlyQry[i].IDx] = currAns;
+    }
+    for(int i = 0; i < qu; i++) printf("%lld\n", ans[i]);
 }
