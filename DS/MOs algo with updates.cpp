@@ -11,13 +11,9 @@ typedef struct _info{
 }QUERY;
 
 QUERY OnlyQry[MAX];
-
 unordered_map < ll, ll > ID;
-
 vector < ll > forsort;
-
 pair < ll, pair < ll, ll > > AllQ[MAX], OnlyUpd[MAX];
-
 ll A[MAX], Count[MAX], vis[MAX], ans[MAX], dummy[MAX], ValBeforeUpd[MAX];
 
 bool cmp(const QUERY &a, const QUERY &b){
