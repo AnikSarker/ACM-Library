@@ -132,7 +132,7 @@ namespace Polygonal {
     using namespace Vectorial;
     using namespace Linear;
 
-    double getArea (Point* p, int n) {
+    double getSignedArea (Point* p, int n) {
         double ret = 0;
         for (int i = 0; i < n-1; i++)
             ret += (p[i]-p[0]) * (p[i+1]-p[0]);
@@ -259,6 +259,16 @@ namespace Polygonal {
                 ret.push_back(b);
         }
         return ret;
+    }
+
+    Point ComputeCentroid( Point* p,int n){
+        Point c(0,0);
+        double scale = 6.0 * getSignedArea(p,n);
+        for (int i = 0; i < n; i++){
+            int j = (i+1) % n;
+            c = c + (p[i]+p[j])*(p[i].x*p[j].y - p[j].x*p[i].y);
+        }
+        return c / scale;
     }
 };
 
