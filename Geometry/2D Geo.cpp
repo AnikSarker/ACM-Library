@@ -52,18 +52,6 @@ struct DirLine {
     bool operator < (const DirLine& u) const { return ang < u.ang; }
 };
 
-struct Circle {
-    Point o;
-    double r;
-    Circle () {}
-    Circle (Point o, double r = 0): o(o), r(r) {}
-    void read () { o.read(), scanf("%lf", &r); }
-    Point point(double rad) { return Point(o.x + cos(rad)*r, o.y + sin(rad)*r); }
-    double getArea (double rad) { return rad * r * r / 2; }
-    //area of the circular sector cut by a chord with central angle alpha
-    double sector(double alpha) {return r * r * 0.5 * (alpha - sin(alpha));}
-};
-
 namespace Punctual {
     double getDistance (Point a, Point b) { double x=a.x-b.x, y=a.y-b.y; return sqrt(x*x + y*y); }
 };
@@ -272,6 +260,18 @@ namespace Polygonal {
         }
         return ret;
     }
+};
+
+struct Circle {
+    Point o;
+    double r;
+    Circle () {}
+    Circle (Point o, double r = 0): o(o), r(r) {}
+    void read () { o.read(), scanf("%lf", &r); }
+    Point point(double rad) { return Point(o.x + cos(rad)*r, o.y + sin(rad)*r); }
+    double getArea (double rad) { return rad * r * r / 2; }
+    //area of the circular sector cut by a chord with central angle alpha
+    double sector(double alpha) {return r * r * 0.5 * (alpha - sin(alpha));}
 };
 
 namespace Circular {
