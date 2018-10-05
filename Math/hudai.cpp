@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int t , cs ;
+int t , cs;
 typedef long long ll ;
 ll n ;
 int p[]={7,5,3,2,0};
@@ -54,16 +54,15 @@ bool miller(ll n){
 }
 
 bool go(int u,ll x, int choto){
-    cout << x << endl;
     if(u==n){
         if(miller(x)){
-            cout << x << endl;
+            printf("Case %d: %lld\n", cs, x);
             return true;
         }
         return false;
     }
     bool ret = false;
-    for(int i=0;i<4;i++){
+    for(int i=0;i<5;i++){
         if(choto)ret=go(u+1,10*x+p[i],choto);
         else if(a[u]>=p[i])ret=go(u+1,10*x+p[i],a[u]>p[i]);
         if(ret)return true;
@@ -75,7 +74,7 @@ int main(){
     cin>>t;
     while(cs<t){
         cs++;
-        cin>>n;
+        scanf("%lld", &n);
         a.clear();
         while(n){
             a.push_back(n%10);
