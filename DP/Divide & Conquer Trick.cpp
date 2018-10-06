@@ -1,16 +1,17 @@
-/// DP optimization divide and conquer trick O(nlogn)
-/// dp[i][j] = min(dp[i-1][k]+C[k][j]) [ k < j ]
+//Complexity : O(n logn)
+//dp[i][j] = min(dp[i-1][k] + C[k][j]) [ k < j ]
 
-///To use D&Q Its sufficient to prove the following
-/// Cost(l + 1 , j + 1) - Cost(l + 1, j) <= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(l < k < j)
+//To use D&Q, its sufficient to prove the following :
+//Cost(l + 1 , j + 1) - Cost(l + 1, j) <= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(l < k < j)
 
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
+#define ll long long int
+#define MAX 5005
 ll m, n, x, y, z, p, q, r, K, t, cs = 1;
-ll segor[5002][5002];
-ll ara[5002];
-ll dp[5002][5002];
+ll segor[MAX][MAX];
+ll ara[MAX];
+ll dp[MAX][MAX];
 
 void compute(ll K, ll l, ll r, ll optl, ll optr){
     if(l > r) return;
@@ -44,10 +45,7 @@ int main(){
         }
 
         for(ll i = 1; i <= n; i++) dp[1][i] = segor[1][i];
-
-        for(ll i = 2; i <= K; i++) {
-            compute(i, 1, n, 1, n);
-        }
+        for(ll i = 2; i <= K; i++) compute(i, 1, n, 1, n);
         printf("%lld\n", dp[K][n]);
     }
 }
