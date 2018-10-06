@@ -1,6 +1,5 @@
 //Complexity : O(n log n)
 //dp[i][j] = min(dp[i-1][k] + C[k][j]) [ k < j ]
-
 //To use D&Q, its sufficient to prove the following :
 //Cost(l + 1 , j + 1) - Cost(l + 1, j) <= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(l < k < j)
 
