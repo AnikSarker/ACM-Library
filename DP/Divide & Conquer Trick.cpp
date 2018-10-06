@@ -12,8 +12,7 @@ ll segor[5002][5002];
 ll ara[5002];
 ll dp[5002][5002];
 
-void compute(ll K, ll l, ll r, ll optl, ll optr)
-{
+void compute(ll K, ll l, ll r, ll optl, ll optr){
     if(l > r) return;
     ll mid = (l + r) / 2;
     ll optnow = optl;
@@ -22,7 +21,6 @@ void compute(ll K, ll l, ll r, ll optl, ll optr)
     ll tmpoptl = min(optr, mid);
 
     for(ll i = optl; i <= tmpoptl; i++){
-
         ll tmp = dp[K - 1][i] + segor[i + 1][mid];
         if(tmp > dp[K][mid]){
             dp[K][mid] = tmp;
@@ -33,14 +31,11 @@ void compute(ll K, ll l, ll r, ll optl, ll optr)
     compute(K, mid + 1, r, optnow, optr);
 }
 
-
-int main()
-{
+int main(){
     cin >> t;
 
     while(t--){
         scanf("%lld %lld", &n, &K);
-
         for(ll i = 1; i <= n; i++) scanf("%lld", &ara[i]);
 
         for(ll i = 1; i <= n; i++){
@@ -53,9 +48,6 @@ int main()
         for(ll i = 2; i <= K; i++) {
             compute(i, 1, n, 1, n);
         }
-
         printf("%lld\n", dp[K][n]);
-
     }
-    return 0;
 }
