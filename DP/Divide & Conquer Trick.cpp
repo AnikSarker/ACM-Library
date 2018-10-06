@@ -1,4 +1,4 @@
-//Complexity : O(n logn)
+//Complexity : O(n log n)
 //dp[i][j] = min(dp[i-1][k] + C[k][j]) [ k < j ]
 
 //To use D&Q, its sufficient to prove the following :
