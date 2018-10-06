@@ -1400,3 +1400,174 @@ vector<vector<int>> biconnected_components(graph &adj,graph&tree ) {
     }
     return comps;
 }
+
+// MO ON Tree
+
+#include <bits/stdc++.h>
+using namespace std ;
+int a[100005];
+int p[200005],m[200005];
+int pp[200005],mm[200005],ex[200005];
+int n ;
+vector<int>y;
+vector<int>adj[100005];
+int st[100005];
+int en[100005];
+int tim;
+int par[20][100005];
+int level[100005];
+void go(int u,int p) {
+    st[u]=++tim;
+    par[0][u]=p;
+    level[u]=1+level[p];
+    for(int i=1; i<20; i++)par[i][u]=par[i-1][par[i-1][u]];
+    for(int v:adj[u])
+        if(v!=p)
+            go(v,u);
+    en[u]=++tim;
+}
+
+int LCA(int u,int v) {
+    if(level[u]< level[v])swap(u,v);
+    int tmp=1;
+    for(; (1<<tmp)<=level[u]; ++tmp);
+    --tmp;
+    for(int i=tmp; i>=0; --i) {
+        if(level[u]-(1<<i)>=level[v])u=par[i][u];
+    }
+    if(u==v)return u ;
+    for(int i = tmp ; i >= 0 ; --i) if(par[i][u]!=par[i][v])u=par[i][u],v=par[i][v] ;
+    if(par[0][u]==0)par[0][u]=1;
+    return par[0][u];
+}
+typedef pair<pair<int,int>,pair<int,int> > que;
+vector<que >query;
+int S=sqrt(100005);
+#define L first.first
+#define R first.second
+#define O second.first
+#define ID second.second
+bool cmp(const que &P,const que &Q){
+    if(P.L/S!=Q.L/S)return P.L/S<Q.L/S;
+    if((P.L/S)&1)return P.R>Q.R;
+    return P.R<Q.R;
+}
+typedef long long ll;
+ll ans[100005];
+ll ml[100005];
+ll fl[100005];
+ll res;
+void sub(int idx){
+    //cout << "sub"<<endl;
+    //cout << idx << " pi " << p[idx] << endl;
+    res -= ml[p[idx]]*fl[p[idx]] ;
+    if(m[idx]==0)fl[p[idx]]--;
+    else ml[p[idx]]--;
+    res += ml[p[idx]]*fl[p[idx]] ;
+}
+void add(int idx){
+    //cout << "add"<<endl;
+    //cout << idx << " pi " << p[idx] << endl;
+    res -= ml[p[idx]]*fl[p[idx]] ;
+    if(m[idx]==0)fl[p[idx]]++;
+    else ml[p[idx]]++;
+    res += ml[p[idx]]*fl[p[idx]] ;
+
+}
+int l, r;
+void up(int& x,int d,int type){
+    //cout <<".....\n"<< x << " " ;
+    if(type==0){ // R
+      //  cout << "R "<<endl;
+        if(d==1){//inc
+        //    cout << "inc\n";
+            x++;
+            if(x<ex[x])add(x);
+            else if(ex[x]<l)add(x);
+            else sub(x);
+        }
+        else{
+          //  cout << "dec\n";
+            if(x<ex[x])sub(x);
+            else if(ex[x]<l)sub(x);
+            else add(x);
+            x--;
+        }
+
+    }
+    else{//L
+       // cout << "L "<<endl;
+        if(d==1){//inc
+            //cout << "inc\n";
+            if(ex[x]<x)sub(x);
+            else if(ex[x]>r)sub(x);
+            else add(x);
+            x++;
+        }
+        else{
+            //cout << "dec\n";
+            x--;
+            if(ex[x]<x)add(x);
+            else if(ex[x]>r)add(x);
+            else sub(x);
+        }
+    }
+   // cout << x << " " << res << endl<<endl;
+}
+ll check(int idx){
+   if(idx==0)return res ;
+    ll ret = res;
+    ret -= ml[p[idx]]*fl[p[idx]] ;
+    if(m[idx]==0)fl[p[idx]]++;
+    else ml[p[idx]]++;
+    ret += ml[p[idx]]*fl[p[idx]] ;
+    if(m[idx]==0)fl[p[idx]]--;
+    else ml[p[idx]]--;
+    return ret;
+}
+int main() {
+    cin>>n;
+    for(int i=1; i<=n; i++)scanf("%d",&mm[i]);
+    for(int i=1; i<=n; i++) {
+        scanf("%d",&pp[i]);
+        y.push_back(pp[i]);
+    }
+    sort(y.begin(),y.end());
+    y.resize(unique(y.begin(),y.end())-y.begin());
+    for (int i=1; i<=n; ++i)pp[i]=lower_bound(y.begin(),y.end(),pp[i])-y.begin();
+    int u,v;
+    for(int i=1; i<n; i++) {
+        scanf("%d %d",&u,&v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    go(1,1);
+    for(int i=1; i<=n; i++) {
+        p[st[i]]=p[en[i]]=pp[i];
+        m[st[i]]=m[en[i]]=mm[i];
+        ex[st[i]]=en[i];
+        ex[en[i]]=st[i];
+    }
+    int q;
+    cin>>q;
+    for(int i=0; i<q; i++) {
+        scanf("%d %d",&u,&v);
+        if(st[u]>st[v])swap(u,v);
+        int lca = LCA(u,v);
+        if(lca!=u)query.push_back({{en[u],st[v]},{st[lca],i}});
+        else query.push_back({{st[u],st[v]},{0,i}});
+    }
+    sort(query.begin(),query.end(),cmp);
+    l=1;
+    r=0;
+    for(auto q : query){
+        while(l>q.L)up(l,-1,1);
+        while(r<q.R)up(r,1,0);
+        while(l<q.L)up(l,1,1);
+        while(r>q.R)up(r,-1,0);
+        ans[q.ID]=check(q.O);
+    }
+    for(int i=0;i<q;i++)printf("%lld\n",ans[i]);
+
+    return 0 ;
+}
