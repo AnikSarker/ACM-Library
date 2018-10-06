@@ -5,8 +5,8 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-#define ll long long int
 #define MAX 5005
+#define ll long long int
 ll m, n, x, y, z, p, q, r, K, t, cs = 1;
 ll segor[MAX][MAX];
 ll ara[MAX];
