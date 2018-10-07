@@ -114,8 +114,8 @@ namespace Planar{
     Plane perpThrough(Line l,Point a)     {return Plane(l.v,a);}
 
     //Modify p.n if necessary with respect to the reference point
-    Vector rotateCCW90(Plane p,Vector d){return getCross(p.n,d);}
-    Vector rotateCW90(Plane p,Vector d) {return getCross(d,p.n);}
+    Vector rotateCCW90(Plane p,Vector d)  {return getCross(p.n,d);}
+    Vector rotateCW90(Plane p,Vector d)   {return getCross(d,p.n);}
 }
 
 struct Sphere{
