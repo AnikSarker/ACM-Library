@@ -25,14 +25,15 @@ typedef Point Vector;
 namespace Vectorial{
     double getDot (Vector a, Vector b)  {return a.x*b.x+a.y*b.y+a.z*b.z;}
     Vector getCross(Vector a, Vector b) {return Point(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.y-a.y*b.x);}
-    double getLength (Vector a) { return sqrt(getDot(a, a)); }
-    double getPLength (Vector a) { return getDot(a, a); }
-    double getUnsignedAngle(Vector u,Vector v) {
+    double getLength (Vector a)         {return sqrt(getDot(a, a)); }
+    double getPLength (Vector a)        {return getDot(a, a); }
+    Vector unitVector(Vector v)         {return v/getLength(v);}
+
+    double getUnsignedAngle(Vector u,Vector v){
         double cosTheta = getDot(u,v)/getLength(u)/getLength(v);
         cosTheta = max(-1.0,min(1.0,cosTheta));
         return acos(cosTheta);
     }
-    Vector unitVector(Vector v){return v/getLength(v);}
 }
 
 struct Line{
@@ -43,17 +44,17 @@ struct Line{
 
 namespace Linear{
     using namespace Vectorial;
-    double getDistSq(Line l, Point p)   {return getPLength(getCross(l.v,p-l.o))/getPLength(l.v);}
+    double getDistSq(Line l, Point p)          {return getPLength(getCross(l.v,p-l.o))/getPLength(l.v);}
     double getDistLinePoint(Line l, Point p)   {return sqrt(getDistSq(l,p));}
-    bool cmp(Line l,Point p, Point q)   {return getDot(l.v,p) < getDot(l.v,q);}
-    Point projection(Line l,Point p)    {return l.o + l.v * getDot(l.v,p-l.o)/getPLength(l.v);}
-    Point reflection(Line l,Point p)    {return projection(l,p)+projection(l,p)-p;}
+    bool cmp(Line l,Point p, Point q)          {return getDot(l.v,p) < getDot(l.v,q);}
+    Point projection(Line l,Point p)           {return l.o + l.v * getDot(l.v,p-l.o)/getPLength(l.v);}
+    Point reflection(Line l,Point p)           {return projection(l,p)+projection(l,p)-p;}
 
-    double getAngle(Line l,Line m)      {return getUnsignedAngle(l.v,m.v);}
-    bool isParallel(Line p,Line q)      {return dcmp(getPLength(getCross(p.v,q.v))) == 0;}
-    bool isPerpendicular(Line p,Line q) {return dcmp(getDot(p.v,q.v)) == 0;}
+    double getAngle(Line l,Line m)             {return getUnsignedAngle(l.v,m.v);}
+    bool isParallel(Line p,Line q)             {return dcmp(getPLength(getCross(p.v,q.v))) == 0;}
+    bool isPerpendicular(Line p,Line q)        {return dcmp(getDot(p.v,q.v)) == 0;}
 
-    double getDist(Line l, Line m) {
+    double getDist(Line l, Line m){
         Vector n = getCross(l.v, m.v);
         if(getPLength(n) == 0) return getDistLinePoint(l,m.o);
         else return fabs(getDot(m.o-l.o , n)) / getLength(n);
@@ -78,9 +79,9 @@ struct Plane{
 namespace Planar{
     using namespace Vectorial;
     Plane getPlane(Point a,Point b,Point c) {return Plane(getCross(b-a,c-a),a);}
-    Plane translate(Plane p,Vector t)   {return Plane(p.n, p.d+getDot(p.n,t));}
-    Plane shiftUp(Plane p,double dist)  {return Plane(p.n, p.d+dist*getLength(p.n));}
-    Plane shiftDown(Plane p,double dist)  {return Plane(p.n, p.d-dist*getLength(p.n));}
+    Plane translate(Plane p,Vector t)       {return Plane(p.n, p.d+getDot(p.n,t));}
+    Plane shiftUp(Plane p,double dist)      {return Plane(p.n, p.d+dist*getLength(p.n));}
+    Plane shiftDown(Plane p,double dist)    {return Plane(p.n, p.d-dist*getLength(p.n));}
 
     double getSide(Plane p,Point a)     {return getDot(p.n,a)-p.d;}
     double getDistance(Plane p,Point a) {return fabs(getSide(p,a))/getLength(p.n);}
@@ -110,9 +111,11 @@ namespace Planar{
 
     Line perpThrough(Plane p,Point a)     {return Line(p.n,a);}
     Plane perpThrough(Line l,Point a)     {return Plane(l.v,a);}
-//    Vector rotateCCW90(Plane p,Vector d){return getCross(p.n,d);}
-//    Vector rotateCW90(Plane p,Vector d) {return getCross(d,p.n);}
+//  Vector rotateCCW90(Plane p,Vector d){return getCross(p.n,d);}
+//  Vector rotateCW90(Plane p,Vector d) {return getCross(d,p.n);}
 }
+
+
 
 struct Pyramid{
     int n;     //number of side of the pyramid
