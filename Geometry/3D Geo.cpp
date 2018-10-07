@@ -2,8 +2,9 @@
 using namespace std;
 
 const double pi = 4 * atan(1);
-const double eps=1e-10;
+const double eps = 1e-10;
 inline int dcmp (double x) { if (fabs(x) < eps) return 0; else return x < 0 ? -1 : 1; }
+inline double torad(double deg) { return deg / 180 * pi; }
 
 struct Point{
     double x, y, z;
@@ -115,7 +116,37 @@ namespace Planar{
 //  Vector rotateCW90(Plane p,Vector d) {return getCross(d,p.n);}
 }
 
+struct Sphere{
+    Point c;
+    double r;
+    Sphere() {}
+    Sphere(Point c, double r) : c(c), r(r) {}
+};
 
+namespace Spherical{
+    using namespace Planar;
+    using namespace Linear;
+    Point getPointOnSurface(double r,double Lat,double Lon){
+        Lat = torad(Lat);  //North-South
+        Lon = torad(Lon);  //East-West
+        return Point(r*cos(Lat)*cos(Lon), r*cos(Lat)*sin(Lon), r*sin(Lat));
+    }
+
+    int intersect(Sphere s,Line l, vector<Point>& ret){
+        double h2 = s.r*s.r - getDistSq(l,s.c);
+        if(dcmp(h2)<0) return 0;
+
+        Point p = projection(l,s.c);
+        if(dcmp(h2) == 0) {ret.push_back(p); return 1;}
+
+        Vector h = l.v * sqrt(h2) / getLength(l.v);
+        ret.push_back(p-h); ret.push_back(p+h); return 2;
+    }
+
+    double GreatCircleDistance(Sphere s,Point a,Point b){
+        return s.r * getUnsignedAngle(a-s.c, b-s.c);
+    }
+}
 
 struct Pyramid{
     int n;     //number of side of the pyramid
