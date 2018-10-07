@@ -107,8 +107,11 @@ namespace Planar{
     bool getAngle(Plane p,Line l)         {return pi/2.0 - getUnsignedAngle(p.n,l.v);}
     bool isParallel(Plane p,Line l)       {return dcmp(getDot(p.n,l.v)) == 0;}
     bool isPerpendicular(Plane p,Line l)  {return dcmp(getPLength(getCross(p.n,l.v))) == 0;}
-//  Vector rotateCCW90(Plane p,Vector d){return getCross(p.n,d);}
-//  Vector rotateCW90(Plane p,Vector d) {return getCross(d,p.n);}
+
+    Line perpThrough(Plane p,Point a)     {return Line(p.n,a);}
+    Plane perpThrough(Line l,Point a)     {return Plane(l.v,a);}
+//    Vector rotateCCW90(Plane p,Vector d){return getCross(p.n,d);}
+//    Vector rotateCW90(Plane p,Vector d) {return getCross(d,p.n);}
 }
 
 struct Pyramid{
