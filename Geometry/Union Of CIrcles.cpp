@@ -1,4 +1,4 @@
-//UVa 12056
+// UVa 12056
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -10,25 +10,34 @@ const double INF = 1e99;
 int sig(double x) {return x < -EPS ? -1 : x > EPS ? 1 : 0;}
 template<class T> T pow2(T x) {return x * x;}
 
-struct Point{
-    double x, y;
-    Point (double x = 0, double y = 0): x(x), y(y) {}
-    void read () { scanf("%lf%lf", &x, &y); }
-    void write () { printf("%lf %lf", x, y); }
 
-    bool operator == (const Point& u) const { return dcmp(x - u.x) == 0 && dcmp(y - u.y) == 0; }
-    bool operator != (const Point& u) const { return !(*this == u); }
-    bool operator < (const Point& u) const { return dcmp(x - u.x) < 0 || (dcmp(x-u.x)==0 && dcmp(y-u.y) < 0); }
-    bool operator > (const Point& u) const { return u < *this; }
-    bool operator <= (const Point& u) const { return *this < u || *this == u; }
-    bool operator >= (const Point& u) const { return *this > u || *this == u; }
-    Point operator + (const Point& u) { return Point(x + u.x, y + u.y); }
-    Point operator - (const Point& u) { return Point(x - u.x, y - u.y); }
-    Point operator * (const double u) { return Point(x * u, y * u); }
-    Point operator / (const double u) { return Point(x / u, y / u); }
-    double operator * (const Point& u) { return x*u.y - y*u.x; }
+class Vector {
+public:
+    double x, y;
+    Vector() {}
+    Vector(double x, double y): x(x), y(y) {}
+
+    Vector operator -() const {return Vector(-x, -y);}
+    Vector operator +(const Vector &v) const {return Vector(x+v.x, y+v.y);}
+    Vector operator -(const Vector &v) const {return Vector(x-v.x, y-v.y);}
+    Vector operator *(const double &s) const {return Vector(x * s, y * s);}
+    Vector operator /(const double &s) const {return Vector(x / s, y / s);}
+
+    double operator *(const Vector &v) const {return x*v.x + y*v.y;}
+    double operator ^(const Vector &v) const {return x*v.y - y*v.x;}
+
+    // rotate vector (Right/Left hand)
+    Vector  R(double co, double si) {return Vector(x*co-y*si, y*co+x*si);}
+    Vector  L(double co, double si) {return Vector(x*co+y*si, y*co-x*si);}
+    Vector  R(double th) {return R(cos(th), sin(th));}
+    Vector  L(double th) {return L(cos(th), sin(th));}
+
+    double len2() {return x*x + y*y;}
+    double len()  {return sqrt(len2());}
+    double ang()  {return atan2(y, x);}  // angle of vector
+    Vector e(double s = 1.0) {return *this / len() * s;}
 };
-typedef Point Vector;
+typedef Vector Point;
 
 
 class Line {
