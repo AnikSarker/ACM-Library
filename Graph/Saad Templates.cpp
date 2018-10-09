@@ -787,61 +787,47 @@ While there is more than one components,
 These edges are the edges of minimum spanning tree.
 
 2SAT
-const int N = 100005;
-struct twoSAT{
- int Ans , n, m, s[N] ,x,y,ck[2*N], up[2*N] ;
- vector < int >ans, bro[2*N],orb[2*N],scc[2*N], graph[2*N] ; stack < int > Stack ;
- void addEdge(int u, int v ) {
-    int ux,vx,uy,vy;
-    if(u>0)ux=2*u-1,uy=ux-1;else uy=2*(-u)-1,ux=uy-1;
-    if(v>0)vx=2*v-1,vy=vx-1;else vy=2*(-v)-1,vx=vy-1;
-    bro[uy].push_back(vx) ;bro[vy].push_back(ux) ;
-   orb[vx].push_back(uy) ;orb[ux].push_back(vy) ;
- }
- void go(int u) {
-    if(ck[u]!=-1)return;ck[u]=0; for(int i=0;i<bro[u].size();i++ )go(bro[u][i]) ;Stack.push(u) ;
-}
- void go(int u, int id) {
-    if(ck[u]!=0)return;ck[u] = id ; scc[id].push_back(u);
-    for(int i=0;i<orb[u].size();i++)go(orb[u][i],id);
- }
-void graph_compression(){
-    int r = 2*m ;
-    for(int u =0;u<r;u++)for(int i=0;i<bro[u].size();i++){
-            int v = bro[u][i];graph[ck[u]].push_back(ck[v]) ;
+
+typedef long long ll;
+const int maxn = 2 * 100005;
+struct TwoSat {
+    int n;
+    vector<int> G[maxn * 2];
+    // x = false, x+n = true
+    bool mark[maxn * 2];//store actual value
+    int S[maxn * 2],c;
+    bool dfs(int x) {
+        if(mark[x + n]) return false;
+        if(mark[x]) return true;
+        mark[x] = true;
+        S[c++] = x;
+        for(int i = 0; i < G[x].size(); i++) {
+            if(!dfs(G[x][i])) return false;
         }
-}
-int theLastCalc(int u ) {
-    if(ck[u]!=0) return up[u];ck[u]=1;
-    for( int i=0;i<graph[u].size();i++){up[u]|=theLastCalc(graph[u][i]);}
-    for( int i=0;i<scc[u].size();i++){
-        int ux =scc[u][i]|1; ux =(ux+1)>>1 ;
-        if(s[ux]!=-1&&(scc[u][i]&1)!=s[ux]){up[u]=1;break;}
+        return true;
     }
-    for(int i =0;i<scc[u].size();i++){int ux=scc[u][i]|1;ux=(ux+1)>>1;s[ux]=up[u]^(scc[u][i]&1);}
-    return up[u] ;
-}
-void init(){
-    ans.clear();Ans=0;memset(s,-1,sizeof(s));memset(ck,-1,sizeof(ck));
-    for( int i=0;i<N*2;i++)graph[i].clear(),bro[i].clear(),orb[i].clear(),scc[i].clear() ;
-}
-void solve(){
-        scanf("%d %d",&n, &m ) ;
-        for( int i = 0 ; i < n ; i++ ) {scanf("%d %d",&x,&y) ;addEdge(x,y) ;}
-        int r = 2*m ; for( int i = 0 ; i < r ; i++ )go(i) ; int cnt = 0 ;
-        while(!Stack.empty()) {
-            int u = Stack.top() ; Stack.pop() ; if(ck[u] == 0 ) {++cnt ; go(u,cnt) ;}
-         }
-        Ans = 1 ;
-        for( int i = 0 ; i < r ; i+=2 ) if(ck[i]==ck[i+1] ){Ans = 0;break ;}
-        //only if solution is needed to show
-        if(Ans == 1 ) {
-            graph_compression();memset(ck,0,sizeof(ck)) ;memset(up,0,sizeof(up)) ;
-            for(int i = 1 ; i <= cnt ; i++) theLastCalc(i) ;
-            for( int i = 1 ; i <= m ; i++ ) if(s[i] == 1 )ans.push_back(i);
+    void init(int n) {
+        this -> n = n;
+        for(int i = 0; i < n * 2; i++) G[i].clear();
+        memset(mark,0,sizeof(mark));
+    }
+    void add_clause(int x,int y) {
+        G[x].push_back(y);
+        //printf("%d ----- %d\n",x + 1,y + 1);
+    }
+    bool solve() {
+        for(int i = 0; i < n; i ++) {
+            if(!mark[i] && !mark[i + n]) {
+                c = 0;
+                if(!dfs(i)) {
+                    while(c > 0) mark[S[--c]] = false;
+                    if(!dfs(i + n)) return false;
+                }
+            }
         }
-}
-};
+        return true;
+    }
+} sat;
       
 Dijkstra        
 const int inf = 1e9; const int N = 1e5;
