@@ -5,4 +5,4 @@ subsets = Str2(n,k) = k * Str2(n-1,k) + Str2(n-1,k-1)
 
 3. Ways to partition n labelled objects into k unlabelled 
 subsets, with each subset containing at least r elements : 
-StrR(n,k) = k * Str(n-1,k) + C(n-1,r-1) * StrR(n-r,k-1)
+StrR(n,k) = k * StrR(n-1,k) + C(n-1,r-1) * StrR(n-r,k-1)
