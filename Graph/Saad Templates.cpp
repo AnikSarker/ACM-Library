@@ -821,7 +821,7 @@ int theLastCalc(int u ) {
     for(int i =0;i<scc[u].size();i++){int ux=scc[u][i]|1;ux=(ux+1)>>1;s[ux]=up[u]^(scc[u][i]&1);}
     return up[u] ;
 }
-void clr(){
+void init(){
     ans.clear();Ans=0;memset(s,-1,sizeof(s));memset(ck,-1,sizeof(ck));
     for( int i=0;i<N*2;i++)graph[i].clear(),bro[i].clear(),orb[i].clear(),scc[i].clear() ;
 }
