@@ -1,0 +1,4 @@
+1. Number of ways of partitioning n labelled objects into k 
+unlabelled subsets = Str2(n,k) = k * Str2(n-1,k) + Str2(n-1,k-1)
+
+2. Parity of Str2(n,k) = ! ((n-k) & Floor((k-1)/2)) == 0)
