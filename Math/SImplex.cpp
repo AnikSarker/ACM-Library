@@ -51,11 +51,9 @@ struct Simplex {
         }
     }
 
-    /*
-    
-    or all i<m,j<n : a[i][j]*b[i]<=a[i][n] //
-    maximize sum of a[m][j]-a[m][n] where j<n
-    */
+    // for all i<m,j<n : a[i][j]*b[i]<=a[i][n]
+    // maximize sum of a[m][j]-a[m][n] where j<n
+
     int simplex( int m,int n,double A[maxM+7][maxN+7],double *b,double &Ret ) {
         int B[maxM+7],N[maxN+7],r,c,i;
         double p,v;
