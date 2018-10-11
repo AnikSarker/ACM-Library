@@ -1,5 +1,4 @@
 // O(n (log n)^2) 
-// Taken from Rezwan Arefin
 typedef long long ll;
 #define sq(a) ((a)*(a))
 struct point { 
