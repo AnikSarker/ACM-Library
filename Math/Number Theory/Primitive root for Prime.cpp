@@ -1,4 +1,3 @@
-//Taken from Rezwan Arefin
 int bigMod(int n, int k, int mod){
     if(k == 0) return 1;
     long long re = bigMod(n, (k / 2), mod);
@@ -18,7 +17,7 @@ int primitive_root(int p){
 
     int tmp = php;
     for(int i = 2; i * i <= tmp; ++i)    {
-        if (tmp%i==0)        {
+        if (tmp%i==0){
             factor.push_back(i);
             while (tmp % i == 0) tmp /= i;
         }
