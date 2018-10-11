@@ -1,31 +1,22 @@
-/*
- * Algorithm : Simplex ( Linear Programming )
- * Author : Simon Lo
- * Note: Simplex algorithm on augmented matrix a of dimension (m+1)x(n+1)
+/* Note: Simplex algorithm on augmented matrix a of dimension (m+1)x(n+1)
  * returns 1 if feasible, 0 if not feasible, -1 if unbounded
  * returns solution in b[] in original var order, max(f) in ret
  * form: maximize sum_j(a_mj*x_j)-a_mn s.t. sum_j(a_ij*x_j)<=a_in
- * in standard form.
  * To convert into standard form:
  * 1. if exists equality constraint, then replace by both >= and <=
  * 2. if variable x doesn't have nonnegativity constraint, then replace by
  * difference of 2 variables like x1-x2, where x1>=0, x2>=0
  * 3. for a>=b constraints, convert to -a<=-b
  * note: watch out for -0.0 in the solution, algorithm may cycle
- * EPS = 1e-7 may give wrong answer, 1e-10 is better
- */
+ * EPS = 1e-7 may give wrong answer, 1e-10 is better     */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define maxM 7
 #define maxN 100007
 #define INF 1000000007
 #define EPS (1e-12)
-#define si(a) scanf("%d",&a)
 #define PI acos(-1)
-#define f first
-#define s second
-#define mp(a,b) make_pair(a,b)
 
 struct Simplex {
     void pivot( int m,int n,double A[maxM][maxN+7],int *B,int *N,int r,int c ) {
@@ -61,7 +52,8 @@ struct Simplex {
     }
 
     /*
-    for all i<m,j<n : a[i][j]*b[i]<=a[i][n] //
+    
+    or all i<m,j<n : a[i][j]*b[i]<=a[i][n] //
     maximize sum of a[m][j]-a[m][n] where j<n
     */
     int simplex( int m,int n,double A[maxM+7][maxN+7],double *b,double &Ret ) {
