@@ -1,50 +1,48 @@
 //Complexity : O(n log n)
 //dp[i][j] = min(dp[i-1][k] + C[k][j]) [ k < j ]
 //To use D&Q, its sufficient to prove the following :
-//Cost(l + 1 , j + 1) - Cost(l + 1, j) <= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(l < k < j)
+//Cost(L + 1 , j + 1) - Cost(L + 1, j) <= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(L < k < j)
 
 #include<bits/stdc++.h>
 using namespace std;
 #define MAX 5005
 #define ll long long int
-ll m, n, x, y, z, p, q, r, K, t, cs = 1;
-ll segor[MAX][MAX];
-ll ara[MAX];
-ll dp[MAX][MAX];
+int ara[MAX];
+ll C[MAX][MAX],dp[2][MAX];
 
-void compute(ll K, ll l, ll r, ll optl, ll optr){
-    if(l > r) return;
-    ll mid = (l + r) / 2;
-    ll optnow = optl;
+void compute(int K,int L,int R,int OptL,int OptR){
+    if(L > R) return;
+    int mid=(L+R)/2;
+    int optNow=mid-1;
 
-    dp[K][mid] = 0;
-    ll tmpoptl = min(optr, mid);
+    dp[K&1][mid]=0;
+    int tmpOpt=min(OptR, mid);
 
-    for(ll i = optl; i <= tmpoptl; i++){
-        ll tmp = dp[K - 1][i] + segor[i + 1][mid];
-        if(tmp > dp[K][mid]){
-            dp[K][mid] = tmp;
-            optnow = i;
+    for(int i=OptL;i<=tmpOpt;i++){
+        ll tmp=dp[(K&1)^1][i-1]+C[i][mid];
+        if(tmp > dp[K&1][mid]){
+            dp[K&1][mid]=tmp;
+            optNow=i;
         }
     }
-    compute(K, l, mid - 1, optl, optnow);
-    compute(K, mid + 1, r, optnow, optr);
+    compute(K,L,mid-1,OptL,optNow);
+    compute(K,mid+1,R,optNow,OptR);
 }
 
 int main(){
-    cin >> t;
+    int t;
+    scanf("%d",&t);
 
     while(t--){
-        scanf("%lld %lld", &n, &K);
-        for(ll i = 1; i <= n; i++) scanf("%lld", &ara[i]);
+        int n,K; scanf("%d %d", &n, &K);
+        for(int i=1;i<=n;i++) scanf("%d",&ara[i]);
 
-        for(ll i = 1; i <= n; i++){
-            segor[i][i - 1] = 0;
-            for(ll j = i; j <= n; j++) segor[i][j] = segor[i][j - 1] | ara[j];
+        for(int i=1;i<=n;i++) for(int j=i;j<=n;j++){
+            if(i==j) C[i][j]=ara[j];
+            else C[i][j] = C[i][j-1]|ara[j];
         }
-
-        for(ll i = 1; i <= n; i++) dp[1][i] = segor[1][i];
-        for(ll i = 2; i <= K; i++) compute(i, 1, n, 1, n);
-        printf("%lld\n", dp[K][n]);
+        for(int i=1;i<=n;i++) dp[1][i]=C[1][i];
+        for(int i=2;i<=K;i++) compute(i,1,n,1,n);
+        printf("%lld\n",dp[K&1][n]);
     }
 }
