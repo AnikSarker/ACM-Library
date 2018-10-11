@@ -16,9 +16,7 @@ void compute(int K,int L,int R,int OptL,int OptR){
     int optNow=mid-1;
 
     dp[K&1][mid]=0;
-    int tmpOpt=min(OptR, mid);
-
-    for(int i=OptL;i<=tmpOpt;i++){
+    for(int i=OptL;i<=min(OptR, mid);i++){
         ll tmp=dp[(K&1)^1][i-1]+C[i][mid];
         if(tmp >= dp[K&1][mid]){
             dp[K&1][mid]=tmp;
