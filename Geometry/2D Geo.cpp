@@ -64,6 +64,9 @@ namespace Vectorial {
     double getAngle (Vector u) { return atan2(u.y, u.x); }
     double getSignedAngle (Vector a, Vector b) {return getAngle(b)-getAngle(a);}
     Vector rotate (Vector a, double rad) { return Vector(a.x*cos(rad)-a.y*sin(rad), a.x*sin(rad)+a.y*cos(rad)); }
+    Vector ccw(Vector a, double co, double si) {return Vector(a.x*co-a.y*si, a.y*co+a.x*si);}
+    Vector cw (Vector a, double co, double si) {return Vector(a.x*co+a.y*si, a.y*co-a.x*si);}
+    Vector scale(Vector a, double s = 1.0) {return a / getLength(a) * s;}
     Vector getNormal (Vector a) { double l = getLength(a); return Vector(-a.y/l, a.x/l); }
 };
 
@@ -339,21 +342,33 @@ namespace Circular {
         return fabs(res);
     }
 
+    // interior          (d < R - r)         ----> -2
+    // interior tangents (d = R - r)         ----> -1
+    // concentric        (d = 0)
+    // secants           (R - r < d < R + r) ---->  0
+    // exterior tangents (d = R + r)         ---->  1
+    // exterior          (d > R + r)         ---->  2
+    int getPos(Circle o1, Circle o2) {
+        using namespace Vectorial;
+        double d = getLength(o1.o - o2.o);
+        int in = dcmp(d - fabs(o1.r - o2.r)), ex = dcmp(d - (o1.r + o2.r));
+        return in<0 ? -2 : in==0? -1 : ex==0 ? 1 : ex>0? 2 : 0;
+    }
+
     int getCircleCircleIntersection (Circle o1, Circle o2, vector<Point>& sol) {
         double d = getLength(o1.o - o2.o);
-
         if (dcmp(d) == 0) {
             if (dcmp(o1.r - o2.r) == 0) return -1;
             return 0;
         }
-
         if (dcmp(o1.r + o2.r - d) < 0) return 0;
         if (dcmp(fabs(o1.r-o2.r) - d) > 0) return 0;
 
-        double a = getAngle(o2.o - o1.o);
-        double da = acos((o1.r*o1.r + d*d - o2.r*o2.r) / (2*o1.r*d));
-
-        Point p1 = o1.point(a-da), p2 = o1.point(a+da);
+        Vector v = o2.o - o1.o;
+        double co = (o1.r*o1.r + getPLength(v) - o2.r*o2.r) / (2 * o1.r * getLength(v));
+        double si = sqrt(fabs(1.0 - co*co));
+        Point p1 = scale(cw(v,co, si), o1.r) + o1.o;
+        Point p2 = scale(ccw(v,co, si), o1.r) + o1.o;
 
         sol.push_back(p1);
         if (p1 == p2) return 1;
