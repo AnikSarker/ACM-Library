@@ -1,3 +1,4 @@
+/* 
 * Number of permutations of n elements with k disjoint cycles
 = Str1(n,k) = (n-1) * Str1(n-1,k) + Str1(n-1,k-1)
 
@@ -15,3 +16,4 @@ SR(n,k) = k * SR(n-1,k) + C(n-1,r-1) * SR(n-r,k-1)
 * Number of ways to partition n labelled objects 1,2,3, ... n
 into k non-empty subsets so that for any integers i and j in a
 given subset |i-j| >= d : Str2(n-d+1, k-d+1), n >= k >= d
+*/
