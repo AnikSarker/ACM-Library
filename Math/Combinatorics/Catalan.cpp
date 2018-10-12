@@ -1,3 +1,4 @@
+/*
 * Total number of paths from point P(x1, y1) 
 to point Q(x2, y2) where x2 >= x1 and y2 >= y1 :
 Let x = x2 - x1 and y = y2 - y1. Then ans = C(x+y,x).
@@ -16,3 +17,4 @@ so that Count(Y)-Count(X) < m in any prefix, then :
 when 0 <= k <= m, ans = C(n+k,k)
 when m <= k <= n+m-1, ans = C(n+k,k) - C(n+k,k-m)
 when k > n+m-1, ans = 0
+*/
