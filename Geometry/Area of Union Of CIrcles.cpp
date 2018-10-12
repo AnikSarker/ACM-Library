@@ -1,7 +1,6 @@
-// UVa 12056
-// -pi <= th <= pi
+// Problem  ID : UVa 12056
 struct Range {
-    double t;
+    double t;  // -pi <= t <= pi
     int evt;
     Point p;
     Range() {}
