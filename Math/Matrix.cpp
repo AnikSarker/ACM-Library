@@ -56,7 +56,7 @@ Matrix Power(Matrix mat,ll p){
     }
 
     while(p){
-        if(p&2) ans=Multiply(ans,res);
+        if(p&1) ans=Multiply(ans,res);
         res=Multiply(res,res);
         p=p/2;
     }
