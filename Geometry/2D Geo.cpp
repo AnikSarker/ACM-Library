@@ -111,13 +111,17 @@ namespace Linear {
     }
 
     Point getPointToLine (Point p, Point a, Point b) { Vector v = b-a; return a+v*(getDot(v, p-a) / getDot(v,v)); }
+    bool onSegment (Point p, Point a, Point b) { return dcmp(getCross(a-p, b-p)) == 0 && dcmp(getDot(a-p, b-p)) <= 0; }
 
     bool haveIntersection (Point a1, Point a2, Point b1, Point b2) {
+        if(onSegment(a1,b1,b2)) return true;
+        if(onSegment(a2,b1,b2)) return true;
+        if(onSegment(b1,a1,a2)) return true;
+        if(onSegment(b2,a1,a2)) return true;  //Case of touch
+
         double c1=getCross(a2-a1, b1-a1), c2=getCross(a2-a1, b2-a1), c3=getCross(b2-b1, a1-b1), c4=getCross(b2-b1,a2-b1);
         return dcmp(c1)*dcmp(c2) < 0 && dcmp(c3)*dcmp(c4) < 0;
     }
-
-    bool onSegment (Point p, Point a, Point b) { return dcmp(getCross(a-p, b-p)) == 0 && dcmp(getDot(a-p, b-p)) < 0; }
     bool onLeft(DirLine l, Point p) { return dcmp(l.v * (p-l.p)) >= 0; }
 }
 
