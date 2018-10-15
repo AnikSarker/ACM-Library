@@ -123,11 +123,34 @@ struct Sphere{
     double r;
     Sphere() {}
     Sphere(Point c, double r) : c(c), r(r) {}
+
+    //Spherical cap with polar angle theta
+    double Height(double alpha)      {return r*(1-cos(alpha));}
+    double BaseRadius(double alpha)  {return r*sin(alpha);}
+    double Volume(double alpha)      {double h = Height(alpha); return pi*h*h*(3*r-h)/3.0;}
+    double SurfaceArea(double alpha) {double h = Height(alpha); return 2*pi*r*h;}
 };
 
 namespace Spherical{
+    using namespace Vectorial;
     using namespace Planar;
     using namespace Linear;
+
+    pair<double,double> SphereSphereIntersection(Sphere s1,Sphere s2){
+        double d = getLength(s1.c-s2.c);
+        if(dcmp(d - s1.r -s2.r) >= 0) return {0,0};
+
+        double R1 = max(s1.r,s2.r); double R2 = min(s1.r,s2.r);
+        double y = R1 + R2 - d;
+        double x = (R1*R1 - R2*R2 + d*d) / (2*d);
+        double h1 = R1 - x;
+        double h2 = y - h1;
+
+        double Volume      = pi*h1*h1*(3*R1-h1)/3.0 + pi*h2*h2*(3*R2-h2)/3.0;
+        double SurfaceArea = 2*pi*R1*h1 + 2*pi*R2*h2;
+        return make_pair(SurfaceArea,Volume);
+    }
+
     Point getPointOnSurface(double r,double Lat,double Lon){
         Lat = torad(Lat);  //North-South
         Lon = torad(Lon);  //East-West
