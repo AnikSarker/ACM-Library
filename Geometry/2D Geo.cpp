@@ -417,10 +417,10 @@ namespace Circular {
 
     int getTangents (Circle o1, Circle o2, Point* a, Point* b) {
         int cnt = 0;
-        if (o1.r < o2.r) { swap(o1, o2); swap(a, b); }
-        double d2 = getLength(o1.o - o2.o); d2 = d2 * d2;
+        if (dcmp(o1.r-o2.r) < 0) { swap(o1, o2); swap(a, b); }
+        double d2 = getPLength(o1.o - o2.o);
         double rdif = o1.r - o2.r, rsum = o1.r + o2.r;
-        if (d2 < rdif * rdif) return 0;
+        if (dcmp(d2 - rdif * rdif) < 0) return 0;
         if (dcmp(d2) == 0 && dcmp(o1.r - o2.r) == 0) return -1;
 
         double base = getAngle(o2.o - o1.o);
@@ -434,11 +434,12 @@ namespace Circular {
         a[cnt] = o1.point(base-ang); b[cnt] = o2.point(base-ang); cnt++;
 
         if (dcmp(d2 - rsum * rsum) == 0) {
-            a[cnt] = o1.point(base); b[cnt] = o2.point(base); cnt++;
-        } else if (d2 > rsum * rsum) {
+            a[cnt] = o1.point(base); b[cnt] = o2.point(pi+base); cnt++;
+        }
+        else if (dcmp(d2 - rsum * rsum) > 0) {
             double ang = acos( (o1.r + o2.r) / sqrt(d2) );
-            a[cnt] = o1.point(base+ang); b[cnt] = o2.point(base+ang); cnt++;
-            a[cnt] = o1.point(base-ang); b[cnt] = o2.point(base-ang); cnt++;
+            a[cnt] = o1.point(base+ang); b[cnt] = o2.point(pi+base+ang); cnt++;
+            a[cnt] = o1.point(base-ang); b[cnt] = o2.point(pi+base-ang); cnt++;
         }
         return cnt;
     }
