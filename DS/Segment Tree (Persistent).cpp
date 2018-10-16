@@ -63,6 +63,5 @@ int main(){
     dfs(1,0,0);
     Size=Map.size();  //number of distinct elements after co-ordinate compression
     root[0]=new node();
-    root[0]->build(1,Size);
     ......
 }
