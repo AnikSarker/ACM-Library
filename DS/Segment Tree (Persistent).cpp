@@ -38,11 +38,11 @@ struct node{
     }
 };
 
-//Searching kth minimum element in sorted order
 inline int Val(node* x)    {return x ? x->val : 0;}
 inline node* Left(node* x)   {return x ? x->left : NULL;}
 inline node* Right(node* x)  {return x ? x->right : NULL;}
 
+//Searching kth minimum element in sorted order
 int Search(node *a,node *b,node* c,node* d,int l,int r,int k) {
   if(l==r) return l;
   int Count=Val(Left(a))+Val(Left(b))-Val(Left(c))-Val(Left(d));
