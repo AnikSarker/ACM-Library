@@ -1,4 +1,4 @@
-include<bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 #define MAX 105
 #define ll long long int
