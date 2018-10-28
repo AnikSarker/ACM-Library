@@ -38,8 +38,8 @@ struct NTT{
                 for (ll k=0,l=0; k<i; k++,l+=t){
                     ll x=a[j+k+i]*1ll*w[f][l]%P;
                     ll y=a[j+k];
-                    a[j+k+i]=y-x<0?y-x+P:y-x;
-                    a[j+k]=y+x>=P?y+x-P:y+x;
+                    a[j+k+i] = y-x<0 ? y-x+P : y-x;
+                    a[j+k] = y+x>=P ? y+x-P : y+x;
                 }
         if (f){
             ll x=Pow(M,P-2);
