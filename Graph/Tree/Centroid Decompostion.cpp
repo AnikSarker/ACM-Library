@@ -2,7 +2,7 @@
 // d[x][u] = distance from u to a parent of u at level x of centroid tree
 //           if u is in subtree of centroid c, then d[lvl[c]][u] = dist(c, l)
 // Taken from Rezwan Arefin
-
+// If (x, y) edge exist, then x must be in adj[y] and y must be in adj[x]
 const int maxn = 1e5 + 10; 
 vector<int> adj[maxn]; 
 int lvl[maxn], sub[maxn], p[maxn], vis[maxn], d[18][maxn], ans[maxn];
