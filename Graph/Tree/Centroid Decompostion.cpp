@@ -24,7 +24,7 @@ void dfs(int l, int u, int par) {
 void decompose(int u, int par) {
 	calc(u, -1);
 	int c = centroid(u, -1, sub[u] >> 1);
-	vis[c] = 1, p[c] = par; 
+	vis[c] = 1, p[c] = par, lvl[c] = 0; 
 	if(par + 1) lvl[c] = lvl[par] + 1;
 	dfs(lvl[c], c, -1);
 	for(int v : adj[c]) if(v - par && !vis[v]) 
