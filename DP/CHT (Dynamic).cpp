@@ -4,7 +4,6 @@ using namespace std;
 #define ll long long int
 
 ll inf = 9e18 + 5;
-
 struct HullDynamic{
 	struct line {
 		ll m, b; ld x;
