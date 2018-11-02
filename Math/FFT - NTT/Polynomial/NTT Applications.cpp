@@ -1,5 +1,4 @@
 /*********************************
-// Taken from Rezwan Arefin
  * polyinv(a, b, n) calculates b: b(z)a(z) = 1 (mod z^n)
  * polysqrt(a, b, n) calculates b: b(z)^2 = a(z) (mod z^n)
  * make sure ta[], tb[] has 2n spaces to be used. 
