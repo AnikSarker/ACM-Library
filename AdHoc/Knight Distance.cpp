@@ -3,7 +3,6 @@ using namespace std;
 #define ll long long int
 
 //O(1)
-//Taken from Rezwan Arefin
 struct point{
     ll x, y;
     bool operator < (const point &p) const {return x == p.x ? y < p.y : x < p.x;}
