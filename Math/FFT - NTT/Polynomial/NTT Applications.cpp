@@ -2,7 +2,8 @@
  * polyinv(a, b, n) calculates b: b(z)a(z) = 1 (mod z^n)
  * polysqrt(a, b, n) calculates b: b(z)^2 = a(z) (mod z^n)
  * make sure ta[], tb[] has 2n spaces to be used. 
- * in polysqrt(), if a[0] != 1 then discrete sqrt function is needed*/
+ * in polysqrt(), if a[0] != 1 then discrete sqrt function is needed
+*/
  
 int ta[N], tb[N], tc[N];
 void polyinv(int *a, int *b, int n) { 
