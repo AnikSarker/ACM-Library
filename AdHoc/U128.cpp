@@ -1,5 +1,4 @@
 #include <bits/stdtr1c++.h>
-
 using namespace std;
 
 typedef unsigned long long int U64;
@@ -18,11 +17,11 @@ struct U128{
     }
 
     inline U128 operator~() const {
-		U128 t(*this);
-		t.lo = ~t.lo;
-		t.hi = ~t.hi;
-		return t;
-	}
+	U128 t(*this);
+	t.lo = ~t.lo;
+	t.hi = ~t.hi;
+	return t;
+    }
 
     inline U128 &operator +=(const U128 &b) {
         if (lo > bmax - b.lo) ++hi;
@@ -54,15 +53,15 @@ struct U128{
     }
 
     inline U128 &operator /= (const U128 &b) {
-		U128 rem;
-		divide(*this, b, *this, rem);
-		return *this;
+	U128 rem;
+	divide(*this, b, *this, rem);
+	return *this;
     }
 
     inline U128 &operator %= (const U128 &b) {
-		U128 quo;
-		divide(*this, b, quo, *this);
-		return *this;
+	U128 quo;
+	divide(*this, b, quo, *this);
+	return *this;
     }
 
     inline static void divide(const U128 &num, const U128 &den, U128 &quo, U128 &rem) {
@@ -100,7 +99,7 @@ struct U128{
     }
 
     inline U128 &operator<<=(const U128& rhs) {
-		size_t n = rhs.to_int();
+	size_t n = rhs.to_int();
         if (n >= sz) {
             lo = hi = 0;
             return *this;
@@ -122,7 +121,7 @@ struct U128{
 	}
 
     inline U128 &operator>>=(const U128& rhs) {
-		size_t n = rhs.to_int();
+	size_t n = rhs.to_int();
         if (n >= sz) {
             lo = hi = 0;
             return *this;
