@@ -1,4 +1,4 @@
-
+//complexity EV^2
 const int M=500;
 struct struct_edge {
     int v;
