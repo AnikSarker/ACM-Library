@@ -1,3 +1,7 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
 struct State{
     int Len, Link;
     map<char,int>Next;
@@ -13,29 +17,29 @@ int Size, Last;
 void SA_Init() {Size = Last = 0; St[0].Clear();}
 
 void SA_Extend(char c){
-    int cur = ++Size;
-    St[cur].Clear();
+    int Curr = ++Size;
+    St[Curr].Clear();
 
-    St[cur].Len = St[Last].Len + 1;
+    St[Curr].Len = St[Last].Len + 1;
     int p;
     for(p=Last; p!=-1 && !St[p].Next.count(c); p=St[p].Link)
-        St[p].Next[c] = cur;
+        St[p].Next[c] = Curr;
 
-    if(p == -1) St[cur].Link = 0;
+    if(p == -1) St[Curr].Link = 0;
     else{
         int q = St[p].Next[c];
-        if(St[p].Len + 1 == St[q].Len) St[cur].Link = q;
+        if(St[p].Len + 1 == St[q].Len) St[Curr].Link = q;
         else{
-            int clone = ++Size;
-            St[clone].Len = St[p].Len + 1;
-            St[clone].Next = St[q].Next;
-            St[clone].Link = St[q].Link;
+            int Clone = ++Size;
+            St[Clone].Len = St[p].Len + 1;
+            St[Clone].Next = St[q].Next;
+            St[Clone].Link = St[q].Link;
             for(; p!=-1 && St[p].Next[c]==q; p=St[p].Link)
-                St[p].Next[c] = clone;
-            St[q].Link = St[cur].Link = clone;
+                St[p].Next[c] = Clone;
+            St[q].Link = St[Curr].Link = Clone;
         }
     }
-    Last = cur;
+    Last = Curr;
 }
 
 ll pathCalc(int pos){
