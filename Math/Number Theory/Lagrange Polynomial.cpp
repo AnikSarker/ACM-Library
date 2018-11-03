@@ -25,7 +25,7 @@ namespace lgr{
     }
 
     int lagrange(ll n,int k){
-        if(!k) return (n%MOD);
+        if(!k) return ( n % MOD );
 
         if(!inv[0]){
             int x = 1;
