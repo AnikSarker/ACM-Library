@@ -1,3 +1,7 @@
+//Faulhaber's Formua
+//faulhaber(n,k) = 1^k + 2^k + 3^k + ... + n^k modulo ANY number
+//Complexity : O(k^2)
+
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX 1005
