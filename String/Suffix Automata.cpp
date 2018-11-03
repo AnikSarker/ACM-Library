@@ -23,9 +23,7 @@ namespace SAM{
         St[Curr].Len = St[Curr].FrPos = St[Last].Len + 1;
 
         int p = Last;
-        while(p!=-1 && !St[p].Next.count(c)){
-            St[p].Next[c] = Curr; p = St[p].Link;
-        }
+        while(p!=-1 && !St[p].Next.count(c)) St[p].Next[c] = Curr, p = St[p].Link;
 
         if(p == -1) St[Curr].Link = 0;
         else{
@@ -38,9 +36,7 @@ namespace SAM{
                 St[Clone].Link = St[q].Link;
                 St[Clone].FrPos = St[q].FrPos;
 
-                while(p!=-1 && St[p].Next[c]==q){
-                    St[p].Next[c] = Clone;  p=St[p].Link;
-                }
+                while(p!=-1 && St[p].Next[c]==q) St[p].Next[c] = Clone, p=St[p].Link;
                 St[q].Link = St[Curr].Link = Clone;
             }
         }
