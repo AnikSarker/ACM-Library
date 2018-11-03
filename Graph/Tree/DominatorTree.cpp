@@ -54,7 +54,7 @@ struct DominatorTree {
             for(int j=0; j < adj[u].size() ; j++ ) {
                 int v = adj[u][j];
                 int w = cost[u][j];
-                if(dis[v]+w==dis[u])mama[u].push_back(v);
+                if(dis[u]+w==dis[v])mama[v].push_back(u);
             }
         }
     }
