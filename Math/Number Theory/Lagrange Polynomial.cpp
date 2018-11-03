@@ -4,7 +4,7 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX 1000010      // Upper limit of k
+#define MAX 1000010            // Upper Limit of k
 #define MOD 1000000007
 #define ll long long int
 
@@ -41,7 +41,11 @@ namespace lgr{
         }
 
         k++;
-        for(int i = 0; i <= k; i++) ar[i] = bigMod(i,k-1);
+        ar[0] = 0, ar[1] = 1;
+        for(int i=2;i<=k;i++){
+            if(!factor[i]) ar[i] = bigMod(i,k-1);
+            else ar[i] = (ll) ar[factor[i]] * ar[i/factor[i]] % MOD;
+        }
         for(int i = 1; i <= k; i++) ar[i] = Add(ar[i], ar[i-1]);
         if(n <= k) return ar[n];
 
