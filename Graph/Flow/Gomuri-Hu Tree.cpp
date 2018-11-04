@@ -1,4 +1,4 @@
-// return gomuri-hu tree
+// ret = gomuri-hu tree
 // edge e : i to ret[i].second with cost=ret[i].first 
 Dinic dinic ;
 struct edg{int s,e,x;};
