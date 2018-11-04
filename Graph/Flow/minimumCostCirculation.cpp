@@ -1,18 +1,22 @@
-#define MAXN 70
+\#define MAXN 105
+typedef double T;
 struct cost_circ {
     struct edg {
-        int pos, cap, rev, cost;
+        int pos, cap, rev;
+        T cost;
     };
     vector<edg> gph[MAXN];
     void clear() {
         for(int i=0; i<MAXN; i++) gph[i].clear();
     }
-    void add_edge(int s, int e, int x, int c) {
+    void add_edge(int s, int e, int x, T c) {
+        //cout << s << " " <<e << " "<<x<< " "<<c<<endl;
         gph[s].push_back({e, x, (int)gph[e].size(), c});
         gph[e].push_back({s, 0, (int)gph[s].size()-1, -c});
     }
 
-    int dist[MAXN], par[MAXN], pae[MAXN];
+    int par[MAXN], pae[MAXN];
+    T dist[MAXN];
     int negative_cycle(int n) {
         bool mark[MAXN] = {};
         memset(dist, 0, sizeof(dist));
@@ -42,9 +46,9 @@ struct cost_circ {
         return -1;
     }
     typedef pair<int,int> pi ;
-    int match(int n) {
+    T match(int n) {
         int rt = -1;
-        int ans = 0;
+        T ans = 0;
         while(~(rt = negative_cycle(n))) {
             bool mark[MAXN] = {};
             vector<pi > cyc;
@@ -69,3 +73,4 @@ struct cost_circ {
         return ans;
     }
 } circ;
+//call circ.match(n+1)
