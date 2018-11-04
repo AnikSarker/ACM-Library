@@ -4,7 +4,7 @@ const ll maxN = 305 ;
 const ll inf = 0x3f3f3f3f ;
 // Stoer-wagner algorithm, complexity: O(n^3)
 // compute the global minimum cut with self-loop ignored.
-ll n,m, g[maxN][maxN];
+ll n,m, g[maxN][maxN];//1-indexed,initialised with 0
 bool vis[maxN];
 ll dis[maxN],v[maxN];
 ll stoer_wagner() {
