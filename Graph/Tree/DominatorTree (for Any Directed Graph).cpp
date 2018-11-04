@@ -1,34 +1,29 @@
-#define Max 100
+#define Max 1000000
 #define sz(u) u.size()
 #define pb push_back
 struct DominatorTree {
     vector <int> g[Max], tree[Max],bucket[Max],rg[Max];
     int sdom[Max],dom[Max],label[Max],arr[Max],rev[Max],T;
-    int papa[Max]; //papa te sobar dominator node save kora ache
-    int ed[Max][2], n,m,par[Max],dsu[Max];
+    int papa[Max]; //store u's dominator in papa[u]
+    int n,m,par[Max],dsu[Max];
     int Find(int u,int x=0) {
         if(u == dsu[u])return x ? -1 : u;
         int v = Find(dsu[u],x+1);
-        if(v < 0)return u;
-        if(sdom[ label[ dsu[u] ] ] < sdom[ label[u] ])
+        if(v<0)return u;
+        if(sdom[label[dsu[u]]]<sdom[label[u]])
             label[u] = label[ dsu[u] ];
         dsu[u] = v;
         return x ? v : label[u];
     }
-    void Union(int u,int v) {
-        dsu[v] = u;
-    }
+    void Union(int u,int v) {dsu[v] = u;}
     void dfs0(int u) {
         ++T;
-        arr[u] = T;
-        rev[T] = u;
-        sdom[T] = T;
-        label[T] = T;
-        dsu[T] = T;
+        rev[T]=u;
+        arr[u]=sdom[T]=label[T]=dsu[T]=T;
         for(int i = 0; i < sz(g[u]); i++) {
             int w = g[u][i];
-            if( !arr[w] )dfs0(w), par[ arr[w] ] = arr[u];
-            rg[ arr[w] ].pb( arr[u] );
+            if(!arr[w])dfs0(w),par[arr[w]]=arr[u];
+            rg[arr[w]].pb(arr[u]);
         }
     }
     void dominator_tree_init() {
@@ -48,9 +43,7 @@ struct DominatorTree {
         for(int i = 2; i <= T; i++) {
             if(dom[i] != sdom[i])dom[i] = dom[ dom[i] ];
             tree[ rev[ dom[i] ] ].pb(rev[i]);
-            tree[ rev[i] ].pb(rev[ dom[i] ]);
             papa[rev[i]]=rev[dom[i]];
-            //cout << rev[dom[i]] << " -> " <<  rev[i] << endl ;
             //here rev[dom[i]] dominates rev[i]
         }
     }
@@ -64,4 +57,5 @@ struct DominatorTree {
         }
         T=0;
     }
-};
+} dtree;
+//dree.g[u].pb(v)&then call dominator_tree_init()
