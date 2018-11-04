@@ -1,6 +1,9 @@
+// return gomuri-hu tree
+// edge e : i to ret[i].second with cost=ret[i].first 
 Dinic dinic ;
 struct edg{int s,e,x;};
-vector<edg>edgs;
+vector<edg>edgs; // original graph
+
 void clear(){edgs.clear();}
 void add_edge(int s,int e,int x) {
     edgs.push_back({s,e,x});
