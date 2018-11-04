@@ -1,7 +1,7 @@
-const int MAXN = 2000+5 ;
-const int INF = 1000000000 ;
-typedef double T;
-const T eps = 1e-9;
+const int MAXN = 5000+5 ;
+typedef long long T;
+const T INF = 1e15 ;
+const T eps = 0;
 struct edge {
     int a, b;
     T cap,flow;
@@ -17,8 +17,8 @@ struct Dinic {
         for(int i = 0; i < MAXN ; i++)g[i].clear();
     }
     void addEdge(int a,int b,T cap, int x = -1, int y= -1) {
-        edge e1 = { a, b, cap, 0.0, 1, x, y } ;
-        edge e2 = { b, a, 0.0, 0.0, 0, x, y } ;
+        edge e1 = { a, b, cap, 0, 1, x, y } ;
+        edge e2 = { b, a, 0, 0, 0, x, y } ;
         g[a].push_back((int)e.size());
         e.push_back(e1);
         g[b].push_back((int)e.size());
