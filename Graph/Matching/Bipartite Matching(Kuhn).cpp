@@ -1,4 +1,4 @@
-class KuhnImplementation {
+class KuhnBPM{
   public:
     int n, k;
     vector < vector<int> > g;
