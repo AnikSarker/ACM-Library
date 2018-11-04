@@ -1,4 +1,4 @@
-//complexity EV^2
+//complexity EV^2,0-indexed
 const int M=500;
 struct struct_edge {
     int v;
