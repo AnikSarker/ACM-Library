@@ -7,16 +7,17 @@ ll Base[2] = {773,709};
 ll Mod[2] = {281559881,693329647};
 ll InvBase[2][2];
 
-ll Pow[MAX][2][2];
-ll PowCell[MAX][MAX][2];
+ll Pow[MAX][2][2],Inv[MAX][2][2];
+ll PowCell[MAX][MAX][2],InvCell[MAX][MAX][2];
 
-ll Inv[MAX][2][2];
-ll InvCell[MAX][MAX][2];
+ll A[MAX][MAX],B[MAX][MAX];
+ll cA[MAX][MAX][2],cB[MAX][MAX][2];
 
-ll A[MAX][MAX];
-ll B[MAX][MAX];
-ll cA[MAX][MAX][2];
-ll cB[MAX][MAX][2];
+ll cMod(ll x,ll mod){
+    while(x >= mod) x-=mod;
+    while(x < 0)    x+=mod;
+    return x;
+}
 
 ll bigMod(ll n,ll r,ll mod){
     if(r==0) return 1;
@@ -27,11 +28,6 @@ ll bigMod(ll n,ll r,ll mod){
 }
 ll invMod(ll n,ll mod) {return bigMod(n,mod-2,mod);}
 
-ll cMod(ll x,ll mod){
-    while(x>=mod) x-=mod;
-    while(x<0)    x+=mod;
-    return x;
-}
 
 void Preprocess(){
     for(int b=0;b<2;b++) for(int m=0;m<2;m++)                          Pow[0][b][m]     = Inv[0][b][m] = 1;
