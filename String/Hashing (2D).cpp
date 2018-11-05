@@ -28,7 +28,6 @@ ll bigMod(ll n,ll r,ll mod){
 }
 ll invMod(ll n,ll mod) {return bigMod(n,mod-2,mod);}
 
-
 void Preprocess(){
     for(int b=0;b<2;b++) for(int m=0;m<2;m++)                          Pow[0][b][m]     = Inv[0][b][m] = 1;
     for(int b=0;b<2;b++) for(int m=0;m<2;m++)   for(int i=1;i<MAX;i++) Pow[i][b][m]     = (Pow[i-1][b][m]*Base[b]) % Mod[m];
