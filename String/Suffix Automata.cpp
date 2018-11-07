@@ -1,52 +1,107 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define ll long long int
+const int MAXLEN = 400005;
 
-namespace SAM{
-    struct Node{
-        int Len, Link;
-        int FrPos; ll pathCount;
-        map<char,int>Next;
-        void Clear() {Len = pathCount = 0; Link = FrPos = -1; Next.clear();}
-    };
+int TotalLen,Size;
+int Root,Last;
 
-    const int MAXLEN = 100000;
-    Node St[MAXLEN*2];
-    int Size, Last;
+struct Node{
+    int Link,Len;
+    int FirstPos,version,baseID;
+    int Next[27];
+    void Clear(){
+        Len = 0; Link = baseID = FirstPos = version = -1;
+        memset(Next,0,sizeof(Next));
+    }
+};
 
-    // root is St[0]
-    void Init() {Size = Last = 0; St[0].Clear();}
+Node St[MAXLEN*2];
+bool isValid[MAXLEN*2];
+vector<int>CurrList;
+vector<int>LastList;
 
-    void Extend(char c){
-        int Curr = ++Size;
-        St[Curr].Clear();
-        St[Curr].Len = St[Curr].FrPos = St[Last].Len + 1;
+inline void CreateNode(int dep){
+    St[Size].Clear();
+    St[Size].Len = dep;
+    St[Size].FirstPos = dep;
+    St[Size].baseID = Size;
 
-        int p = Last;
-        while(p!=-1 && !St[p].Next.count(c)) St[p].Next[c] = Curr, p = St[p].Link;
+    isValid[Size] = true;
+}
 
-        if(p == -1) St[Curr].Link = 0;
+inline void init(){
+    Size = 0;
+    Root = Last = TotalLen = 0;
+    St[Root].Clear();
+    CurrList.clear();
+    LastList.clear();
+}
+
+inline bool has(int u, int ch){
+    int x = St[u].Next[ch];
+    return isValid[St[x].baseID];
+}
+
+inline void SAM(int ch){
+    TotalLen++;
+    int Curr = ++Size;
+    CreateNode(St[Last].Len + 1);
+
+    int p = Last;
+    while(p !=-1 && !has(p,ch)){
+        St[p].Next[ch] = Curr;
+        p = St[p].Link;
+    }
+
+    if(p == -1) St[Curr].Link = Root;
+    else{
+        int q = St[p].Next[ch];
+        if(St[q].Len == St[p].Len + 1) St[Curr].Link = q;
         else{
-            int q = St[p].Next[c];
-            if(St[p].Len + 1 == St[q].Len) St[Curr].Link = q;
-            else{
-                int Clone = ++Size;
-                St[Clone].Len = St[p].Len + 1;
-                St[Clone].Next = St[q].Next;
-                St[Clone].Link = St[q].Link;
-                St[Clone].FrPos = St[q].FrPos;
+            int Clone = ++Size;
+            CreateNode(St[p].Len + 1);
 
-                while(p!=-1 && St[p].Next[c]==q) St[p].Next[c] = Clone, p=St[p].Link;
-                St[q].Link = St[Curr].Link = Clone;
-            }
+            St[Clone].FirstPos = St[q].FirstPos;
+            memcpy(St[Clone].Next,St[q].Next,sizeof(St[q].Next));
+            St[Clone].Link = St[q].Link;
+            St[Clone].baseID = St[q].baseID;
+            St[q].Link = St[Curr].Link = Clone;
+
+            while(p != -1 && St[p].Next[ch] == q) St[p].Next[ch] = Clone, p = St[p].Link;
         }
-        Last = Curr;
     }
+    CurrList.push_back(Curr);
+    LastList.push_back(Last);
+    Last = Curr;
+}
 
-    ll pathCalc(int pos){
-        if(St[pos].pathCount != 0) return St[pos].pathCount;
-        ll re = 1;
-        for(auto to : St[pos].Next) re += pathCalc(to.second);
-        return St[pos].pathCount = re;
+inline void del(int len){
+    if(!len) return;
+
+    for(int i = 0; i < len; i++){
+        isValid[St[CurrList.back()].baseID] = false;
+        CurrList.pop_back();
+        Last = LastList.back();
+        LastList.pop_back();
+        TotalLen--;
     }
+}
+
+inline void MarkTerminal(int u,int v){
+    while(u != -1) St[u].version = v,  u = St[u].Link;
+}
+
+int FindSmallest(int len,int idx){
+    MarkTerminal(Last,idx);
+
+    int cur = Root;
+    for(int i= 0; i< len; i++){
+        if(cur > Root && St[cur].version == idx) return TotalLen - i + 1;
+        for(int ch = 0; ch < 26; ch++){
+            if(!has(cur, ch )) continue;
+            cur = St[cur].Next[ch];
+            break;
+        }
+    }
+    return St[cur].FirstPos - len + 1;
 }
