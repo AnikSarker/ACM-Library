@@ -102,7 +102,7 @@ int main(){
     }
     sort(OnlyQry, OnlyQry + qu, cmp);
 
-    currR = 0, currL = 0, currUPDT = 0;
+    currR = -1, currL = 0, currUPDT = 0;
 
     for(ll i = 0; i < qu; i++){
         ll L = OnlyQry[i].L, R = OnlyQry[i].R, UPDT = OnlyQry[i].BeforeUpd;
@@ -112,8 +112,8 @@ int main(){
 
         while(currL<L)   Up(currL++);
         while(currL>L)   Up(--currL);
-        while(currR<=R)  Up(currR++);
-        while(currR>R+1) Up(--currR);
+        while(currR<R)   Up(++currR);
+        while(currR>R)   Up(currR--);
         ans[OnlyQry[i].IDx] = currAns;
     }
     for(ll i = 0; i < qu; i++) printf("%lld\n", ans[i]);
