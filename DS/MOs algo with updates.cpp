@@ -14,8 +14,8 @@ QUERY OnlyQry[MAX];
 unordered_map < ll, ll > ID;
 vector < ll > forsort;
 pair < ll, pair < ll, ll > > AllQ[MAX], OnlyUpd[MAX];
-ll A[MAX], Count[MAX], vis[MAX], ans[MAX], dummy[MAX], ValBeforeUpd[MAX];
-
+ll A[MAX], Count[MAX],ans[MAX], dummy[MAX], ValBeforeUpd[MAX];
+bool vis[MAX];
 bool cmp(const QUERY &a, const QUERY &b){
     if((a.L / block) != (b.L / block)) return (a.L / block) < (b.L / block);
     if((a.R / block) != (b.R / block)) return (a.R / block) < (b.R / block);
@@ -26,8 +26,7 @@ void DoUpdate(ll IDx){
     ll i = OnlyUpd[IDx].second.first;
     ll Prv = OnlyUpd[IDx].second.second;
     ll New = A[i]; A[i] = Prv;
-
-    if(i < currL || i >= currR) return;
+    if(!vis[i]) return;
     if(New != -1) {Count[New]--;  if(Count[New] == 0) currAns -= forsort[New - 1];}
     if(Prv != -1) {Count[Prv]++;  if(Count[Prv] == 1) currAns += forsort[Prv - 1];}
 }
@@ -36,27 +35,30 @@ void UndoUpdate(ll IDx){
     ll i = OnlyUpd[IDx].second.first;
     ll Prv = ValBeforeUpd[IDx];
     ll New = A[i]; A[i] = Prv;
-
-    if(i < currL || i >= currR) return;
+    if(!vis[i]) return;
     if(New != -1) {Count[New]--; if(Count[New] == 0) currAns -= forsort[New - 1];}
     if(Prv != -1) {Count[Prv]++; if(Count[Prv] == 1) currAns += forsort[Prv - 1];}
 }
 
-void Add(int x){
+void Add(ll x){
     if(A[x]==-1) return;
     if(Count[A[x]]==0) currAns+=forsort[A[x]-1]; Count[A[x]]++;
 }
 
-void Remove(int x){
+void Remove(ll x){
     if(A[x]==-1) return;
     Count[A[x]]--; if(Count[A[x]]==0) currAns-=forsort[A[x]-1];
 }
-
+void Up(ll x){
+    if(!vis[x])Add(x);
+    else Remove(x);
+    vis[x]^=1;
+}
 int main(){
     cin >> n >> m;
     block = n/cbrt(n);
 
-    for(int i = 1; i <= n; i++) {
+    for(ll i = 1; i <= n; i++) {
         scanf("%lld", &A[i]);
         dummy[i] = A[i];
         if(ID[A[i]]) continue;
@@ -65,7 +67,7 @@ int main(){
     }
 
     ll updtno = 0, qu = 0;
-    for(int i = 1; i <= m; i++){
+    for(ll i = 1; i <= m; i++){
         scanf("%lld %lld %lld", &AllQ[i].first, &AllQ[i].second.first, &AllQ[i].second.second);
 
         if(AllQ[i].first == 0){
@@ -108,11 +110,11 @@ int main(){
         while(currUPDT < UPDT) DoUpdate(currUPDT++);
         while(currUPDT > UPDT) UndoUpdate(--currUPDT);
 
-        while(currL<L)   Remove(currL++);
-        while(currL>L)   Add(--currL);
-        while(currR<=R)  Add(currR++);
-        while(currR>R+1) Remove(--currR);
+        while(currL<L)   Up(currL++);
+        while(currL>L)   Up(--currL);
+        while(currR<=R)  Up(currR++);
+        while(currR>R+1) Up(--currR);
         ans[OnlyQry[i].IDx] = currAns;
     }
-    for(int i = 0; i < qu; i++) printf("%lld\n", ans[i]);
+    for(ll i = 0; i < qu; i++) printf("%lld\n", ans[i]);
 }
