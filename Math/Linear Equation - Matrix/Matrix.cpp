@@ -76,7 +76,7 @@ int Det(Matrix mat){
     for (int i = 1; i <= n; i++) {
         for (int j = i + 1; j <= n; j++)
             while(mat.m[j][i]){
-                int t = mat.m[i][i] / mat.m[j][i];  // Be careful about MODs
+                int t = mat.m[i][i] / mat.m[j][i];
                 for (int k = i; k <= n; ++k) {
                     mat.m[i][k] -= Mul(mat.m[j][k] , t);
                     if(mat.m[i][k] < 0) mat.m[i][k] += MOD;
