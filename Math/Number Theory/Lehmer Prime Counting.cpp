@@ -1,3 +1,8 @@
+/* Let p(j) = j-th prime number.
+dp(n,j) = Count of k (1 <= k <= n and all prime div of k >= p(j))
+Then we have : dp(n,1) = n and dp(n,j+1) = dp(n,j) - dp(n/p(j),j)
+Let p(k) be the smallest prime > sqrt(n), π(n) = dp(n,k) + k - 1 */
+
 #include <bits/stdc++.h>
 using namespace std;
 
