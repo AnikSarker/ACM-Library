@@ -67,24 +67,27 @@ int Det(Matrix mat){
     assert(mat.row == mat.col);
     int n = mat.row;
     for(int i = 1; i <= n; i++)
-        for (int j = 1; j <= n; ++j)
+        for (int j = 1; j <= n; ++j){
             mat.m[i][j] %= MOD;
+            if(mat.m[i][j] < 0) mat.m[i][j] += MOD;
+        }
 
     ll ret = 1;
     for (int i = 1; i <= n; i++) {
         for (int j = i + 1; j <= n; j++)
-            for (; mat.m[j][i]; ret = -ret) {
-                int t = Div(mat.m[i][i],mat.m[j][i]);
+            while(mat.m[j][i]){
+                int t = mat.m[i][i] / mat.m[j][i];  // Be careful about MODs
                 for (int k = i; k <= n; ++k) {
                     mat.m[i][k] -= Mul(mat.m[j][k] , t);
                     if(mat.m[i][k] < 0) mat.m[i][k] += MOD;
                     swap(mat.m[j][k], mat.m[i][k]);
                 }
+                ret = MOD - ret;
             }
         if(mat.m[i][i] == 0) return 0;
         ret = Mul(ret , mat.m[i][i]);
     }
-    if (ret < 0) ret += MOD;
+    if(ret < 0) ret += MOD;
     return ret;
 }
 
