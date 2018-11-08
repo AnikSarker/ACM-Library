@@ -13,8 +13,7 @@ int main(){
     int n;
     scanf("%d",&n);
 
-    ll Plus=0;
-    ll Minus=0;
+    ll Plus=0, Minus=0;
     for(int i=1;i<=n;i++) cin>>p[i].x>>p[i].y>>p[i].val;
     
     //Precalculate w.r.t. Y-axis
