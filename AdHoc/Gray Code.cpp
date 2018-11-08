@@ -1,11 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
 #define ll long long int
-
-ll gray_code(ll x){
-    return x ^ (x >> 1);
-}
-
+ll gray_code(ll x){return x ^ (x >> 1);}
 ll inverse_gray_code(ll x){
     ll h = 1, res = 0;
     do{
