@@ -42,6 +42,7 @@ namespace pcf{
 
     ll phi(ll m,int n){
         if(n==0) return m;
+        if(primes[n-1] >= m) return 1;
         if(primes[n-1] * 1LL * primes[n-1] >=m) return counter[m] - n + 1;
         if(m<MAXM && n<MAXN) return dp[n][m];
         return phi(m,n-1) - phi(m/primes[n-1],n-1);
