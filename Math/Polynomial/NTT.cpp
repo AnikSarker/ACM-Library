@@ -1,4 +1,5 @@
 const ll mod = 786433;
+// FOR 10^9 + 7 : {7340033, 415236097, 463470593} 
 
 struct NTT{
     vector<ll>A,B;
