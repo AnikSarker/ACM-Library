@@ -1,5 +1,0 @@
-* Eulerian number of the first kind A(n,k) is the number of permutations
-of 1 to n in which exactly k elements are greater than their previous 
-element. Then : A(n,k) = (n-k) * A(n-1,k-1) + (k+1) * A(n-1,k)
-
-* 
