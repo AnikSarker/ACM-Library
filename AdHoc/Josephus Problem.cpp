@@ -1,15 +1,10 @@
-#include <bits/stdc++.h>
-using namespace std;
 #define ll long long int
-
 // Complexity : O(k log(n))
 // People 1 to n in a circle, counting starts from 1, every k'th
 // people dies, returns the position of the m'th killed people
-
 ll Josephus(ll n, ll k, ll m){
     m = n - m;
     if (k <= 1) return n - m;
-
     ll i = m;
     while (i < n){
         ll r = (i - m + k - 2) / (k - 1);
