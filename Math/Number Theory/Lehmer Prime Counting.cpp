@@ -50,7 +50,7 @@ namespace pcf{
     //returns number of primes in range [1,m]
     //Complexity : O(m^(2/3))
     ll Lehmer(ll m){
-        if(m<MAX) return counter[m];
+        if(m < MAX) return counter[m];
 
         ll w,res=0;
         int i,a,s,c,x,y;
@@ -59,4 +59,12 @@ namespace pcf{
         for(i=a;primes[i]<=s;i++) res=res-Lehmer(m/primes[i])+Lehmer(primes[i])-1;
         return res;
     }
+    
+    ll Legendre(ll m){
+        if (m < MAX) return counter[m];
+
+        int lim = sqrt(m) + 1;
+        int n = upper_bound(primes, primes + len, lim) - primes;
+        return phi(m, n) + (n - 1);
+     }
 }
