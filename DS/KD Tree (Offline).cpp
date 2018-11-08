@@ -59,12 +59,10 @@ void NearestNeighbour(node_ptr node, point q, ll&Ans){
         if(q!=node->p) Ans=min(Ans,Dist(node->p,q));
         return;
     }
-
     if(q.p[node->axis] <= node->value)    {
         NearestNeighbour(node->left,q,Ans);
         if(q.p[node->axis]+sqrt(Ans)>=node->value) NearestNeighbour(node->right,q,Ans);
     }
-
     else{
         NearestNeighbour(node->right,q,Ans);
         if(q.p[node->axis]-sqrt(Ans)<=node->value) NearestNeighbour(node->left,q,Ans);
