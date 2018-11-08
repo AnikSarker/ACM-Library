@@ -5,7 +5,7 @@ struct BIT2D{
     ll tree[4][MAX][MAX];
     BIT2D() {memset(tree,0,sizeof(tree));}
 
-    // Add v to the sub-rectangle from upper-left [p,q] to lower-right [n,n]
+    // Add v to submatrix from upper-left [p,q] to lower-right [n,n]
     void update(int p, int q, ll v){
         if((p <= 0) || (q <= 0) || (p >= MAX) || (q >= MAX)) return;
 
@@ -21,7 +21,7 @@ struct BIT2D{
         }
     }
 
-    // Query for sum of the sub-rectangle from upper-left [p,q] to lower-right [n,n]
+    // Query sum of submatrix from upper-left [p,q] to lower-right [n,n]
     ll query(int p, int q){
         int i, j;
         ll x, y, z, c, d, res;
@@ -41,16 +41,16 @@ struct BIT2D{
         return res;
     }
 
-    // Add v to the sub-rectangle from upper-left [i,j] to lower-right [k,l]
+    // Add v to submatrix from upper-left [i,j] to lower-right [k,l]
     void update(int i, int j, int k, int l, ll v){
         update(i, j, v);                   update(k + 1, j, -v);
         update(k + 1, l + 1, v);           update(i, l + 1, -v);
     }
 
-    // Query for sum of the sub-rectangle from upper-left [i,j] to lower-right [k,l]
+    // Query for sum of submatrix from upper-left [i,j] to lower-right [k,l]
     ll query(int i, int j, int k, int l){
         if (i > k || j > l) return 0;
-        ll res = query(k, l) - query(i - 1, l) + query(i - 1, j - 1) - query(k, j - 1);
+        ll res = query(k, l)-query(i - 1, l) + query(i - 1, j - 1)-query(k, j - 1);
         return res;
     }
 };
