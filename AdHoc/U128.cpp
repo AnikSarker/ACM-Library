@@ -19,8 +19,7 @@ struct U128{
         if (b == 0){lo = hi = 0;return *this;}
         U128 a(*this);U128 t = b;lo = hi = 0;
         for (size_t i = 0; i < sz; i++) {
-            if((t & 1) != 0) *this += (a << i);
-            t >>= 1;
+            if((t & 1) != 0){*this += (a << i);} t >>= 1;
         }
         return *this;
     }
@@ -37,8 +36,7 @@ struct U128{
             x <<= 1;d <<= 1;
         }
         while(x != 0) {
-            if(n >= d) { n -= d;ans |= x;}
-            x >>= 1, d >>= 1;
+            if(n >= d) { n -= d;ans |= x;} x >>= 1, d >>= 1;
         }
         quo = ans, rem = n;
     }
@@ -59,7 +57,7 @@ struct U128{
         return *this;
      }
     inline U128 &operator>>=(const U128& rhs) {
-	size_t n = rhs.to_int();
+        size_t n = rhs.to_int();
         if (n >= sz){lo = hi = 0;return *this;}
         if(n >= hsz){n -= hsz;lo = hi; hi = 0;}
         if(n != 0) {
