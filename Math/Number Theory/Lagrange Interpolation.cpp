@@ -15,17 +15,17 @@ ll Fact[MAXN];
 
 // Calculate first n points on the polynomial
 // n should be >= degree of the polynomial
-// Then find f(n) for any n using interpolation
+// Then find f(x) for any x using interpolation
 
-ll interpolate(int n,ll d) {
-    if(d<=n) return Point[d];
+ll interpolate(int n,ll x) {
+    if(x <= n) return Point[x];
 
     ll num = 1;
-    for(int i=0; i<=n; i++) num=(num * (d-i)) % MOD;
+    for(int i=0; i<=n; i++) num=(num * (x-i)) % MOD;
 
     ll ret = 0;
     for(int i=0; i<=n; i++) {
-        ll nn = (num * bigMod(d-i, MOD-2)) % MOD;
+        ll nn = (num * bigMod(x-i, MOD-2)) % MOD;
         ll dd = (Fact[n-i] * Fact[i]) % MOD;
 
         if((n-i) & 1) dd = MOD -dd;
