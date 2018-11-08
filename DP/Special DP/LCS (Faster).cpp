@@ -14,7 +14,7 @@ int lcs(char* A, char* B){
     for(n = 0; A[n]; n++) S[0][n] = A[n];
     for(m = 0; B[m]; m++) S[1][m] = B[m];
 
-    for (int i = 0; (i * 64) < m; i++){
+    for(int i = 0; (i * 64) < m; i++){
         memset(mask, 0, sizeof(mask));
         for(int k = 0; k < 64 && (i * 64 + k) < m; k++){
             mask[S[1][i * 64 + k]] |= (1ULL << k);
