@@ -92,6 +92,36 @@ int Det(Matrix mat){
     return ret;
 }
 
+#define EPS 1e-7
+double Tmp[MAX*2][MAX*2];
+double Inv[MAX][MAX];
+bool Inverse(Matrix mat){
+    int n = mat.row;
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++) Tmp[i][j] = mat.m[i][j];
+        for(int j=n+1; j<=2*n; j++) Tmp[i][j] = 0;
+        Tmp[i][i+n] = 1;
+    }
+
+    for(int i=1; i<=n; i++) {
+        if(fabs(Tmp[i][i]) < EPS)  return false;
+        for(int j=1;j<=n;j++){
+            if(i == j)  continue;
+            double c = Tmp[j][i] / Tmp[i][i];
+            for(int k = i; k <= 2*n; k++){
+                Tmp[j][k] = Tmp[j][k] - Tmp[i][k]*c;
+            }
+        }
+    }
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= n; j++){
+            Inv[i][j] = Tmp[i][j+n]/Tmp[i][i];
+        }
+    }
+    return true;
+}
+
 //Freivalds algorithm : check whether AB = C
 //Complexity : O(iteration * n^2)
 int p[MAX],q[MAX],r[MAX];
