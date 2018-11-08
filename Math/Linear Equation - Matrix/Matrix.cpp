@@ -20,9 +20,9 @@ inline int Div(ll a,ll b) {return Mul(a,inv(b));}
 
 struct Matrix{
     int row, col;
-    int m[4][4];
-    Matrix() {row = col = 3; memset(m,0,sizeof(m));}
-    Matrix(int r,int c) {row = r; col = c; memset(m,0,sizeof(m));}
+    int m[MAX][MAX];
+    Matrix() {memset(m,0,sizeof(m));}
+    void Set(int r,int c) {row = r; col = c;}
 };
 
 Matrix Multiply(Matrix A,Matrix B){
