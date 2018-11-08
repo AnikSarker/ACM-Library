@@ -23,6 +23,7 @@ struct Matrix{
     int m[MAX][MAX];
     Matrix() {memset(m,0,sizeof(m));}
     void Set(int r,int c) {row = r; col = c;}
+    Matrix(int r,int c) {memset(m,0,sizeof(m)); Set(r,c);}
 };
 
 Matrix Multiply(Matrix A,Matrix B){
