@@ -1,3 +1,5 @@
+//Complexity : O(n*m / 64)
+
 #define MAX 100010
 #define ull unsigned long long
 
