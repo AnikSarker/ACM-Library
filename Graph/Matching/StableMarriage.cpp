@@ -1,35 +1,40 @@
-//Stable Marriage
-/* Numbered from 0
- * For man i, L[i] = list of women in order of decreasing preference
- * For women j, R[j][i] = index of man i in j-th women's list of preference
- * OUTPUTS:
- *      - L2R[]:    the mate of man i (always between 0 and n-1)
- *      - R2L[]:    the mate of woman j (or -1 if single)
- * COMPLEXITY: M^2
- */
-
-#define MAXM 1024
-#define MAXW 1024
-int m;
-int L[MAXM][MAXW], R[MAXW][MAXM];
-int L2R[MAXM], R2L[MAXW];
-int p[MAXM];
-void stableMarriage(){
-    static int p[128];
-    memset(R2L, -1, sizeof R2L);
-    memset(p, 0, sizeof p);
-    // Each man proposes...
-    for(int i = 0; i < m; i++) {
-        int man = i;
-        while (man >= 0) { // propose until success
-            int wom;
-            while (1) {
-                wom = L[man][p[man]++];
-                if (R2L[wom] < 0 || R[wom][man] > R[wom][R2L[wom]]) break;
-            }
-            int hubby = R2L[wom];
-            R2L[L2R[man] = wom] = man;
-            man = hubby; // remarry the dumped guy
-        }
+// man-preference's priority is high
+const int maxn=1050;
+queue<int> q;
+int future_wife[maxn],future_husband[maxn],
+order[maxn][maxn],perfer[maxn][maxn],nextt[maxn];
+//order[i][j]=indexOfMan i in j-th women'sListOfPreference
+//prefer[i]=listOfWomen inOrderOf decreasingPreference
+void enage(int man,int woman) {
+    int m1=future_husband[woman];
+    if(m1==0) {
+        future_husband[woman]=man;
+        future_wife[man]=woman;
+    } else {
+        future_wife[m1]=0;
+        future_husband[woman]=man;
+        future_wife[man]=woman;
+        q.push(m1);
+    }
+}
+void stableMarriage() {
+    while(!q.empty())q.pop();
+    int n,x;scanf("%d",&n);
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++)
+            scanf("%d",&perfer[i][j]);
+        nextt[i]=1;q.push(i);future_wife[i]=0;
+    }
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++)
+            scanf("%d",&x),order[i][x]=j;
+        future_husband[i]=0;
+    }
+    while(!q.empty()) {
+        int man=q.front();q.pop();
+        int woman=perfer[man][nextt[man]++];
+        if(future_husband[woman]==0)enage(man,woman);
+        else if(order[woman][man]<order[woman][future_husband[woman]])enage(man,woman);
+        else q.push(man);
     }
 }
