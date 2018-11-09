@@ -13,10 +13,7 @@ using namespace std;
 
 // to check if all value of A is zero
 bool AllZero( vector<ll> &A ){
-    ll i;
-    for( i=0;i<A.size();i++ ){
-        if( A[i] ) return false;
-    }
+    for(int i=0;i<A.size();i++ ) if(A[i]) return false;
     return true;
 }
 
