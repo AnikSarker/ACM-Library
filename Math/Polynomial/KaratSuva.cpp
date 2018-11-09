@@ -33,13 +33,9 @@ void KaratSuva( vector<ll> &A,vector<ll> &B,vector<ll> &Ret ){
     /* normal multiplication for n lower value
     limit should be power of 2 ( 16,32,64 )
     any value can be used but 32 seems to be better */
-
     if(n<=32){
-        for(i=0;i<n;i++){
-            for(j=0;j<n;j++){
-                Ret[i+j] += A[i]*B[j];
-            }
-        }
+        for(i=0;i<n;i++) for(j=0;j<n;j++)
+            Ret[i+j] += A[i]*B[j];
         return;
     }
 
