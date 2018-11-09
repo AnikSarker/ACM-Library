@@ -33,19 +33,45 @@ void FFT(vector<CN>&a,bool invert){
 
 }
 
-void Multiply(vector<int>& a,vector<int>& b, vector<int>& res){
-    vector<CN>fa(a.begin(),a.end());
-    vector<CN>fb(b.begin(),b.end());
-    int n=1;
-    while(n<max(a.size(),b.size())) n<<=1;
-    n<<=1;
-    fa.resize(n),fb.resize(n);
-    FFT(fa,false),FFT(fb,false);
-    for(int i=0;i<n;i++) fa[i]*=fb[i];
-    FFT(fa,true);
-    res.resize(n);
+inline ll Round(double x){
+    if(abs(x)<eps) return 0;
+    else return (x/abs(x)) * (ll)(abs(x)+0.5);
+}
+ 
+void multiply ( vector<ll> & a, vector<ll> & b, vector<ll> & res) {
+    ll sq=sqrt(MOD);
+    int n = 1;
+    while (n < max (a.size(), b.size()))  n <<= 1;
+    n <<= 1;
+ 
+    vector<CN> a1(n),a2(n),b1(n),b2(n);
+ 
+    a.resize(n);
+    b.resize(n);
     for(int i=0;i<n;i++){
-        if(abs(fa[i].real())<eps) res[i]=0;
-        else res[i]=fa[i].real()/abs(fa[i].real())*(int)(abs(fa[i].real())+0.5);
+        a1[i]=a[i]/sq; a2[i]=a[i]%sq;
+        b1[i]=b[i]/sq; b2[i]=b[i]%sq;
+    }
+ 
+    FFT(a1, false),  FFT(a2, false);
+    FFT(b1, false),  FFT(b2, false);
+    vector<CN>c1(n),c2(n),c3(n);
+ 
+    for(int i=0;i<n;i++){
+        c1[i] = a1[i]*b1[i];
+        c2[i] = a1[i]*b2[i]+b1[i]*a2[i];
+        c3[i] = a2[i]*b2[i];
+    }
+ 
+    FFT(c1,true);
+    FFT(c2,true);
+    FFT(c3,true);
+    res.resize(n);
+ 
+    for(int i=0; i<n; ++i){
+        res[i] = ( (sq*sq) %MOD * (Round(c1[i].real()) % MOD) ) %MOD
+                  + ( sq * (Round(c2[i].real()) % MOD) ) %MOD
+                  + ( Round(c3[i].real()) %MOD );
+        res[i] %=  MOD;
     }
 }
