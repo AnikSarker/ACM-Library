@@ -27,7 +27,7 @@ void KaratSuva( vector<ll> &A,vector<ll> &B,vector<ll> &Ret ){
     ll i,j,n = A.size();
     Ret.resize(2*n);
 
-    // check is any num is zero
+    // check if any polynomial is zero
     if( AllZero( A ) || AllZero( B ) ) return;
 
     /* normal multiplication for n lower value
