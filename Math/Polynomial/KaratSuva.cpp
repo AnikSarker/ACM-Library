@@ -3,7 +3,7 @@
  * Algorithm: Karatsuva multiplication
  * Order: n^1.58
  * Note : 1) All the number should be kept in reverse order in vector
-          4) initially for two numbers length should be power of 2,
+          2) initially for two numbers length should be power of 2,
              otherwise padded extra field with zero
  */
 
