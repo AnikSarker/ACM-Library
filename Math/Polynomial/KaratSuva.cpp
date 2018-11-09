@@ -40,18 +40,18 @@ void KaratSuva( vector<ll> &A,vector<ll> &B,vector<ll> &Ret ){
     }
 
     vector<ll> A1( A.begin()+n/2,A.end());
-	vector<ll> A0( A.begin(),A.begin()+n/2 );
+    vector<ll> A0( A.begin(),A.begin()+n/2 );
     vector<ll> B1( B.begin()+n/2,B.end());
-	vector<ll> B0( B.begin(),B.begin()+n/2 );
+    vector<ll> B0( B.begin(),B.begin()+n/2 );
 
-	vector<ll> A1_B1,A0_B0;
+    vector<ll> A1_B1,A0_B0;
     KaratSuva( A1,B1,A1_B1 );
-	KaratSuva( A0,B0,A0_B0 );
+    KaratSuva( A0,B0,A0_B0 );
 
     for(i=0;i<n/2;i++) {A1[i] += A0[i]; B1[i] += B0[i];}
 
     vector<ll> A_B;
-	KaratSuva( A1,B1,A_B );
+    KaratSuva( A1,B1,A_B );
     for(i=0;i<n;i++) A_B[i] -= A1_B1[i] + A0_B0[i];
 
     for(i=0;i<n;i++){
