@@ -45,9 +45,8 @@ bool AddLetter(int pos){
         if(pos-1>=CurLen && s[pos-1-CurLen]==s[pos]) break;
         Cur=Tree[Cur].SuffLink;
     }
-    Tree[Cur].Occurrence++;
 
-    if(Tree[Cur].Next[Let]) {Suff=Tree[Cur].Next[Let]; return false;}
+    if(Tree[Cur].Next[Let]) {Suff=Tree[Cur].Next[Let]; Tree[Suff].Occurrence++; return false;}
 
     Size++;
     Tree[Size].nodeClear();
@@ -69,6 +68,7 @@ bool AddLetter(int pos){
         }
     }
     Tree[Size].Count=1+Tree[Tree[Size].SuffLink].Count;
+    Tree[Size].Occurrence++;
 
     //Update for palindromic factorization Begin
     Tree[Suff].Diff = Tree[Suff].Len - Tree[Tree[Suff].SuffLink].Len;
@@ -112,5 +112,4 @@ int main(){
     //cin>>s; int n=s.size(); s="$"+s;
     //for(int i=1;i<=n;i++) AddLetter(i), Update(i);
     //distinct palindrome count = Size - 2
-    //For(i=Size;i>=1;i--) Tree[Tree[i].SuffLink].Occurrence+=Tree[i].Occurrence;
 }
