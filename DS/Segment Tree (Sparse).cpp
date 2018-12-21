@@ -36,9 +36,9 @@ void lazyPropagation(item* node,int lo,int hi){
     }
 }
 
-void updateRange(item* node, int lo, int hi, int i, int j, int val){
-    if(lo!=hi && !node->Left) node->Left=new item();
-    if(lo!=hi && !node->Right) node->Right=new item();
+void updateRange(item* node, int lo, int hi, int i, int j, ll val){
+    if(!node->Left)  node->Left=new item();
+    if(!node->Right) node->Right=new item();
     lazyPropagation(node,lo,hi);
 
     if(lo>hi) return;
@@ -50,18 +50,20 @@ void updateRange(item* node, int lo, int hi, int i, int j, int val){
     node->value=node->Left->value + node->Right->value;
 }
 
-int queryRange(item* node,int lo,int hi,int i,int j){
+ll queryRange(item* node,int lo,int hi,int i,int j){
     if(lo>hi) return 0;
     else if(lo>j || hi<i) return 0;
-    if(lo!=hi && !node->Left) node->Left=new item();
-    if(lo!=hi && !node->Right) node->Right=new item();
-
+    
+    if(!node->Left) node->Left=new item();
+    if(!node->Right) node->Right=new item();
     lazyPropagation(node,lo,hi);
+    
     if(lo>=i && hi <= j) return node->value;
-    int p1=queryRange(node->Left,lo,mid,i,j);
-    int p2=queryRange(node->Right,mid+1,hi,i,j);
+    ll p1=queryRange(node->Left,lo,mid,i,j);
+    ll p2=queryRange(node->Right,mid+1,hi,i,j);
     return p1+p2;
 }
+
 
 //Free each node of the tree after each test case
 void Free(item* node){
