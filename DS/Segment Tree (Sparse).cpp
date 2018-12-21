@@ -37,12 +37,12 @@ void lazyPropagation(item* node,int lo,int hi){
 }
 
 void updateRange(item* node, int lo, int hi, int i, int j, int val){
-    if(lo>hi) return;
-    else if(lo>j || hi<i) return;
     if(lo!=hi && !node->Left) node->Left=new item();
     if(lo!=hi && !node->Right) node->Right=new item();
-
     lazyPropagation(node,lo,hi);
+
+    if(lo>hi) return;
+    else if(lo>j || hi<i) return;
     if(lo>=i && hi<=j) {node->lazy+=val;  lazyPropagation(node,lo,hi);  return;}
 
     updateRange(node->Left,lo,mid,i,j,val);
