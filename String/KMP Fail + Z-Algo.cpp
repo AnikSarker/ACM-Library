@@ -1,5 +1,5 @@
 //0-indexed string s[0...n-1]
-//fail[i] = maximum x such that s[1....x] matches with s[i-x+1...i]
+//fail[i] = maximum x such that s[0....x] matches with s[i-x+1...i]
 int fail[MAX];
 void build_failure(string s){
     int n=s.size();
