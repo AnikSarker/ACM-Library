@@ -28,7 +28,7 @@ int KMPSearch(string txt, string pat){
 }
 
 //0-indexed string s[0...n-1]
-//z[i] = maximum x such that s[1....x] matches with s[i..i+x-1]
+//z[i] = maximum x such that s[0....x-1] matches with s[i..i+x-1]
 int z[MAX];
 void zAlgo(string s){
     int L=0,R=0;
