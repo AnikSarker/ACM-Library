@@ -116,6 +116,45 @@ namespace Planar{
     //Modify p.n if necessary with respect to the reference point
     Vector rotateCCW90(Plane p,Vector d)  {return getCross(p.n,d);}
     Vector rotateCW90(Plane p,Vector d)   {return getCross(d,p.n);}
+
+    pair<Point3D, Point3D> TwoPointsOnPlane(Plane p){
+        Vector3D N = p.n; double D = p.d;
+
+        assert(dcmp(N.x) != 0 || dcmp(N.y) != 0 || dcmp(N.z) != 0);
+        if(dcmp(N.x) == 0 && dcmp(N.y) == 0) return {Point3D(1,0,D/N.z), Point3D(0,1,D/N.z)};
+        if(dcmp(N.y) == 0 && dcmp(N.z) == 0) return {Point3D(D/N.x,1,0), Point3D(D/N.x,0,1)};
+        if(dcmp(N.z) == 0 && dcmp(N.x) == 0) return {Point3D(1,D/N.y,0), Point3D(0,D/N.y,1)};
+        if(dcmp(N.x) == 0) return {Point3D(0,D/N.y,0), Point3D(0,0,D/N.z)};
+        if(dcmp(N.y) == 0) return {Point3D(0,0,D/N.z), Point3D(D/N.x,0,0)};
+        return {Point3D(D/N.x,0,0), Point3D(0,D/N.y,0)};
+    }
+
+    Point From3Dto2D(Plane p, Point3D a){
+        assert( dcmp(getDot(a,p.n) - p.d) == 0 );
+        auto Pair = TwoPointsOnPlane(p);
+        Point3D A = Pair.first;
+        Point3D B = Pair.second;
+
+        Vector3D Z = p.n;                 Z = Z / getLength(Z);
+        Vector3D X = B - A;               X = X / getLength(X);
+        Vector3D Y = getCross(Z,X);
+
+        Vector3D v = a - A;
+        assert( dcmp(getDot(v,Z)) == 0);
+        return Point(getDot(v,X),getDot(v,Y));
+    }
+
+    Point3D From2Dto3D(Plane p, Point a){
+        auto Pair = TwoPointsOnPlane(p);
+        Point3D A = Pair.first;
+        Point3D B = Pair.second;
+
+        Vector3D Z = p.n;                 Z = Z / getLength(Z);
+        Vector3D X = B - A;               X = X / getLength(X);
+        Vector3D Y = getCross(Z,X);
+
+        return A + X * a.x + Y * a.y;
+    }
 }
 
 struct Sphere{
