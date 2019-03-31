@@ -259,7 +259,6 @@ namespace Poly{
             for (int j = 1; j < n; j++){
                 if(getPLength(C - p[j]) > getPLength(C - p[pos])) pos = j;
             }
-
             C = C + (p[pos] - C)*P;
             P *= 0.998;
         }
