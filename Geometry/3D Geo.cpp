@@ -228,6 +228,7 @@ namespace Spherical{
 namespace Poly{
     using namespace Vectorial;
     Sphere SmallestEnclosingSphere(Polyhedron p){
+        //Reduce n by getting convex hull
         int n = p.size();
         Point3D C(0,0,0);
         for(int i=0; i<n; i++) C = C + p[i];
