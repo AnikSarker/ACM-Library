@@ -52,6 +52,7 @@ namespace Vectorial{
 
 struct Line3D{
     Vector3D v; Point3D o;
+    Line3D() {};
     Line3D(Vector3D v,Point3D o):v(v),o(o){}
     Point3D getPoint(double t) {return o + v*t;}
 };
@@ -143,7 +144,7 @@ namespace Planar{
     }
 
     Point From3Dto2D(Plane p, Point3D a){
-        assert( dcmp(getDot(a,p.n) - p.d) == 0 );
+        assert( dcmp(getSide(p,a)) == 0 );
         auto Pair = TwoPointsOnPlane(p);
         Point3D A = Pair.first;
         Point3D B = Pair.second;
@@ -188,6 +189,23 @@ namespace Spherical{
     using namespace Planar;
     using namespace Linear;
 
+    Sphere CircumscribedSphere(Point3D a,Point3D b,Point3D c,Point3D d){
+        assert( dcmp(getSide(getPlane(a,b,c), d)) != 0);
+
+        Plane U = Plane(a-b, (a+b)/2);
+        Plane V = Plane(b-c, (b+c)/2);
+        Plane W = Plane(c-d, (c+d)/2);
+
+        Line3D l1,l2;
+        bool ret1 = intersect(U,V,l1);
+        bool ret2 = intersect(V,W,l2);
+        assert(ret1 == true && ret2 == true);
+        assert( dcmp(getDist(l1,l2)) != 0);
+
+        Point3D C = getClosestPointOnLine1(l1,l2);
+        return Sphere(C, getLength(C-a));
+    }
+
     pair<double,double> SphereSphereIntersection(Sphere s1,Sphere s2){
         double d = getLength(s1.c-s2.c);
         if(dcmp(d - s1.r -s2.r) >= 0) return {0,0};
@@ -228,7 +246,6 @@ namespace Spherical{
 namespace Poly{
     using namespace Vectorial;
     Sphere SmallestEnclosingSphere(Polyhedron p){
-        //Reduce n by getting convex hull
         int n = p.size();
         Point3D C(0,0,0);
         for(int i=0; i<n; i++) C = C + p[i];
