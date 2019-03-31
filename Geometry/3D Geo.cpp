@@ -200,7 +200,7 @@ namespace Spherical{
         bool ret1 = intersect(U,V,l1);
         bool ret2 = intersect(V,W,l2);
         assert(ret1 == true && ret2 == true);
-        assert( dcmp(getDist(l1,l2)) != 0);
+        assert( dcmp(getDist(l1,l2)) == 0);
 
         Point3D C = getClosestPointOnLine1(l1,l2);
         return Sphere(C, getLength(C-a));
