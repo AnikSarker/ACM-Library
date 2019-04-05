@@ -48,6 +48,11 @@ namespace Vectorial{
         cosTheta = max(-1.0,min(1.0,cosTheta));
         return acos(cosTheta);
     }
+
+    Vector3D rotate(Vector3D v,Vector3D a,double rad){
+        a = unitVector(a);
+        return v * cos(rad) + a * (1 - cos(rad)) * getDot(a,v) + getCross(a,v) * sin(rad);
+    }
 }
 
 struct Line3D{
