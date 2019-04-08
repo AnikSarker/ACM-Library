@@ -13,8 +13,8 @@ ll bigMod(ll n, ll r) {
 ll Point[MAXN];
 ll Fact[MAXN];
 
-// Calculate first n points on the polynomial
-// n should be >= degree of the polynomial
+// Calculate first n + 1 points on the polynomial
+// n + 1 should be >= degree of the polynomial
 // Then find f(x) for any x using interpolation
 
 ll interpolate(int n,ll x) {
