@@ -83,9 +83,10 @@ struct eerTree{
         Tree[num].occurrence++;
 
         //update for palindromic factorization Begin
-        Tree[suff].diff = Tree[suff].len - Tree[Tree[suff].suffLink].len;
-        if(Tree[suff].diff == Tree[Tree[suff].suffLink].diff){
-            Tree[suff].serialLink = Tree[Tree[suff].suffLink].serialLink;
+        int xx = Tree[suff].suffLink;
+        Tree[suff].diff = Tree[suff].len - Tree[xx].len;
+        if(Tree[suff].diff == Tree[xx].diff){
+            Tree[suff].serialLink = Tree[xx].serialLink;
         }
         else Tree[suff].serialLink = suff;
         //update for palindromic factorization Ended
@@ -100,7 +101,7 @@ struct eerTree{
             Tree[j].seriesAns = DP[pos - (Tree[slv].len + Tree[j].diff)];
 
             if(Tree[j].diff == Tree[Tree[j].suffLink].diff){
-                Tree[j].seriesAns.ff  = min(Tree[j].seriesAns.ff, Tree[Tree[j].suffLink].seriesAns.ff);
+                Tree[j].seriesAns.ff = min(Tree[j].seriesAns.ff, Tree[Tree[j].suffLink].seriesAns.ff);
                 Tree[j].seriesAns.ss = min(Tree[j].seriesAns.ss, Tree[Tree[j].suffLink].seriesAns.ss);
             }
 
