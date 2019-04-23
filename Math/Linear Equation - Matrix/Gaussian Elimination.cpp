@@ -1,5 +1,5 @@
 //Gaussian Elimination
-//format : (a[0]*x[0]+a[1]*x[1] ... a[m-1]*x[m-1]) % k = 0, where 0 <= ai < k
+//format : (a[0]*x[0]+a[1]*x[1] ... a[m-1]*x[m-1]) % k = a[m], where 0 <= ai < k
 //number of solution : k^(number of free variable) = k^(n-rank)
 
 int gcdExtended(int a, int b, int& x, int& y){
