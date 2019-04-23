@@ -97,12 +97,14 @@ struct eerTree{
     void update(int pos){
         DP[pos]={INF,INF};
         for(int j=suff; Tree[j].len > 0;){
-            int slv = Tree[Tree[j].serialLink].suffLink;
+            int sfl = Tree[j].suffLink;
+            int srl = Tree[j].serialLink;
+            int slv = Tree[srl].suffLink;
             Tree[j].seriesAns = DP[pos - (Tree[slv].len + Tree[j].diff)];
 
-            if(Tree[j].diff == Tree[Tree[j].suffLink].diff){
-                Tree[j].seriesAns.ff = min(Tree[j].seriesAns.ff, Tree[Tree[j].suffLink].seriesAns.ff);
-                Tree[j].seriesAns.ss = min(Tree[j].seriesAns.ss, Tree[Tree[j].suffLink].seriesAns.ss);
+            if(Tree[j].diff == Tree[sfl].diff){
+                Tree[j].seriesAns.ff = min(Tree[j].seriesAns.ff, Tree[sfl].seriesAns.ff);
+                Tree[j].seriesAns.ss = min(Tree[j].seriesAns.ss, Tree[sfl].seriesAns.ss);
             }
 
             auto val = Tree[j].seriesAns;
