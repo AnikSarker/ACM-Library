@@ -5,9 +5,9 @@
 using namespace std;
 #define INF 1e9
 #define MAX 300005
-#define pii pair<int,int>
 #define ff first
 #define ss second
+#define pii pair<int,int>
 
 struct node{
     int next[26];
@@ -113,8 +113,8 @@ struct eerTree{
 };
 
 int main(){
-    //initTree();
-    //cin>>s; int n=s.num(); s="$"+s;
-    //for(int i=1;i<=n;i++) addLetter(i, s[i-1]), update(i);
-    //distinct palindrome Count = num - 2
+    // eerTree T; T.initTree();
+    // cin>>s; int n=s.num(); s="$"+s;
+    // for(int i=1;i<=n;i++) addLetter(i, s[i-1]), update(i);
+    // distinct palindrome Count = num - 2
 }
