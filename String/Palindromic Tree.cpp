@@ -9,12 +9,12 @@ using namespace std;
 
 struct node{
     int Next[26];
-    int MinPos;        //Position in string where this node first occurs
-    int Occurrence;  //Total number of occurrence of this node
-    int Len;             //Length of the palindrome represented by current node
-    int Power;         //Number of palindromic suffixes of the palindrome represented by current node
-    int SuffLink;      //Links such node w such that the palindrome represented by node w is the largest
-                            //palindrome which is a proper suffix of the palindrome represented by current node
+    int MinPos;       //Position in string where this node first occurs
+    int Occurrence;   //Total number of occurrence of this node
+    int Len;          //Length of the palindrome represented by current node
+    int Power;        //Number of palindromic suffixes of the palindrome represented by current node
+    int SuffLink;     //Links such node w such that the palindrome represented by node w is the largest
+                      //palindrome which is a proper suffix of the palindrome represented by current node
 
     //Used for palindrome factorization
     int Diff;
