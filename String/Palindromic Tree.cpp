@@ -6,110 +6,115 @@ using namespace std;
 #define INF 1e9
 #define MAX 300005
 #define pii pair<int,int>
+#define ff first
+#define ss second
 
 struct node{
-    int Next[26];
-    int MinPos;       //Position in string where this node first occurs
-    int Occurrence;   //Total number of occurrence of this node
-    int Len;          //Length of the palindrome represented by current node
-    int Power;        //Number of palindromic suffixes of the palindrome represented by current node
-    int SuffLink;     //Links such node w such that the palindrome represented by node w is the largest
+    int next[26];
+    int minPos;       //Position in string where this node ff occurs
+    int occurrence;   //Total number of occurrence of this node
+    int len;          //Length of the palindrome represented by current node
+    int power;        //Number of palindromic suffixes of the palindrome represented by current node
+    int suffLink;     //Links such node w such that the palindrome represented by node w is the largest
                       //palindrome which is a proper suffix of the palindrome represented by current node
 
     //Used for palindrome factorization
-    int Diff;
-    pii SeriesAns;
-    int SerialLink;
+    int diff;
+    pii seriesAns;
+    int serialLink;
 
-    void nodeClear(){
-        Len = Power = MinPos = Occurrence = SuffLink = 0;
-        Diff = SerialLink = 0; SeriesAns = {INT_MAX,INT_MAX};
-        memset(Next, 0, sizeof(Next));
+    void Init(){
+        memset(next, 0, sizeof(next));
+        len = power = minPos = occurrence = suffLink = 0;
+        diff = serialLink = 0; seriesAns = {INT_MAX,INT_MAX};
     }
 };
 
-string s;
-pii DP[MAX];
-node Tree[MAX];
-int Suff;           // Points to Current (initially previous) node in palindromic tree
-int Size;           // Size = Total number of node in palindromic tree
-                    // Size = 1 --> root 1 (Len -1),  Size = 2 ---> root 2 (Len  0)
+struct eerTree{
+    string s;
+    pii DP[MAX];
+    node Tree[MAX];
+    int suff;           // Points to current (initially previous) node in palindromic tree
+    int num;           // num = Total number of node in palindromic tree
+                        // num = 1 --> root 1 (len -1),  num = 2 ---> root 2 (len  0)
 
-bool AddLetter(int pos){
-    int Cur=Suff;
-    int CurLen=0;
-    int Let=s[pos]-'a';
-
-    while(true){
-        CurLen=Tree[Cur].Len;
-        if(pos-1>=CurLen && s[pos-1-CurLen]==s[pos]) break;
-        Cur=Tree[Cur].SuffLink;
+    void initTree(){
+        num=2; suff=2;
+        Tree[1].Init(); Tree[2].Init();
+        Tree[1].len=-1; Tree[1].suffLink=1;
+        Tree[2].len=0;  Tree[2].suffLink=1;
+        DP[0] = {INF,0};
     }
 
-    if(Tree[Cur].Next[Let]) {Suff=Tree[Cur].Next[Let]; Tree[Suff].Occurrence++; return false;}
+    bool addLetter(int pos){
+        int curr = suff, curLen = 0;
+        int let=s[pos]-'a';
 
-    Size++;
-    Tree[Size].nodeClear();
-
-    Suff=Size;
-    Tree[Suff].MinPos=pos;
-    Tree[Suff].Len=Tree[Cur].Len+2;
-    Tree[Cur].Next[Let]=Suff;
-
-    if(Tree[Size].Len==1) Tree[Size].SuffLink=2;
-    else{
         while(true){
-            Cur=Tree[Cur].SuffLink;
-            CurLen=Tree[Cur].Len;
-            if(pos-1>=CurLen && s[pos-1-CurLen]==s[pos]){
-                Tree[Size].SuffLink=Tree[Cur].Next[Let];
-                break;
+            curLen=Tree[curr].len;
+            if(pos-1>=curLen && s[pos-1-curLen]==s[pos]) break;
+            curr=Tree[curr].suffLink;
+        }
+
+        if(Tree[curr].next[let]) {
+            suff=Tree[curr].next[let];
+            Tree[suff].occurrence++;
+            return false;
+        }
+
+        suff = ++num;
+        Tree[suff].Init();
+        Tree[suff].minPos = pos;
+        Tree[suff].len = Tree[curr].len+2;
+        Tree[curr].next[let] = suff;
+
+        if(Tree[num].len == 1) Tree[num].suffLink=2;
+        else{
+            while(true){
+                curr = Tree[curr].suffLink;
+                curLen = Tree[curr].len;
+                if(pos-1 >= curLen && s[pos-1-curLen] == s[pos]){
+                    Tree[num].suffLink=Tree[curr].next[let];
+                    break;
+                }
             }
         }
-    }
-    Tree[Size].Power=1+Tree[Tree[Size].SuffLink].Power;
-    Tree[Size].Occurrence++;
+        Tree[num].power = 1+Tree[Tree[num].suffLink].power;
+        Tree[num].occurrence++;
 
-    //Update for palindromic factorization Begin
-    Tree[Suff].Diff = Tree[Suff].Len - Tree[Tree[Suff].SuffLink].Len;
-    if(Tree[Suff].Diff == Tree[Tree[Suff].SuffLink].Diff){
-        Tree[Suff].SerialLink = Tree[Tree[Suff].SuffLink].SerialLink;
-    }
-    else Tree[Suff].SerialLink = Suff;
-    //Update for palindromic factorization Ended
-
-    return true;
-}
-
-void Update(int pos){
-    DP[pos]={INF,INF};
-    for(int j=Suff; Tree[j].Len > 0;){
-        int slv = Tree[Tree[j].SerialLink].SuffLink;
-        Tree[j].SeriesAns = DP[pos - (Tree[slv].Len + Tree[j].Diff)];
-
-        if(Tree[j].Diff == Tree[Tree[j].SuffLink].Diff){
-            Tree[j].SeriesAns.first = min(Tree[j].SeriesAns.first, Tree[Tree[j].SuffLink].SeriesAns.first);
-            Tree[j].SeriesAns.second = min(Tree[j].SeriesAns.second, Tree[Tree[j].SuffLink].SeriesAns.second);
+        //update for palindromic factorization Begin
+        Tree[suff].diff = Tree[suff].len - Tree[Tree[suff].suffLink].len;
+        if(Tree[suff].diff == Tree[Tree[suff].suffLink].diff){
+            Tree[suff].serialLink = Tree[Tree[suff].suffLink].serialLink;
         }
+        else Tree[suff].serialLink = suff;
+        //update for palindromic factorization Ended
 
-        auto val = Tree[j].SeriesAns;
-        DP[pos].first = min(DP[pos].first, val.second + 1);
-        DP[pos].second = min(DP[pos].second, val.first + 1);
-        j = slv;
+        return true;
     }
-}
 
-void InitTree(){
-    Size=2; Suff=2;
-    Tree[1].nodeClear(); Tree[2].nodeClear();
-    Tree[1].Len=-1; Tree[1].SuffLink=1;
-    Tree[2].Len=0;  Tree[2].SuffLink=1;
-    DP[0] = {INF,0};
-}
+    void update(int pos){
+        DP[pos]={INF,INF};
+        for(int j=suff; Tree[j].len > 0;){
+            int slv = Tree[Tree[j].serialLink].suffLink;
+            Tree[j].seriesAns = DP[pos - (Tree[slv].len + Tree[j].diff)];
+
+            if(Tree[j].diff == Tree[Tree[j].suffLink].diff){
+                Tree[j].seriesAns.ff  = min(Tree[j].seriesAns.ff, Tree[Tree[j].suffLink].seriesAns.ff);
+                Tree[j].seriesAns.ss = min(Tree[j].seriesAns.ss, Tree[Tree[j].suffLink].seriesAns.ss);
+            }
+
+            auto val = Tree[j].seriesAns;
+            DP[pos].ff = min(DP[pos].ff, val.ss + 1);
+            DP[pos].ss = min(DP[pos].ss, val.ff + 1);
+            j = slv;
+        }
+    }
+};
 
 int main(){
-    //InitTree();
-    //cin>>s; int n=s.size(); s="$"+s;
-    //for(int i=1;i<=n;i++) AddLetter(i), Update(i);
-    //distinct palindrome Power = Size - 2
+    //initTree();
+    //cin>>s; int n=s.num(); s="$"+s;
+    //for(int i=1;i<=n;i++) addLetter(i, s[i-1]), update(i);
+    //distinct palindrome Count = num - 2
 }
