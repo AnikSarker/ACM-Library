@@ -3,18 +3,18 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-#define MAX 300005
 #define INF 1e9
+#define MAX 300005
 #define pii pair<int,int>
 
 struct node{
     int Next[26];
-    int MinPos;     //Position in string where this node first occurs
-    int Occurrence; //Total number of occurrence of this node
-    int Len;        //Length of the palindrome represented by current node
-    int Count;      //Number of palindromic suffixes of the palindrome represented by current node
-    int SuffLink;   //Links such node w such that the palindrome represented by node w is the largest
-                    //palindrome which is a proper suffix of the palindrome represented by current node
+    int MinPos;        //Position in string where this node first occurs
+    int Occurrence;  //Total number of occurrence of this node
+    int Len;             //Length of the palindrome represented by current node
+    int Power;         //Number of palindromic suffixes of the palindrome represented by current node
+    int SuffLink;      //Links such node w such that the palindrome represented by node w is the largest
+                            //palindrome which is a proper suffix of the palindrome represented by current node
 
     //Used for palindrome factorization
     int Diff;
@@ -22,7 +22,7 @@ struct node{
     int SerialLink;
 
     void nodeClear(){
-        Len = Count = MinPos = Occurrence = SuffLink = 0;
+        Len = Power = MinPos = Occurrence = SuffLink = 0;
         Diff = SerialLink = 0; SeriesAns = {INT_MAX,INT_MAX};
         memset(Next, 0, sizeof(Next));
     }
@@ -67,7 +67,7 @@ bool AddLetter(int pos){
             }
         }
     }
-    Tree[Size].Count=1+Tree[Tree[Size].SuffLink].Count;
+    Tree[Size].Power=1+Tree[Tree[Size].SuffLink].Power;
     Tree[Size].Occurrence++;
 
     //Update for palindromic factorization Begin
@@ -111,5 +111,5 @@ int main(){
     //InitTree();
     //cin>>s; int n=s.size(); s="$"+s;
     //for(int i=1;i<=n;i++) AddLetter(i), Update(i);
-    //distinct palindrome count = Size - 2
+    //distinct palindrome Power = Size - 2
 }
