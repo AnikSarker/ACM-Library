@@ -55,12 +55,13 @@ int main(){
 //MO on Tree Path
 BuildSparse(){...}
 LCA(){...}
+
 int main(){
-	......
-	for(int i=1;i<=m;i++){
+    ......
+    for(int i=1;i<=m;i++){
         int u,v;
         scanf("%d %d",&u,&v);
-        if(D[u]>D[v]) swap(u,v);
+        if(st[u]>st[v]) swap(u,v);
         int lca=LCA(u,v);
         if(lca==u) my[i]=Q(st[u],st[v],i);    //Case 1 : range(st[u],st[v])
         else my[i]=Q(en[u],st[v],i);          //Case 2 : range(en[u],st[v]) and LCA(u,v)
@@ -68,10 +69,14 @@ int main(){
     ......
     for(int i=1;i<=m;i++){
         Q now=my[i];
-	......
+        while(left<now.L)  Check(A[left++]);
+        while(left>now.L)  Check(A[--left]);
+        while(right<now.R) Check(A[++right]);
+        while(right>now.R) Check(A[right--]);
+
         int lca=LCA(A[left],A[right]);
         if(A[left]!=lca && A[right]!=lca) Check(lca); //Adding LCA(u,v) for Case 2
-        Ans[my[i].id]=Unique;
+        Ans1[my[i].id]=MaxFreq;
         if(A[left]!=lca && A[right]!=lca) Check(lca); //Discarding the Addition
     }
 }
