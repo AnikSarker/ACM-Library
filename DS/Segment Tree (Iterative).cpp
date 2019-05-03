@@ -5,7 +5,7 @@ int tree[MAX*2];
 //initial elements at tree[n]....tree[2*n-1]
 void build(){
     for(int i=n-1;i>=1;i--) 
-        tree[i]=tree[i<<1]+tree[i<<1|1];
+        tree[i]=max(tree[i<<1],tree[i<<1|1]);
 }
 
 void update(int p,int value){
