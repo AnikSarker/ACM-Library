@@ -7,8 +7,8 @@ int main(){
 
     vector<char> vec;
     vec.clear();
-    while(Ans) vec.push_back((int) Ans % 10), Ans /= 10;
+    while(Ans) vec.push_back(Ans % 10 | 48), Ans /= 10;
     reverse(vec.begin(),vec.end());
-    for(int x : vec) printf("%d",x);
+    for(char x : vec) printf("%c",x);
     printf("\n");
 }
