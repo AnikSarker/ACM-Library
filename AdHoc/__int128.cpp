@@ -5,7 +5,7 @@ int main(){
     int n = 100;
     __int128 Ans = n;
 
-	vector<char> vec;
+    vector<char> vec;
     vec.clear();
     while(Ans) vec.push_back((int) Ans % 10), Ans /= 10;
     reverse(vec.begin(),vec.end());
