@@ -29,6 +29,13 @@ struct maxxor{
         return ans;
     }
 
+    //returns max xor over (k ^ some subset)
+    ll getMax(ll k){
+        ll ans = k;
+        for(ll b : basis) ans = max(ans, ans ^ b);
+        return ans;
+    }
+
     //returns k-th (0-indexed) smallest distinct subset xor
     ll getKth(ll k){
         ll ans = 0;
