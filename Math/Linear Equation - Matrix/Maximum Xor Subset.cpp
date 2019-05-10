@@ -29,7 +29,7 @@ struct maxxor{
         return ans;
     }
 
-    //returns k-th (0-indexed) smallest subset xor
+    //returns k-th (0-indexed) smallest distinct subset xor
     ll getKth(ll k){
         ll ans = 0;
         for(ll i = 0; i < basis.size(); i++)
