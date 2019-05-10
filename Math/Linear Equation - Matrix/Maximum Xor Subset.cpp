@@ -9,11 +9,12 @@ struct maxxor{
     void init() {basis.clear();}
 
     void add(ll x){
-        // we keep the basis sorted in increasing order
+        // Keep the basis sorted in increasing order
         for(ll b : basis) x = min(x, x ^ b);
+        for(ll &b : basis) b = min(b, x ^ b);
+
         if(x){
             basis.push_back(x);
-            // now we move x up until the basis is increasingly sorted again
             for(ll i = basis.size() - 1; i> 0 ; i--){
                 if(basis[i] < basis[i - 1]) swap(basis[i], basis[i - 1]);
                 else break;
