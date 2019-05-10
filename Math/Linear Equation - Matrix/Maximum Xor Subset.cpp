@@ -5,32 +5,34 @@ using namespace std;
 
 // Gaussian Elimination Online
 struct maxxor{
-    ll b[64];
-    ll sz;
-    void init() {sz = 0;}
+    vector<ll> basis;
+    void init() {basis.clear();}
 
     void add(ll x){
-        for(ll i = 0; i < sz; i++)
-            if((x ^ b[i]) < x) x ^= b[i];
-        for(ll i = 0; i < sz; i++)
-            if((x ^ b[i]) < b[i]) b[i] ^= x;
+        // we keep the basis sorted in increasing order
+        for(ll b : basis) x = min(x, x ^ b);
         if(x){
-            b[sz++] = x;
-            for(ll i = sz - 1; i>=0 ; i--)
-                if(b[i] < b[i - 1]) swap(b[i], b[i - 1]);
+            basis.push_back(x);
+            // now we move x up until the basis is increasingly sorted again
+            for(ll i = basis.size() - 1; i> 0 ; i--){
+                if(basis[i] < basis[i - 1]) swap(basis[i], basis[i - 1]);
+                else break;
+            }
         }
     }
 
-    ll getMax(){     //returns max subset xor
+    //returns max subset xor
+    ll getMax(){
         ll ans=0;
-        for(ll i = 0; i < sz; i++) ans ^= b[i];
+        for(ll b : basis) ans ^= b;
         return ans;
     }
 
-    ll getKth(ll k){ //returns k-th smallest distinct subset xor
-        k--; ll ans = 0;
-        for(ll i = 0; i < sz; i++)
-            if((k >> i) & 1) ans ^= b[i];
+    //returns k-th (0-indexed) smallest distinct subset xor
+    ll getKth(ll k){
+        ll ans = 0;
+        for(ll i = 0; i < basis.size(); i++)
+            if((k >> i) & 1) ans ^= basis[i];
         return ans;
     }
 }ds;
