@@ -1,4 +1,3 @@
-//Trie
 //Space Complexity : O(Sum of length of all strings)
 
 struct NODE{
