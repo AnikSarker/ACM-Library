@@ -12,20 +12,20 @@ void BuildSparse(int n){
 }
 
 int LCA(int p,int q){
-    if (D[p]<D[q]) swap(p,q);
+    if(D[p]<D[q]) swap(p,q);
 
-    int Log=log2(D[p])+1;
-    for(int i=Log;i>=0;i--) if(D[p]-D[q] >= (1<<i)) p=P[p][i];
+    int Log = log2(D[p])+1;
+    for(int i=Log;i>=0;i--) if(D[p]-D[q] >= (1<<i)) p = P[p][i];
     if(p==q) return p;
 
-    for(int i=Log;i>=0;i--) if(P[p][i]!=0 && P[p][i] != P[q][i]) {p=P[p][i]; q=P[q][i];}
-    int LCA=Par[p];
+    for(int i=Log;i>=0;i--) if(P[p][i]!=0 && P[p][i] != P[q][i]) {p = P[p][i]; q = P[q][i];}
+    int LCA = Par[p];
     return LCA;
 }
 
 //Note 1 : Reversing v while merging (u,v) might be necessary in some case.
-//Note 2 : We  assign cost of an edge as the cost of the child node.
-//Note 3 : In case values/costs for each node given (instead of each edge), merge u,M[LCA][0] and v together.
+//Note 2 : We assign cost of an edge as the cost of the child node.
+//Note 3 : In case values/costs for each node given (instead of each edge), merge LCA too along with merging u and v.
 
 int kth_par(int u,int d){
     int Log = log2(d)+1;
