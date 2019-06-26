@@ -5,7 +5,6 @@ int Sz;
 int A[MAXN];
 int blkId[MAXN];
 bool vis[MAXN];
-int Count[MAXN];
 
 struct Query{
     int L,R,id;
@@ -18,10 +17,20 @@ struct Query{
 }qry[MAXQ];
 int perQ[MAXQ];
 
-int Global;
+int MaxFreq = 0;
+int CoC[MAXN];
+int Count[MAXN];
 bool Check(int x){
-    if(!vis[x]) {vis[x]=1; /* To do */ }
-    else        {vis[x]=0; /* To do */ }
+    if(!vis[x]){
+        vis[x]=1;
+        if(Count[A[x]]) CoC[Count[A[x]]]--; Count[A[x]]++; CoC[Count[A[x]]]++;
+        if(CoC[MaxFreq + 1]) MaxFreq++;
+    }
+    else{
+        vis[x]=0;
+        CoC[Count[A[x]]]--; Count[A[x]]--; if(Count[A[x]]) CoC[Count[A[x]]]++;
+        if(CoC[MaxFreq] == 0) MaxFreq--;
+    }
 }
 
 int main(){
@@ -51,6 +60,6 @@ int main(){
         while(left>now.L)  Check(--left);
         while(right<now.R) Check(++right);
         while(right>now.R) Check(right--);
-        perQ[now.id] = Global;
+        perQ[now.id] = MaxFreq;
     }
 }
