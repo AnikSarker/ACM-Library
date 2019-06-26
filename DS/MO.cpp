@@ -1,37 +1,40 @@
-const int MAXN = 100005;
-const int MAXQ = 100005;
+namespace MO{
+    const int MAXN = 100005;
+    const int MAXQ = 100005;
 
-int Sz;
-int A[MAXN];
-int blkId[MAXN];
-bool vis[MAXN];
+    int Sz;
+    int A[MAXN];
+    int blkId[MAXN];
+    bool vis[MAXN];
 
-struct Query{
-    int L,R,id;
-    Query(){}
-    Query(int x,int y,int i){L=x;R=y;id=i;}
-    bool operator<(const Query other) const{
-        int a = blkId[L]; int b = blkId[other.L];
-        return a == b ? ((R < other.R) ^ (a & 1)) : a < b;
-    }
-}qry[MAXQ];
-int perQ[MAXQ];
+    struct Query{
+        int L,R,id;
+        Query(){}
+        Query(int x,int y,int i){L=x;R=y;id=i;}
+        bool operator<(const Query other) const{
+            int a = blkId[L]; int b = blkId[other.L];
+            return a == b ? ((R < other.R) ^ (a & 1)) : a < b;
+        }
+    }qry[MAXQ];
+    int perQ[MAXQ];
 
-int MaxFreq = 0;
-int CoC[MAXN];
-int Count[MAXN];
-bool Check(int x){
-    if(!vis[x]){
-        vis[x]=1;
-        if(Count[A[x]]) CoC[Count[A[x]]]--; Count[A[x]]++; CoC[Count[A[x]]]++;
-        if(CoC[MaxFreq + 1]) MaxFreq++;
-    }
-    else{
-        vis[x]=0;
-        CoC[Count[A[x]]]--; Count[A[x]]--; if(Count[A[x]]) CoC[Count[A[x]]]++;
-        if(CoC[MaxFreq] == 0) MaxFreq--;
+    int MaxFreq = 0;
+    int CoC[MAXN];
+    int Count[MAXN];
+    bool Check(int x){
+        if(!vis[x]){
+            vis[x]=1;
+            if(Count[A[x]]) CoC[Count[A[x]]]--; Count[A[x]]++; CoC[Count[A[x]]]++;
+            if(CoC[MaxFreq + 1]) MaxFreq++;
+        }
+        else{
+            vis[x]=0;
+            CoC[Count[A[x]]]--; Count[A[x]]--; if(Count[A[x]]) CoC[Count[A[x]]]++;
+            if(CoC[MaxFreq] == 0) MaxFreq--;
+        }
     }
 }
+using namespace MO;
 
 int main(){
     int N,Q;
