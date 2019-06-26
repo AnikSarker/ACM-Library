@@ -32,7 +32,7 @@ int main(){
         scanf("%d %d",&u,&v);
 
         if(st[u]>st[v]) swap(u,v);
-        int lca=LCA(u,v);
+        int lca = LCA(u,v);
         if(lca == u) qry[i] = Query(st[u],st[v],i);   //Case 1 : range(st[u],st[v])
         else qry[i] = Query(en[u],st[v],i);           //Case 2 : range(en[u],st[v]) and LCA(u,v)
     }
