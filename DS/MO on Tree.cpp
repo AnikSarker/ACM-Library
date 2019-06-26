@@ -27,7 +27,7 @@ int main(){
     dfs(1,0);
     BuildSparse(N);
 
-	for(int i=1;i<=Q;i++){
+    for(int i=1;i<=Q;i++){
         int u,v;
         scanf("%d %d",&u,&v);
 
