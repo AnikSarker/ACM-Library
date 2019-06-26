@@ -21,7 +21,7 @@ int LCA(int p,int q){
     for(int i=Log;i>=0;i--) if(P[p][i]!=0 && P[p][i] != P[q][i]) {p=P[p][i]; q=P[q][i];}
     int LCA=Par[p];
     return LCA;
-    }
+}
 
 //Note 1 : Reversing v while merging (u,v) might be necessary in some case.
 //Note 2 : We  assign cost of an edge as the cost of the child node.
