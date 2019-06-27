@@ -1,12 +1,18 @@
 //1D BIT
 ll BIT[2][MAX];
 void update(int cs,int indx,ll val){
-    while(indx<MAX) {BIT[cs][indx]+=val; indx+=(indx&-indx);}
+    while(indx<MAX) {
+        BIT[cs][indx]+=val;
+        indx+=(indx&-indx);
+    }
 }
 
 ll sum(int cs,int indx){
     ll ans=0;
-    while(indx!=0) {ans+=BIT[cs][indx];indx-=(indx&-indx);}
+    while(indx!=0) {
+        ans+=BIT[cs][indx];
+        indx-=(indx&-indx);
+    }
     return ans;
 }
 
