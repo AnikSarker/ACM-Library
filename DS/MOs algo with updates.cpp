@@ -5,20 +5,18 @@ const int MAXQ = 300005;
 int Sz;
 ll currAns;
 struct Query{
-    int L,R,BeforeUpd,idx;
+    int L,R,t,id;
     Query() {}
-    Query(int _L,int _R,int _upd,int _idx) {L=_L; R=_R; BeforeUpd=_upd; idx=_idx;}
-    bool operator < (const Query other){
-        int a = L/Sz; int b = other.L / Sz;
-        int c = R/Sz; int d = other.R / Sz;
-        if(a != b) return a < b;
-        if(c != d) return c < d;
-        return BeforeUpd < other.BeforeUpd;
+    Query(int _L,int _R,int _upd,int _id) {L=_L; R=_R; t=_upd; id=_id;}
+    bool operator < (const Query o){
+        if(L/Sz != o.L/Sz) return L < o.L;
+        if(R/Sz != o.R/Sz) return R < o.R;
+        return t < o.t;
     }
 }OnlyQry[MAXQ];
+
 ll ans[MAXQ];
 tuple<int,int,int> AllQ[MAXQ], OnlyUpd[MAXQ];
-
 
 vector <int> forsort;
 unordered_map <int, int> ID;
@@ -113,7 +111,7 @@ int main(){
     for(int i=1;i<=QryNo;i++){
         int L = OnlyQry[i].L;
         int R = OnlyQry[i].R;
-        int Upd = OnlyQry[i].BeforeUpd;
+        int Upd = OnlyQry[i].t;
 
         while(currUpd < Upd) DoUpdate(++currUpd);
         while(currUpd > Upd) UnDoUpdate(currUpd--);
@@ -122,7 +120,7 @@ int main(){
         while(left>L) Check(--left);
         while(right<R) Check(++right);
         while(right>R) Check(right--);
-        ans[OnlyQry[i].idx] = currAns;
+        ans[OnlyQry[i].id] = currAns;
     }
     for(int i=1;i<=QryNo;i++) printf("%lld\n",ans[i]);
 }
