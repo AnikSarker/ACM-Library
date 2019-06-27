@@ -16,45 +16,46 @@ struct Query{
         return BeforeUpd < other.BeforeUpd;
     }
 }OnlyQry[MAXQ];
-
-vector <ll> forsort;
-unordered_map <ll, ll> ID;
-
 ll ans[MAXQ];
-tuple<ll,ll,ll> AllQ[MAXQ], OnlyUpd[MAXQ];
+tuple<int,int,int> AllQ[MAXQ], OnlyUpd[MAXQ];
+
+
+vector <int> forsort;
+unordered_map <int, int> ID;
 
 bool vis[MAXN];
-ll A[MAXN], Count[MAXN], dummy[MAXN], ValBeforeUpd[MAXN];
+int A[MAXN], Count[MAXN];
+int dummy[MAXN], ValBeforeUpd[MAXN];
 
-void DoUpdate(ll idx){
+void DoUpdate(int idx){
     int i = get<1>(OnlyUpd[idx]);
-    ll Prv = get<2>(OnlyUpd[idx]);
-    ll New = A[i]; A[i] = Prv;
+    int Prv = get<2>(OnlyUpd[idx]);
+    int New = A[i]; A[i] = Prv;
     if(!vis[i]) return;
     if(New != -1) {Count[New]--;  if(Count[New] == 0) currAns -= forsort[New - 1];}
     if(Prv != -1) {Count[Prv]++;  if(Count[Prv] == 1) currAns += forsort[Prv - 1];}
 }
 
-void UnDoUpdate(ll idx){
-    ll i = get<1>(OnlyUpd[idx]);
-    ll Prv = ValBeforeUpd[idx];
-    ll New = A[i]; A[i] = Prv;
+void UnDoUpdate(int idx){
+    int i = get<1>(OnlyUpd[idx]);
+    int Prv = ValBeforeUpd[idx];
+    int New = A[i]; A[i] = Prv;
     if(!vis[i]) return;
     if(New != -1) {Count[New]--; if(Count[New] == 0) currAns -= forsort[New - 1];}
     if(Prv != -1) {Count[Prv]++; if(Count[Prv] == 1) currAns += forsort[Prv - 1];}
 }
 
-void Add(ll x){
-    if(A[x]==-1) return;
+void Add(int x){
+    if(A[x] == -1) return;
     if(Count[A[x]]==0) currAns += forsort[A[x]-1]; Count[A[x]]++;
 }
 
-void Remove(ll x){
-    if(A[x]==-1) return;
-    Count[A[x]]--; if(Count[A[x]]==0) currAns-=forsort[A[x]-1];
+void Remove(int x){
+    if(A[x] == -1) return;
+    Count[A[x]]--; if(Count[A[x]]==0) currAns -= forsort[A[x]-1];
 }
 
-void Check(ll x){
+void Check(int x){
     if(!vis[x]) Add(x);
     else Remove(x);
     vis[x] ^= 1;
@@ -67,7 +68,6 @@ int main(){
 
     for(int i=1;i<=N;i++) {
         scanf("%lld",&A[i]);
-        dummy[i] = A[i];
         if(ID[A[i]]) continue;
         ID[A[i]] = 1;
         forsort.push_back(A[i]);
@@ -90,9 +90,11 @@ int main(){
     }
 
     sort(forsort.begin(), forsort.end());
-    for(int i=0;i<forsort.size();i++){
-        if(forsort[i] % 3) ID[forsort[i]] = -1;
-        else ID[forsort[i]] = i + 1;
+    int Cnt = 0;
+    for(int x : forsort){
+        Cnt++;
+        if(x % 3) ID[x] = -1;
+        else ID[x] = Cnt;
     }
 
     for(int i=1;i<=N;i++) A[i] = ID[A[i]], dummy[i] = A[i];
