@@ -1,6 +1,9 @@
-// O(n (log n)^2) 
-typedef long long ll;
+// O(n (log n)^2)
+//Courtesy : Rezwan Arefin
+
+#define ll long long int
 #define sq(a) ((a)*(a))
+
 struct point { 
     ll x, y; 
     bool operator < (const point &p) const {
