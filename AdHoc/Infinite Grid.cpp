@@ -5,11 +5,11 @@
 int n, m;
 ll F(int x,int y){
     if(x < 0 || y < 0) return 0;
-    int r = x / n; int c = y / m;
-    int X = x % n; int Y = y % m;
-
+    
     //12
     //34
+    int r = x / n; int c = y / m;
+    int X = x % n; int Y = y % m;
 
     //Case 1 : r * c Full blocks)
     if(r && c){
