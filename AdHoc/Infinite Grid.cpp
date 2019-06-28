@@ -1,6 +1,6 @@
 //infinite grid formed by replication of initial n*m grid
 //All co-ordinates are 0-indexed
-//Answer rectangular queries
+//Answer rectangular queries (x1,y1,x2,y2)
 
 int n, m;
 ll F(int x,int y){
