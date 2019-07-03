@@ -5,9 +5,8 @@ Formula 3 :   f(n)=2*f(n-1)  //take s[n] or don't take
 
 
 //Number of distinct subsequence
-Formula 1 :   f(n)=2*f(n-1)-f(m)  //here, m=index of previous occurrence of s[n]
+Formula 1 :   f(n) = 2*f(n-1)-f(m)  //here, m=index of previous occurrence of s[n]
                                   //m=0 if s[n] not found previously
-
 
 //Longest Common Subsequence
 Formula 1 :   f(i,j)=0                                                  if(i==0 || j==0)
