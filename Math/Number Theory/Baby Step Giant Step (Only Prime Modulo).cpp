@@ -47,7 +47,7 @@ ll baby_step_giant_step(ll a,ll b,ll m){
 
     //Giant step
     aa=InvMod(aa,m);
-    for(int i=0;i<m;i++){
+    for(int i=0;i<k;i++){
         int j=H.Find(b);
         if(j!=-1) return i*k+j;
         b=b*aa%m;
