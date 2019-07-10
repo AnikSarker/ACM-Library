@@ -7,7 +7,7 @@ struct Line{
 };
 
 bool Bad(Line &P,Line &C,Line &N){
-    return 1.0*(P.c-C.c)*(N.m-P.m) > 1.0*(P.c-N.c)*(C.m - P.m);
+    return (P.c-C.c) * 1.0L * (N.m-P.m) > (P.c-N.c) * 1.0L * (C.m - P.m);
 }
 
 //This Convex Hull always maintains lower convex hull
