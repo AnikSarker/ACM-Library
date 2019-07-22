@@ -25,6 +25,7 @@ void RunLinearSieve(int n) {
 int mob[MAX];
 void Mobius(int n){
     RunLinearSieve(n);
+    
     mob[1] = 1;
     for(int i = 2; i <= n; i++) {
         int j = i/least[i];
