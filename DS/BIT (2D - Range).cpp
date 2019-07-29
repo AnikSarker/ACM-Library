@@ -7,7 +7,7 @@ struct BIT2D{
     ll tree[4][MAXN][MAXN];
     BIT2D() {memset(tree,0,sizeof(tree));}
 
-    //Add v to submatrix [i,j] to [MAXN,MAXN]
+    //Add v to submatrix [i,j] to [inf,inf]
     void update(int p, int q, ll v){
         if((p <= 0) || (q <= 0) || (p >= MAXN) || (q >= MAXN)) return;
 
