@@ -33,7 +33,7 @@ void update(int node, int lo, int hi, int i, int val){
 }
 
 /*
-lazy propagation
+Lazy Propagation
 1. Lets define a range update operation on segment tree OP. If there is a lazy
 value x in some node u from some updates, its guaranteed that this lazy value
 has been already propagated from each node v in the path from root to u. If
