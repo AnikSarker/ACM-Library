@@ -1,5 +1,6 @@
-//Space Complexity : O(Sum of length of all strings)
+//Space Complexity : O(Sum of |S_i|)
 
+const int LOG = 20;
 struct Trie{
     struct Node{
         Node* Child[2];
