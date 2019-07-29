@@ -7,7 +7,7 @@ ll BIT[2][MAXN];
 void update(int cs, int indx, ll val){
     while(indx < MAXN){
         BIT[cs][indx] += val;
-        indx += (indx&-indx);
+        indx += (indx & -indx);
     }
 }
 
@@ -15,7 +15,7 @@ ll sum(int cs, int indx){
     ll ans = 0;
     while(indx != 0) {
         ans += BIT[cs][indx];
-        indx -= (indx&-indx);
+        indx -= (indx & -indx);
     }
     return ans;
 }
