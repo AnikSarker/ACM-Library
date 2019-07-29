@@ -41,5 +41,5 @@ int Query(int x1,int y1,int x2,int y2){
 
     int ret1 = max(M[x1][y1][kX][kY], M[x1][y2-addY+1][kX][kY]);
     int ret2 = max(M[x2-addX+1][y1][kX][kY], M[x2-addX+1][y2-addY+1][kX][kY]);
-    return max(ret1,ret2);
+    return max(ret1, ret2);
 }
