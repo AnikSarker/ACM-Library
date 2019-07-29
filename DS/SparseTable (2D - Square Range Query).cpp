@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//2D SparseTable
 const int MAXN = 1005;
 const int LOGN = 10;
 int A[MAXN][MAXN];
