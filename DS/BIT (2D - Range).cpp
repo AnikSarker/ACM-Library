@@ -1,3 +1,5 @@
+//Tested : https://www.spoj.com/problems/USUBQSUB
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
