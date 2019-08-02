@@ -1,3 +1,4 @@
+//0-indexed , root = 0 
 typedef vector<pair<int,int> > vpi;
 typedef vector<vpi> graph;
 typedef long long ll ;
