@@ -21,7 +21,6 @@ struct WaveletTree{
         for(auto it = from; it != to; it++)
             b.push_back(b.back() + f(*it));
 
-        //see how lambda function is used here
         auto pivot = stable_partition(from, to, f);
         l = new WaveletTree(from, pivot, lo, mid);
         r = new WaveletTree(pivot, to, mid+1, hi);
