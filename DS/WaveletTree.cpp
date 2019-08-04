@@ -25,9 +25,9 @@ struct WaveletTree{
         auto pivot = stable_partition(from, to, f);
         l = new WaveletTree(from, pivot, lo, mid);
         r = new WaveletTree(pivot, to, mid+1, hi);
-	}
+    }
 
-	//kth (1-indexed) smallest element in [l, r]
+    //kth (1-indexed) smallest element in [l, r]
     int kth(int l, int r, int k){
         if(l > r) return 0;
         if(lo == hi) return lo;
@@ -38,7 +38,7 @@ struct WaveletTree{
         return this->r->kth(l-lb, r-rb, k-inLeft);
     }
 
-	//Count of numbers <= k in [l, r]
+    //Count of numbers <= k in [l, r]
     int LTE(int l, int r, int k){
         if(l > r or k < lo) return 0;
         if(hi <= k) return r - l + 1;
