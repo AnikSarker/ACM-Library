@@ -23,12 +23,12 @@ dfs(u):
                 y = smallest integer > 0 so that (x + y) > 1
                 x = x + y
                 y = 2 ^ (y - 1)
-                grundy = grundy + (x / y)
+                grundy = grundy + (x / y) //Double Divison
             else:
                 y = smallest integer > 0 so that (x - y) < -1
                 x = x - y
                 y = 2 ^ (y - 1)
-                grundy = grundy + (x / y)
+                grundy = grundy + (x / y) //Double Divison
     return grundy
 
 If the grundy is positive, then blue wins
