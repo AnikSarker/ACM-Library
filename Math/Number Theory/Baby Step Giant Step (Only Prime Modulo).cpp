@@ -36,10 +36,10 @@ struct hash_table{
         return a[i]==aa?j[i]:-1;
     }
 };
-
+hash_table H; 
 ll baby_step_giant_step(ll a,ll b,ll m){
     int k=(int)sqrt(m)+1;
-    static hash_table H; H.init();
+    H.init();
 
     //Baby step
     ll aa=1;
