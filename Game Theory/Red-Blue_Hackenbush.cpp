@@ -11,6 +11,7 @@ or minus cur x times if the first edges are red. And for every next edges
 we make cur = cur / 2 and add it to our grundy value depending on the edge colour.
 
 For a tree follow this pseudo-code:
+
 dfs(u):
     if(u == LEAF_NODE) return 0
     else:
@@ -28,7 +29,6 @@ dfs(u):
                 x = x - y
                 y = 2 ^ (y - 1)
                 grundy = grundy + (x / y)
-
     return grundy
 
 If the grundy is positive, then blue wins
