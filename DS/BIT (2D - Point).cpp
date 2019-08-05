@@ -1,3 +1,5 @@
+//Tested LightOJ 1266 - Points in Rectangle
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
