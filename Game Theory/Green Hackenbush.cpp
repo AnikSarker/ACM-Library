@@ -1,5 +1,3 @@
-
-//
 // Green Hackenbush
 // Description:
 //   Consider a two player game on a graph with a specified vertex (root).
@@ -33,8 +31,7 @@
 // Verified:
 //   SPOJ 1477: Play with a Tree
 //   IPSC 2003 G: Got Root?
-//
-//
+
 #define fst first
 #define snd second
 #define all(c) ((c).begin()), ((c).end())
@@ -70,6 +67,7 @@ struct hackenbush {
 		return dfs(-1, r);
 	}
 };
+
 int main() {
 	int cases; scanf("%d", &cases);
 	for (int icase = 0; icase < cases; ++icase) {
