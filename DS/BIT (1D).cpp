@@ -1,4 +1,5 @@
 //Tested : LightOJ 1164 - Horrible Queries
+
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long int
