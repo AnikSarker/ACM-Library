@@ -5,9 +5,10 @@ When a edge is cut, then the subtree under it is cut. Who will win?
 It can be solved by red-blue hacken bush.
 
 If the tree is a chain, then it's simple. 
-Let cur = 1, and from root there are consecutive x blue/red edges. Then we add cur x times to our grundy val if the first edges are blue
-or minus cur x times if the first edges are red. And for every next edges we make cur = cur / 2 and add it to our grundy value depending
-on the edge colour.
+Let cur = 1, and from root there are consecutive x blue/red edges.
+Then we add cur x times to our grundy val if the first edges are blue
+or minus cur x times if the first edges are red. And for every next edges
+we make cur = cur / 2 and add it to our grundy value depending on the edge colour.
 
 For a tree follow this pseudo-code:
 dfs(u):
