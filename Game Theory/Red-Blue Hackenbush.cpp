@@ -1,3 +1,5 @@
+//Resources : http://www.geometer.org/mathcircles/hackenbush.pdf
+
 Lets say you are given a rooted tree and edges are coloured red and blue.
 Red player will cut red edges and blue player will cut blue edges.
 When a edge is cut, then the subtree under it is cut. Who will win?
