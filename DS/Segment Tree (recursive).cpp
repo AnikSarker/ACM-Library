@@ -1,5 +1,3 @@
-//Tested : CF 455E - Function
-
 #include <bits/stdc++.h>
 using namespace std;
 const int MAXN = 100005;
