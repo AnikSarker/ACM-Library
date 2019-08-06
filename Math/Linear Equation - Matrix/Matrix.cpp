@@ -20,7 +20,7 @@ inline int Div(ll a,ll b) {return Mul(a,inv(b));}
 
 struct Matrix{
     int row, col;
-    int m[MAX][MAX];
+    ll m[MAX][MAX];
     Matrix() {memset(m,0,sizeof(m));}
     void Set(int r,int c) {row = r; col = c;}
     Matrix(int r,int c) {memset(m,0,sizeof(m)); Set(r,c);}
