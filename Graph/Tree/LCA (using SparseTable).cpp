@@ -4,7 +4,7 @@ void BuildSparse(int n){
     for(int i=1;i<=n;i++) for(int j=0;j<LOG;j++) P[i][j]=0;
 
     for(int i=1;i<=n;i++) P[i][0]=Par[i];
-    for(int j=1;(1<<j)<n;j++){
+    for(int j=1;j<LOG;j++){
         for(int i=1;i<=n;i++){
              if(P[i][j-1]) {int x=P[i][j-1]; P[i][j]=P[x][j-1];}
         }
