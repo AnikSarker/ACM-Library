@@ -1,12 +1,12 @@
 int Par[MAX], D[MAX];
 void BuildSparse(int n){
     //Using 0 for uninitialized parent (Remember and use carefully)
-    for(int i=1;i<=n;i++) for(int j=0;j<LOG;j++) P[i][j]=0;
+    for(int i=1; i<=n; i++) for(int j=0; j<LOG; j++) P[i][j]=0;
 
-    for(int i=1;i<=n;i++) P[i][0]=Par[i];
-    for(int j=1;j<LOG;j++){
-        for(int i=1;i<=n;i++){
-             if(P[i][j-1]) {int x=P[i][j-1]; P[i][j]=P[x][j-1];}
+    for(int i=1; i<=n; i++) P[i][0]=Par[i];
+    for(int j=1; j<LOG; j++){
+        for(int i=1; i<=n; i++){
+             if(P[i][j-1] != 0) {int x = P[i][j-1]; P[i][j] = P[x][j-1];}
         }
     }
 }
