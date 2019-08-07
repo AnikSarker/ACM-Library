@@ -31,9 +31,9 @@ void Solve(int n, int m, int q){
             //Apply Update[upd]
 
             for(int qry : Check[upd]){
-                bool Ok = [conditions for Query[qry] is satisfied]
-                if(ok) hi[qry] = i;
-                else lo[qry] = i + 1;
+                bool ok = [conditions for Query[qry] is satisfied]
+                if(ok) hi[qry] = upd;
+                else lo[qry] = upd + 1;
             }
         }
     }
