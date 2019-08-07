@@ -8,7 +8,6 @@ const int MAXQ = 100005;
 TYPE ds; //Size MAXN
 TYPE Update[MAXM];
 TYPE Query[MAXQ];
-
 vector<int> Check[MAXM];
 int lo[MAXQ], hi[MAXQ];
 
@@ -31,7 +30,7 @@ void Solve(int n, int m, int q){
         for(int upd=1; upd<=m; upd++){
             //Apply Update[upd]
 
-            for(int qry : Check[i]){
+            for(int qry : Check[upd]){
                 bool Ok = [conditions for Query[qry] is satisfied]
                 if(ok) hi[qry] = i;
                 else lo[qry] = i + 1;
