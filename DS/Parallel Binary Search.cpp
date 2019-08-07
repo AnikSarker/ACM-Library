@@ -12,13 +12,13 @@ TYPE Query[MAXQ];
 vector<int> Check[MAXM];
 int lo[MAXQ], hi[MAXQ];
 
-void Solve(int m, int q){
+void Solve(int n, int m, int q){
     for(int i=1;i<=q;i++) lo[i] = 1, hi[i] = m;
 
     bool Changed = true;
     while(Changed){
         Changed = false;
-        Clear and Re-initialize ds
+        // Clear and Re-initialize ds upto size n
         for(int i=1;i<=m;i++) Check[i].clear();
 
         for(int i=1;i<=q;i++){
