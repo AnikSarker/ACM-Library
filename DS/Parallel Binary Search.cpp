@@ -11,6 +11,8 @@ TYPE Query[MAXQ];
 vector<int> Check[MAXM];
 int lo[MAXQ], hi[MAXQ];
 
+// For each qry in Query, find minimum upd such that condistions
+// for qry are satisfied after applying Update[1....upd] to ds
 void Solve(int n, int m, int q){
     for(int qry=1; qry<=q; qry++) lo[qry] = 1, hi[qry] = m;
 
