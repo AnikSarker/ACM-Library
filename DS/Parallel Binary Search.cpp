@@ -13,22 +13,22 @@ vector<int> Check[MAXM];
 int lo[MAXQ], hi[MAXQ];
 
 void Solve(int n, int m, int q){
-    for(int i=1;i<=q;i++) lo[i] = 1, hi[i] = m;
+    for(int qry=1; qry<=q; qry++) lo[qry] = 1, hi[qry] = m;
 
     bool Changed = true;
     while(Changed){
         Changed = false;
         // Clear and Re-initialize ds upto size n
-        for(int i=1;i<=m;i++) Check[i].clear();
+        for(int upd=1; upd<=m; upd++) Check[upd].clear();
 
-        for(int i=1;i<=q;i++){
-            if(lo[i] == hi[i]) continue;
+        for(int qry=1; qry<=q; qry++){
+            if(lo[qry] == hi[qry]) continue;
             Changed = true;
-            int mid = (lo[i] + hi[i]) / 2;
-            Check[mid].push_back(i);
+            int mid = (lo[qry] + hi[qry]) / 2;
+            Check[mid].push_back(qry);
         }
 
-        for(int upd = 1; upd <= m; upd++){
+        for(int upd=1; upd<=m; upd++){
             //Apply Update[upd]
 
             for(int qry : Check[i]){
