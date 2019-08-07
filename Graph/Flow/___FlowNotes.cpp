@@ -93,5 +93,38 @@ and cost = original edge’s cost. Then run the min cost max flow algorithm.
 if max flow = n*k , then minimum cost will be the answer.
 Otherwise it will not be possible.
 
+
+***************************************************************************************
+***************************************************************************************
+
+//https://www.cnblogs.com/shenben/p/6607401.html
+
+Given a graph where each node has value and each edge’s cost = value[y] xor value[x].
+Initially some node’s values are given and we have to find other node’s value such that sum of all edge is minimum.
+
+We make LOG(MAX_VAL) graphs for each bit.
+For ith bit,for each known node u, 
+  add edge with capacity INF from source to u whose i bit is set.
+  otherwise add edge with capacity INF from node to sink.
+add the regular edge with capacity 1 .
+Then maxflow will be the ans.
+
+***************************************************************************************
+***************************************************************************************
+
+find a subgraph such that cost(edge)-cost(node) is maximum
+Consider each EDGE & NODE as node.
+Add edge from Source to each EDGE of capacity w & from each EDGE to both nodes of capacity INF & from each node to sink of capacity p.
+Ans = sum of w - maxflow 
+
+
+***************************************************************************************
+***************************************************************************************
+
+// to do....
+Euler ciruit : uva-10735 //https://blog.sengxian.com/solutions/uva-10735
+
+https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4135
+
 **********************************************************************************************************************
 **********************************************************************************************************************/
