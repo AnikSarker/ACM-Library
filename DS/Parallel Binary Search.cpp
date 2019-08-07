@@ -29,7 +29,6 @@ void Solve(int n, int m, int q){
 
         for(int upd=1; upd<=m; upd++){
             //Apply Update[upd]
-
             for(int qry : Check[upd]){
                 bool ok = [conditions for Query[qry] is satisfied]
                 if(ok) hi[qry] = upd;
