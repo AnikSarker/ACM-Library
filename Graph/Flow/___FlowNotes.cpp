@@ -81,6 +81,17 @@ Vout = nodes having positive out-degree
 Vin = nodes have positive in-degree
 G' has a matching of size m iff there exists n-m vertex-disjoint paths that cover each vertex in G.
 
+***************************************************************************************
+***************************************************************************************
+
+In a DAG delete some edges so that each node’s indegree=outdegree=k and maximise the sum of the deleted edge’s cost :
+
+From source to each node i (1<=i<=n), add edge of capacity k, cost 0
+From each node j (n<j<=n+n) to Sink, add edge of capacity k, cost 0
+For all i,j (1<=i,j<=n) If in the main graph from i to j , there is an edge , then add from each node i to n+j of capacity 1
+and cost = original edge’s cost. Then run the min cost max flow algorithm.
+if max flow = n*k , then minimum cost will be the answer.
+Otherwise it will not be possible.
 
 **********************************************************************************************************************
 **********************************************************************************************************************/
