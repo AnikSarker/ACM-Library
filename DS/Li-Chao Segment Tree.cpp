@@ -45,3 +45,9 @@ ll query(int node, int lo, int hi, ll x){
     if(x <= mid) return min(Curr, query(Left, lo, mid, x));
     else return min(Curr, query(Right, mid+1, hi, x));
 }
+
+// Comments :
+// In positive domain space, polynomials behave
+// like lines after a certain threshold value MAGIC.
+// For query x < MAGIC, brute-force to calculate minimum
+// For query x >= MAGIC, return query(1,Magic,MAX_X-1,x)
