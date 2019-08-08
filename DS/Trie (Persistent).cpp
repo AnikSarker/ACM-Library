@@ -1,10 +1,6 @@
 //Tested : Codechef GPD - Gotham PD
 
-#include<bits/stdc++.h>
-using namespace std;
-const int MAX = 100005;
-const int LOG = 31;
-
+const int LOG = 20;
 struct PersistentTrie{
     struct Node{
         Node* Child[2];
