@@ -1,6 +1,6 @@
 //Tested : Codechef GPD - Gotham PD
 
-const int LOG = 20;
+const int LOG = 31;
 struct PersistentTrie{
     struct Node{
         Node* Child[2];
