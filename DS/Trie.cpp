@@ -20,7 +20,7 @@ struct Trie{
         }
     }
 
-    int Query(int XOR){
+    int MinQuery(int XOR){
         int Ans = 0;
         Node *Cur = root;
         for(int i = LOG-1; i>=0; i--){
