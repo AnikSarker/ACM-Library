@@ -47,6 +47,7 @@ ll query(int node, int lo, int hi, ll x){
 }
 
 // Comments :
+// Applies directly to lines in any domain space
 // In positive domain space, polynomials behave
 // like lines after a certain threshold value MAGIC.
 // For query x < MAGIC, brute-force to calculate minimum
