@@ -47,8 +47,9 @@ ll query(int node, int lo, int hi, ll x){
 }
 
 // Comments :
-// Applies directly to lines in any domain space
-// In positive domain space, polynomials behave
+// 1. Applies directly to lines in any domain space
+// 2. In positive domain space, polynomials behave
 // like lines after a certain threshold value MAGIC.
+// Add a function as addLine(1,Magic,MAX_X-1, cur_poly)
 // For query x < MAGIC, brute-force to calculate minimum
 // For query x >= MAGIC, return query(1,Magic,MAX_X-1,x)
