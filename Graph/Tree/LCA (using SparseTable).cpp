@@ -32,6 +32,6 @@ int LCA(int p,int q){
 
 int kth_par(int u,int d){
     int Log = log2(d)+1;
-    for(int i=Log;i>=0;i--) if(d >= (1<<i)) {u = M[u][i]; d -= (1<<i);}
+    for(int i=Log; i>=0; i--) if(d >= (1<<i)) {u = P[u][i]; d -= (1<<i);}
     return u;
 }
