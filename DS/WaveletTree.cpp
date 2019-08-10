@@ -11,6 +11,7 @@ struct WaveletTree{
     //from and to are array pointers
     //Build Wavelet Tree on A[from...to];
     //x <= A[j] <= y, for each from <= j <= to
+    //Warning : Changes the original array A
     WaveletTree(int *from, int *to, int x, int y){
         lo = x, hi = y;
         if(lo == hi or from >= to) return;
