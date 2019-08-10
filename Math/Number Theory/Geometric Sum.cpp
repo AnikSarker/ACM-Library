@@ -1,6 +1,6 @@
 //Computes the sum of a^1 + a^2 .... + a^n
 
-ll GeoSum(ll a,ll n){
+ll GeoSum(ll a, ll n){
     ll sz = 0;
     ll ret = 0;
     ll mul = 1;
