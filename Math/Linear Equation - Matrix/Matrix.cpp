@@ -5,7 +5,7 @@ using namespace std;
 const ll MOD = 1e9 + 7;
 const ll MOD2 = MOD * MOD * 3;
 
-inline int bigMod(ll a,ll b){
+inline ll bigMod(ll a,ll b){
     ll res=1;
     while(b){
         if(b&1) res=(res*a)%MOD;
@@ -14,9 +14,9 @@ inline int bigMod(ll a,ll b){
     return res;
 }
 
-inline int inv(ll n) {return bigMod(n,MOD-2);}
-inline int Mul(ll a,ll b) {return (a*b)%MOD;}
-inline int Div(ll a,ll b) {return Mul(a,inv(b));}
+inline ll inv(ll n) {return bigMod(n,MOD-2);}
+inline ll Mul(ll a,ll b) {return (a*b)%MOD;}
+inline ll Div(ll a,ll b) {return Mul(a,inv(b));}
 
 struct Matrix{
     int row, col;
@@ -24,6 +24,21 @@ struct Matrix{
     Matrix() {memset(m,0,sizeof(m));}
     void Set(int r,int c) {row = r; col = c;}
     Matrix(int r,int c) {memset(m,0,sizeof(m)); Set(r,c);}
+    void normalize(){
+        for(int i=1; i<=row; i++){
+            for(int j=1; j<=col; j++){
+                m[i][j] %= MOD;
+                if(m[i][j] < 0) m[i][j] += MOD;
+            }
+        }
+    }
+
+    void Print(){
+        for(int i=1; i<=row; i++){
+            for(int j=1; j<=col; j++) printf("%lld ",m[i][j]);
+            printf("\n");
+        }
+    }
 };
 
 Matrix Multiply(Matrix A,Matrix B){
@@ -64,62 +79,66 @@ Matrix Power(Matrix mat,ll p){
     return ans;
 }
 
-int Det(Matrix mat){
+ll Det(Matrix mat){
     assert(mat.row == mat.col);
     int n = mat.row;
-    for(int i = 1; i <= n; i++)
-        for (int j = 1; j <= n; ++j){
-            mat.m[i][j] %= MOD;
-            if(mat.m[i][j] < 0) mat.m[i][j] += MOD;
-        }
+    mat.normalize();
 
     ll ret = 1;
-    for (int i = 1; i <= n; i++) {
-        for (int j = i + 1; j <= n; j++)
+    for(int i = 1; i <= n; i++){
+        for(int j = i + 1; j <= n; j++){
             while(mat.m[j][i]){
-                int t = mat.m[i][i] / mat.m[j][i];
-                for (int k = i; k <= n; ++k) {
+                ll t = Div(mat.m[i][i], mat.m[j][i]);
+                for(int k = i; k <= n; ++k){
                     mat.m[i][k] -= Mul(mat.m[j][k] , t);
                     if(mat.m[i][k] < 0) mat.m[i][k] += MOD;
                     swap(mat.m[j][k], mat.m[i][k]);
                 }
                 ret = MOD - ret;
             }
+        }
+
         if(mat.m[i][i] == 0) return 0;
-        ret = Mul(ret , mat.m[i][i]);
+        ret = Mul(ret, mat.m[i][i]);
     }
+
     if(ret < 0) ret += MOD;
     return ret;
 }
 
-#define EPS 1e-7
-double Tmp[MAX*2][MAX*2];
-double Inv[MAX][MAX];
-bool Inverse(Matrix mat){
-    int n = mat.row;
+ll Tmp[MAX<<1][MAX<<1];
+Matrix Inverse(Matrix mat){
+    assert(mat.row == mat.col);
+    assert(Det(mat) != 0);
 
+    int n = mat.row;
+    mat.normalize();
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++) Tmp[i][j] = mat.m[i][j];
         for(int j=n+1; j<=2*n; j++) Tmp[i][j] = 0;
         Tmp[i][i+n] = 1;
     }
 
-    for(int i=1; i<=n; i++) {
-        if(fabs(Tmp[i][i]) < EPS)  return false;
-        for(int j=1;j<=n;j++){
-            if(i == j)  continue;
-            double c = Tmp[j][i] / Tmp[i][i];
-            for(int k = i; k <= 2*n; k++){
-                Tmp[j][k] = Tmp[j][k] - Tmp[i][k]*c;
+    for(int i=1; i<=n; i++){
+        assert(Tmp[i][i] != 0);
+
+        for(int j=1; j<=n; j++){
+            if(i == j) continue;
+            ll c = Div(Tmp[j][i], Tmp[i][i]);
+            for(int k=i; k<=2*n; k++){
+                Tmp[j][k] = Tmp[j][k] - Mul(Tmp[i][k], c);
+                if(Tmp[j][k] < 0) Tmp[j][k] += MOD;
             }
         }
     }
-    for(int i = 1; i <= n; i++){
+
+    Matrix Inv(n,n);
+    for(int i=1; i<=n; i++){
         for(int j = 1; j <= n; j++){
-            Inv[i][j] = Tmp[i][j+n]/Tmp[i][i];
+            Inv.m[i][j] = Div(Tmp[i][j+n], Tmp[i][i]);
         }
     }
-    return true;
+    return Inv;
 }
 
 //Freivalds algorithm : check whether AB = C
