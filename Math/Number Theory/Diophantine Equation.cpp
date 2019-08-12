@@ -1,4 +1,4 @@
-// Tested : LightOJ 1306 - Solutions to an Equation
+//Tested : LightOJ 1306 - Solutions to an Equation
 
 #include <bits/stdc++.h>
 using namespace std;
