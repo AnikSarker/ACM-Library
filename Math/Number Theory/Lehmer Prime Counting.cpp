@@ -1,4 +1,4 @@
-// Tested : CF 665F - Four Divisors
+//Tested : CF 665F - Four Divisors
 
 /* Let p(j) = j-th prime number.
 dp(n,j) = Count of k (1 <= k <= n and all prime div of k >= p(j))
