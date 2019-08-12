@@ -383,6 +383,7 @@ namespace Circular {
     }
 
     // area of intersecion of circle(c.o, c.r) and simple polyson(p[])
+    // Tested : ZOJ 2675 - Little Mammoth
     double areaCirclePolygon(Circle c, Polygon p){
         double res = .0;
         int n = p.size();
