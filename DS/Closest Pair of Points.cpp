@@ -1,3 +1,5 @@
+// Tested : UVa 10245 - The Closest Pair Problem
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
