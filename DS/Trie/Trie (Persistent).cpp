@@ -1,4 +1,4 @@
-Tr//Tested : Codechef GPD - Gotham PD
+// Tested : Codechef GPD - Gotham PD
 
 const int LOG = 31;
 struct PersistentTrie{
