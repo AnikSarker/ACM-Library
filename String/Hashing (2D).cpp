@@ -42,7 +42,7 @@ void Preprocess(){
         InvCell[i][j][m] = (Inv[i][0][m]*1LL*Inv[j][1][m])%Mod[m];
 }
 
-void Generate(int M[MAX][MAX],int cM[MAX][MAX][2],int r,int c){
+void Build(int M[MAX][MAX],int cM[MAX][MAX][2],int r,int c){
     for(int m=0;m<2;m++){
         for(int i=1;i<=r;i++){
             for(int j=1;j<=c;j++){
