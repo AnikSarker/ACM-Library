@@ -6,7 +6,7 @@ using namespace std;
 typedef long long ll;
 const int MAX = 100009;
 ll mods[2] = {1000000007, 1000000009};
-//Some back-up primes: 1072857881, 1066517951
+//Some back-up primes: 1072857881, 1066517951, 1040160883
 ll bases[2] = {137, 281};
 ll pwbase[3][MAX];
 
