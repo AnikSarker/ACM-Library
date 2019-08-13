@@ -9,7 +9,7 @@ ll mods[2] = {1000000007, 1000000009};
 ll bases[2] = {137, 281};
 ll pwbase[3][MAX];
 
-void preProcess(){
+void Preprocess(){
     pwbase[0][0] = pwbase[1][0] = 1;
     for(ll i = 0; i < 2; i++){
         for(ll j = 1; j < MAX; j++){
@@ -25,7 +25,7 @@ struct Hashing{
     Hashing(){}
     Hashing(string _str) {str = _str; memset(hsh, 0, sizeof(hsh)); build();}
 
-    void build(){
+    void Build(){
         for(ll i = str.size() - 1; i >= 0; i--){
             for(int j = 0; j < 2; j++){
                 hsh[j][i] = (hsh[j][i + 1] * bases[j] + str[i]) % mods[j];
@@ -34,7 +34,7 @@ struct Hashing{
         }
     }
 
-    pair<ll,ll> getHash(ll i, ll j){
+    pair<ll,ll> GetHash(ll i, ll j){
         assert(i <= j);
         ll tmp1 = (hsh[0][i] - (hsh[0][j + 1] * pwbase[0][j - i + 1]) % mods[0]) % mods[0];
         ll tmp2 = (hsh[1][i] - (hsh[1][j + 1] * pwbase[1][j - i + 1]) % mods[1]) % mods[1];
