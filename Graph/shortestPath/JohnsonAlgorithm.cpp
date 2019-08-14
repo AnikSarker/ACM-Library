@@ -1,20 +1,16 @@
-#define MAX 2525
+#define MAX 90
 #define clr(ar) memset(ar, 0, sizeof(ar))
-#define read() freopen("lol.txt", "r", stdin)
-#define dbg(x) cout << #x << " = " << x << endl
-#define valid(i, j) ((i) >= 1 && (i) <= n && (j) >= 1 && (j) <= m)
-#define ran(a, b) ((((rand() << 15) ^ rand()) % ((b) - (a) + 1)) + (a))
+typedef long long ll;
 /// Johnson's algorithm for all pair shortest paths in sparse graphs
 /// Complexity: O(N * M) + O(N * M * log(N))
-const long long INF = (1LL << 60) - 666;
-struct edge{
+const ll INF = (1LL << 60) - 666;
+struct Edge{ // u to v edge
     int u, v;
-    long long w;
-    edge(){}
-    edge(int u, int v, long long w) : u(u), v(v), w(w){}
+    ll w;
+    Edge(){}
+    Edge(int u, int v, ll w) : u(u), v(v), w(w){}
 };
-// directed edge ...
-bool bellman_ford(int n, int src, vector <struct edge> E, vector <long long>& dis){
+bool bellman_ford(int n, int src, vector <Edge> E, vector <ll>& dis){
     dis[src] = 0;
     for (int i = 0; i <= n; i++){
         int flag = 0;
@@ -28,23 +24,24 @@ bool bellman_ford(int n, int src, vector <struct edge> E, vector <long long>& di
     }
     return false;
 }
-vector <long long> dijkstra(int n, int src, vector <struct edge> E, vector <long long> potential){
-    set<pair<long long, int> > S;
-    vector <long long> dis(n + 1, INF);
-    vector <long long> temp(n + 1, INF);
-    vector <pair<int, long long> > adj[n + 1];
+vector <ll> dijkstra(int n, int src, vector <Edge> E, vector <ll> potential){
+    set<pair<ll, int> > S;
+    vector <ll> dis(n + 1, INF);
+    vector <ll> temp(n + 1, INF);
+    vector <pair<int, ll> > adj[n + 1];
     dis[src] = temp[src] = 0;
     S.insert(make_pair(temp[src], src));
     for (auto e: E){
         adj[e.u].push_back(make_pair(e.v, e.w));
     }
+    int __sigh  = 0;
     while (!S.empty()){
-        pair<long long, int> cur = *(S.begin());
+        pair<ll, int> cur = *(S.begin());
         S.erase(cur);
         int u = cur.second;
         for (int i = 0; i < adj[u].size(); i++){
             int v = adj[u][i].first;
-            long long w = adj[u][i].second;
+            ll w = adj[u][i].second;
             if ((temp[u] + w) < temp[v]){
                 S.erase(make_pair(temp[v], v));
                 temp[v] = temp[u] + w;
@@ -55,19 +52,19 @@ vector <long long> dijkstra(int n, int src, vector <struct edge> E, vector <long
     }
     return dis;
 }
-void johnson(int n, long long ar[MAX][MAX], vector <struct edge> E){
-    vector <long long> potential(n + 1, INF);
-    for (int i = 1; i <= n; i++) E.push_back(edge(0, i, 0));
+void johnson(int n, ll ar[MAX][MAX], vector <Edge> E){
+    vector <ll> potential(n + 1, INF);
+    for (int i = 1; i <= n; i++) E.push_back(Edge(0, i, 0));
 
     assert(bellman_ford(n, 0, E, potential));
     for (int i = 1; i <= n; i++) E.pop_back();
 
     for (int i = 1; i <= n; i++){
-        vector <long long> dis = dijkstra(n, i, E, potential);
+        vector <ll> dis = dijkstra(n, i, E, potential);
         for (int j = 1; j <= n; j++){
             ar[i][j] = dis[j];
         }
     }
 }
-long long ar[MAX][MAX];// output all pair shortest distance
-vector <struct edge> E; // input graph
+ll ar[MAX][MAX];// output all pair shortest distance
+vector <Edge> E; // input graph
