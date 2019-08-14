@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 #define MAX 2525
 #define clr(ar) memset(ar, 0, sizeof(ar))
 #define read() freopen("lol.txt", "r", stdin)
@@ -15,6 +13,7 @@ struct edge{
     edge(){}
     edge(int u, int v, long long w) : u(u), v(v), w(w){}
 };
+// directed edge ...
 bool bellman_ford(int n, int src, vector <struct edge> E, vector <long long>& dis){
     dis[src] = 0;
     for (int i = 0; i <= n; i++){
