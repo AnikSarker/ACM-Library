@@ -1,7 +1,0 @@
-connectivity -> linkcut tree*** , others *
-flow -> flownotes*** , others *
-matching -> hungarian *** , others *
-MST -> *
-MISC -> *
-tree -> LCA in O(nlogn+q)*** , others *
-shortest path -> *
