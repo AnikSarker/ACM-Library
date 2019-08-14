@@ -97,8 +97,6 @@ Otherwise it will not be possible.
 ***************************************************************************************
 ***************************************************************************************
 
-//https://www.cnblogs.com/shenben/p/6607401.html
-
 Given a graph where each node has value and each edge’s cost = value[y] xor value[x].
 Initially some node’s values are given and we have to find other node’s value such that sum of all edge is minimum.
 
@@ -107,7 +105,8 @@ For ith bit,for each known node u,
   add edge with capacity INF from source to u whose i bit is set.
   otherwise add edge with capacity INF from node to sink.
 add the regular edge with capacity 1 .
-Then maxflow will be the ans.
+Then after finding the MinCut , let U are those node which are in source's component.
+Then their bit will be set. 
 
 ***************************************************************************************
 ***************************************************************************************
@@ -120,11 +119,37 @@ Ans = sum of w - maxflow
 
 ***************************************************************************************
 ***************************************************************************************
+Finding an euler circuit in a graph G with both directed and undirected edges where undirected edges can be used once.
 
-// to do....
-Euler ciruit : uva-10735 //https://blog.sengxian.com/solutions/uva-10735
+Euler circuit exists iff every vettex's indegree = outdegree
 
-https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4135
+make a bipartite graph.One partition contains all edges and other contains all nodes. 
+For each directed edge , connect this edge to its head endpoint . 
+For each undirected edge , connect this edge to its both endpoints .
+Now from Source node , add edges to each G's edge.
+all of these edges' capacity will be 1.
+Now from each G's node , add edges to sink.
+Edge i's capacity will be total degree/2 of node i.
+
+Then check the flow and so on. 
+
+
+***************************************************************************************
+***************************************************************************************
+
+Find a subgraph where |edge|/|node] is maximum.
+
+make a bipartite graph.One partition contains all edges and other contains all nodes. 
+For each G's edge , connect this edge to its both endpoints .
+Now from Source node , add edges to each G's edge.
+all of these edges' capacity will be 1.
+Now from each G's node , add edges to sink.
+Edge i's capacity will be X.
+
+we do binary search on X's value.
+if( Flow < Number of Edges )  left = mid
+otherwise right = mid. 
+
 
 **********************************************************************************************************************
 **********************************************************************************************************************/
