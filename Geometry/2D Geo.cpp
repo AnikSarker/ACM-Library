@@ -109,6 +109,15 @@ namespace Linear {
         else if (dcmp(getDot(v1, v3)) > 0) return getLength(v3);
         else return fabs(getCross(v1, v2) / getLength(v1));
     }
+    
+    double getDistanceSegToSeg (Point a,Point b,Point c,Point d){
+        double Ans=INT_MAX;
+        Ans=min(Ans,getDistanceToSegment(a,c,d));
+        Ans=min(Ans,getDistanceToSegment(b,c,d));
+        Ans=min(Ans,getDistanceToSegment(c,a,b));
+        Ans=min(Ans,getDistanceToSegment(d,a,b));
+        return Ans;
+    }
 
     Point getPointToLine (Point p, Point a, Point b) { Vector v = b-a; return a+v*(getDot(v, p-a) / getDot(v,v)); }
     bool onSegment (Point p, Point a, Point b) { return dcmp(getCross(a-p, b-p)) == 0 && dcmp(getDot(a-p, b-p)) <= 0; }
