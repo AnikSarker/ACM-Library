@@ -461,6 +461,21 @@ namespace Circular {
             return 2;
         }
     }
+    int getTangentPoints (Point p, Circle o, vector<Point>& v) {
+        Vector u = p - o.o ;
+        double d = getLength(u);
+        if (d < o.r) return 0;
+        else if (dcmp(d - o.r) == 0) {
+            v.push_back(o.o+u);
+            return 1;
+        } else {
+            double ang = acos(o.r / d);
+            u = u / getLength(u) * o.r;
+            v.push_back(o.o+rotate(u, -ang));
+            v.push_back(o.o+rotate(u, ang));
+            return 2;
+        }
+    }
 
     int getTangents (Circle o1, Circle o2, Point* a, Point* b) {
         int cnt = 0;
