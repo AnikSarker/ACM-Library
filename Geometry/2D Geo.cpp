@@ -523,6 +523,22 @@ namespace Circular {
         Point p = (p1 * a + p2 * b + p3 * c) / (a + b + c);
         return Circle(p, getDistanceToLine(p, p1, p2));
     }
+    
+    //distance From P : distance from Q =  rp : rq
+    Circle getApolloniusCircle(const Point& P,const Point& Q, double rp, double rq ){
+        rq *= rq ;
+        rp *= rp ;
+        double a = rq - rp ;
+        assert(dcmp(a));
+        double g = rq * P.x - rp * Q.x ; g /= a ;
+        double h = rq * P.y - rp * Q.y ; h /= a ;
+        double c = rq*P.x*P.x-rp*Q.x*Q.x+rq*P.y*P.y-rp*Q.y*Q.y ;
+        c /= a ;
+        Point o(g,h);
+        double R = g*g +h*h - c ;
+        R = sqrt(R);
+        return Circle(o,R);
+    }
 };
 
 struct Star{
