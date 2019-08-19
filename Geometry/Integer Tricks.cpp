@@ -1,4 +1,4 @@
-// 1. Checks the relation between a/b and c/d 
+// 1. Checks the relation between a/b and c/d, a, c >= 0, b, d > 0
 bool comp (ll a, ll b, ll c, ll d){
   if(a / b != c / d) return a / b < c / d;
   a %= b, c %= d;
