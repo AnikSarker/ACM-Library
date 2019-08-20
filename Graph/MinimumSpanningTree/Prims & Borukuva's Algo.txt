@@ -1,4 +1,4 @@
-
+/*
 MST : Prim’s Algorithm
 initial distance of all nodes are INFINITE except the starting node , which distance is 0.
 and all nodes are marked as non-visited.
@@ -14,4 +14,4 @@ While there is more than one components,
 	for each components	
 		find the smallest edge which connects this component 
 		to any other component. And then add this edge.
-These edges are the edges of minimum spanning tree.
+These edges are the edges of minimum spanning tree. */
