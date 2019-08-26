@@ -1,5 +1,9 @@
+// Tested : Gym 101955K - Let the Flames Begin
+
+#include <bits/stdc++.h>
+using namespace std;
 #define ll long long int
-// Complexity : O(k log(n))
+// Complexity : O(min(k log(n), m))
 // People 1 to n in a circle, counting starts from 1, every k'th
 // people dies, returns the position of the m'th killed people
 ll Josephus(ll n, ll k, ll m){
