@@ -4,7 +4,7 @@ typedef long long int ll;
 const ll p = 998244353, gen = 3;
 
 inline ll add(ll x, ll y) {x += y; return x >= p ? x - p: x;}
-inline ll sub(ll x, ll y) {x -= y; return x < 0    ? x + p : x;}
+inline ll sub(ll x, ll y) {x -= y; return x < 0  ? x + p : x;}
 inline ll mul(ll x, ll y) {return (x * y) % p;}
 inline ll Pow(ll x, ll y){
     ll res = 1;
@@ -89,7 +89,7 @@ namespace Polynom{
         return h;
     }
 
-    vector<ll> operator ~(vector<ll> f){
+    vector<ll> operator ~ (vector<ll> f){
         ll n = 1, m = (ll) f.size();
         while(n < m) n <<= 1;
         if(n == 1) f[0] = Pow(f[0], p - 2);
