@@ -1,16 +1,16 @@
 /*
 * Total number of paths from point P(x1, y1) 
 to point Q(x2, y2) where x2 >= x1 and y2 >= y1 :
-Let x = x2 - x1 and y = y2 - y1. Then ans = C(x+y,x).
+Let x = x2 - x1 and y = y2 - y1. Then ans = C(x+y, x).
 
 * Total number of paths from point P(x1, y1) to point Q(x2, y2)
-where x2 >= x1 and y2 >= y1 without crossing the line x=y+c :
-Let x = x2 - x1 and y = y2 - y1. Then ans = C(x+y,x) - C(x+y,x+c-1).
-Special Case : x = n & y = n, then ans = C(2n,n) - C(2n,n-1) [Catalan]
+where x2 >= x1 and y2 >= y1 without crossing the line X = Y + c :
+Let x = x2 - x1 and y = y2 - y1. Then ans = C(x+y, x) - C(x+y, x+c-1).
+Special Case : x = n, y = n, c = 0, then ans = C(2n, n) - C(2n, n-1) [Catalan]
 
 * Catalan triangle : Total number of permutation having n X and k Y
 so that Count(X)-Count(Y)>=0 in any prefix (Non-negative Partial Sum) :
-ans =  C(n+k,k) - C(n+k, k-1) = ((n+k)!*(n-k+1)) / (k!*(n+1)!).
+ans =  C(n+k,k) - C(n+k, k-1)
 
 * Catalan trapezoid : Total number of permutation having n X and k Y 
 so that Count(Y)-Count(X) < m in any prefix, then :
