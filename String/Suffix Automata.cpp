@@ -27,7 +27,6 @@ bool isValid[MAXLEN*2];
 vector<int>CurrList;
 vector<int>LastList;
 
-
 inline void CreateNode(int dep){
     St[Size].Clear();
     St[Size].Len = dep;
@@ -82,7 +81,7 @@ inline void SAM(int ch){
     Last = Curr;
 }
 
-inline void del(int len){
+inline void Del(int len){
     if(!len) return;
 
     for(int i = 0; i < len; i++){
@@ -112,7 +111,8 @@ int FindSmallest(int len,int idx){
     }
     return St[cur].FirstPos - len + 1;
 }
-///Returns longest common substring of 2 strings
+
+// Returns longest common substring of 2 strings
 int LCS(char * s1, char * s2)
 {
     int len1 = strlen(s1), len2 = strlen(s2);
@@ -128,12 +128,10 @@ int LCS(char * s1, char * s2)
     return ans;
 }
 
-///finds number of distinct substring
-///finds number of occurrence of every state(endpos class)
-///finds number of substring which can be reached from this node
-///must call findAllTerminal Before
-void dfs_sam(int pos)
-{
+// Calculates Dstnct_substr, Word, Occurrence for each node
+// Must call findAllTerminal Before
+
+void dfs_sam(int pos){
     if(St[pos].Dstnct_substr) return;
     int resDstnct = 1;
     for(int i = 0; i < alphabetSize; i++) if(St[pos].Next[i]) {
@@ -147,15 +145,13 @@ void dfs_sam(int pos)
     St[pos].Word += St[pos].Occurrence;
 }
 
-void findAllTerminal()
-{
+void findAllTerminal(){
     int cur = Last;
     while(cur > Root) St[cur].Occurrence++, cur = St[cur].Link;
 }
 
-void PrintKthLexSubstr(int k)
-{
-    ///must call dfs_sam before
+void PrintKthLexSubstr(int k){
+    // Must call dfs_sam before
     int cur = Root;
     while(k > 0){
         int tmp = 0;
@@ -172,9 +168,8 @@ void PrintKthLexSubstr(int k)
     }
 }
 
-void PrintKthLexDstSubstr(int k)
-{
-    ///must call dfs_sam before
+void PrintKthLexDstSubstr(int k){
+    // Must call dfs_sam before
     int cur = Root;
     while(k > 0){
         int tmp = 0;
