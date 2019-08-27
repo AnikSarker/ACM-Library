@@ -105,3 +105,21 @@ int FindSmallest(int len,int idx){
     }
     return St[cur].FirstPos - len + 1;
 }
+///Returns longest common substring of 2 strings
+int LCS(char * s1, char * s2)
+{
+    int len1 = strlen(s1);
+    int len2 = strlen(s2);
+    init();
+    for(int i = 0; i < len1; i++) SAM(s1[i] - 'a' + 1);
+    int curNode = 0, curLen = 0;
+    int ans = 0;
+    for(int i = 0; i < len2; i++){
+        while(curNode > -1 && St[curNode].Next[s2[i] - 'a' + 1] == 0) curNode = St[curNode].Link, curLen = St[curNode].Len;
+        if(curNode == -1) curNode = 0;
+        if(St[curNode].Next[s2[i] - 'a' + 1]) curNode = St[curNode].Next[s2[i] - 'a' + 1], curLen++;
+        ans = max(ans, curLen);
+    }
+    return ans;
+}
+
