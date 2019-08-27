@@ -122,7 +122,7 @@ int LCS(char * s1, char * s2)
     return ans;
 }
 
-int dstnct_substr[2 * MAXLEN + 10];
+int dstnct_substr[2 * MAXLEN];
 int dfs_sam(int pos){
     if(dstnct_substr[pos]) return dstnct_substr[pos];
     int res = 1;
