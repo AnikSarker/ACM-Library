@@ -10,11 +10,12 @@ int Root, Last;
 
 struct Node{
     int Link, Len;
-    int FirstPos, version, baseID;
     int Next[alphabetSize];
+    int FirstPos, version, baseID;
     void Clear(){
-        Len = 0; Link = baseID = FirstPos = version = -1;
-        memset(Next,0,sizeof(Next));
+        Len = 0; Link = -1;
+        memset(Next, 0, sizeof(Next));
+        baseID = FirstPos = version = -1;
     }
 };
 
@@ -109,7 +110,6 @@ int FindSmallest(int len,int idx){
     return St[cur].FirstPos - len + 1;
 }
 
-
 // Returns longest common substring of 2 strings
 int LCS(char * s1,char * s2){
     int len1 = strlen(s1), len2 = strlen(s2);
@@ -126,11 +126,13 @@ int LCS(char * s1,char * s2){
     return ans;
 }
 
+// Returns number of distinct substring of a string 
 int dstnct_substr[2 * MAXLEN];
 int dfs_sam(int pos){
     if(dstnct_substr[pos]) return dstnct_substr[pos];
     int res = 1;
-    for(int i = 0; i < alphabetSize; i++) if(St[pos].Next[i]) res += dfs_sam(St[pos].Next[i]);
+    for(int i = 0; i < alphabetSize; i++) 
+        if(St[pos].Next[i]) res += dfs_sam(St[pos].Next[i]);
     return dstnct_substr[pos] = res;
 }
 
@@ -140,4 +142,3 @@ int distinctSubstring(char * s){
     for(int i = 0; i < len; i++) SAM(s[i]);
     return dfs_sam(Root) - 1;
 }
-// Always be careful of the alphabetSize
