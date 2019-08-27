@@ -16,16 +16,16 @@ inline ll Pow(ll x, ll y){
 }
 
 namespace Polynom{
-    vector<ll> rev, root, fac, inv, dvf, dvg, dvr, one = {1};
+    vector<ll> rev, root;
     vector<ll> operator + (vector<ll> f, vector<ll> g) {
-        ll n = (ll) max(f.size(), g.size());
+        ll n = max(f.size(), g.size());
         f.resize(n); g.resize(n);
         for (ll i = 0; i < n; i++) f[i] = add(f[i], g[i]);
         return f;
     }
 
     vector<ll> operator - (vector<ll> f, vector<ll> g) {
-        ll n = (ll) max(f.size(), g.size());
+        ll n = max(f.size(), g.size());
         f.resize(n); g.resize(n);
         for (ll i = 0; i < n; i++) f[i] = sub(f[i], g[i]);
         return f;
@@ -35,10 +35,11 @@ namespace Polynom{
         ll m = log(n) / log(2) + 1e-7;
 
         rev.resize(n); root.resize(n);
-        for (ll i = 1; i < n; i++) { rev[i] = rev[i >> 1] >> 1 | (i & 1) << m - 1; }
-        for (ll len = 1, uni; len < n; len <<= 1) {
-            uni = Pow(gen, (p ^ 1) / (len << 1)); root[len] = 1;
-            for (ll i = 1; i < len; i++) { root[i + len] = root[i + len - 1] * uni % p; }
+        for (ll i = 1; i < n; i++)  rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (m - 1));
+        for (ll len = 1; len < n; len <<= 1) {
+            ll uni = Pow(gen, (p ^ 1) / (len << 1));
+            root[len] = 1;
+            for (ll i = 1; i < len; i++) root[i + len] = mul(root[i + len - 1], uni);
         }
     }
     void ntransform(vector<ll> &f, ll n, bool t){
@@ -65,7 +66,8 @@ namespace Polynom{
         for (ll i = 0; i < n; i++) f[i] = mul(f[i], g[i]);
         ntransform(f, n, true);
         for (ll i = 0; i < n; i++) f[i] = mul(f[i], invN);
-        f.resize(m); return f;
+        f.resize(m);
+        return f;
     }
 
     vector<ll> polyInv(vector<ll> f, ll m){
@@ -90,9 +92,11 @@ namespace Polynom{
         while(n < m) n <<= 1;
         if(n == 1) f[0] = Pow(f[0], p - 2);
         else f = polyInv(f, n);
-        f.resize(m); return f;
+        f.resize(m);
+        return f;
     }
 
+    vector<ll> dvf, dvg, dvr;
     vector<ll> operator / (vector<ll> f, vector<ll> g) {
         if (f == dvf && g == dvg) return dvr;
         dvf = f; dvg = g;
@@ -107,6 +111,7 @@ namespace Polynom{
         f.resize(n - 1); return f;
     }
 
+    vector<ll> fac, inv, one = {1};
     void getFacInv(ll n){
         if (n <= fac.size()) { return; }
         fac.resize(n); inv.resize(n);
@@ -118,30 +123,37 @@ namespace Polynom{
     vector<ll> operator >> (vector<ll> f, ll m){
         ll n = (ll) f.size(); m = min(n, m); getFacInv(n);
         for (ll i = m; i < n; i++) { f[i - m] = f[i] * fac[i] % p * inv[i - m] % p; }
-        f.resize(n - m); return f;
+        f.resize(n - m);
+        return f;
     }
 
     vector<ll> operator <<(vector<ll> f, ll m) {
-        ll n = (ll) f.size(); f.resize(n + m); getFacInv(n + m);
+        ll n = f.size(); f.resize(n + m); getFacInv(n + m);
         for (ll i = n + m - 1; i >= m; i--) { f[i] = f[i - m] * fac[i - m] % p * inv[i] % p; }
-        fill(f.begin(), f.begin() + m, 0); return f;
+        fill(f.begin(), f.begin() + m, 0);
+        return f;
     }
 
     vector<ll> polyLn(vector<ll> f) {
-        ll n = (ll) f.size(); f = (f >> 1) * (~f) << 1;
-        f.resize(n); return f;
+        ll n = f.size();
+        f = (f >> 1) * (~f) << 1;
+        f.resize(n);
+        return f;
     }
 
     vector<ll> polyExp(vector<ll> f, ll n) {
         vector<ll> g, h; f.resize(n);
-        if (n == 2) { g.push_back(1); } else { g = polyExp(f, n >> 1); }
-        g.resize(n); return g * (one - polyLn(g) + f);
+        if (n == 2) g.push_back(1);
+        else g = polyExp(f, n >> 1);
+        g.resize(n);
+        return g * (one - polyLn(g) + f);
     }
 
     vector<ll> polyExp(vector<ll> f) {
         ll n = 1, m = (ll) f.size();
         while (n < m) { n <<= 1; } f = polyExp(f, n);
-        f.resize(m); return f;
+        f.resize(m);
+        return f;
     }
 
     vector<ll> operator ^ (vector<ll> f, ll x) {
@@ -156,6 +168,6 @@ int main(){
     std :: vector<ll> a{43431,1231,435,43340,430,10};
     std :: vector<ll> b = ~a;
 
-    std :: vector<ll> c = a * b;
+    std :: vector<ll> c = a * b * a;
     for(ll x : c) cout<<x<<" ";
 }
