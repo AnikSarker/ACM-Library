@@ -3,12 +3,12 @@ using namespace std;
 const int alphabetSize = 28;
 const int MAXLEN = 400005;
 
-int TotalLen,Size;
-int Root,Last;
+int TotalLen, Size;
+int Root, Last;
 
 struct Node{
-    int Link,Len;
-    int FirstPos,version,baseID;
+    int Link, Len;
+    int FirstPos, version, baseID;
     int Next[alphabetSize];
     void Clear(){
         Len = 0; Link = baseID = FirstPos = version = -1;
@@ -106,17 +106,19 @@ int FindSmallest(int len,int idx){
     }
     return St[cur].FirstPos - len + 1;
 }
-///Returns longest common substring of 2 strings
-int LCS(char * s1, char * s2)
-{
+
+
+// Returns longest common substring of 2 strings
+int LCS(char * s1,char * s2){
     int len1 = strlen(s1), len2 = strlen(s2);
     init();
     for(int i = 0; i < len1; i++) SAM(s1[i] - 'a' + 1);
     int curNode = 0, curLen = 0, ans = 0;
     for(int i = 0; i < len2; i++){
-        while(curNode > -1 && St[curNode].Next[s2[i] - 'a' + 1] == 0) curNode = St[curNode].Link, curLen = St[curNode].Len;
+        int ch = s2[i] - 'a' + 1;
+        while(curNode > -1 && St[curNode].Next[ch] == 0) curNode = St[curNode].Link, curLen = St[curNode].Len;
         if(curNode == -1) curNode = 0;
-        if(St[curNode].Next[s2[i] - 'a' + 1]) curNode = St[curNode].Next[s2[i] - 'a' + 1], curLen++;
+        if(St[curNode].Next[ch]) curNode = St[curNode].Next[ch], curLen++;
         ans = max(ans, curLen);
     }
     return ans;
@@ -136,4 +138,4 @@ int distinctSubstring(char * s){
     for(int i = 0; i < len; i++) SAM(s[i]);
     return dfs_sam(Root) - 1;
 }
-/// Always be careful of the alphabetSize
+// Always be careful of the alphabetSize
