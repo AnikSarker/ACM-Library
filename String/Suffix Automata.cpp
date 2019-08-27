@@ -121,17 +121,16 @@ int LCS(char * s1, char * s2)
     }
     return ans;
 }
+
 int dstnct_substr[2 * MAXLEN + 10];
-int dfs_sam(int pos)
-{
+int dfs_sam(int pos){
     if(dstnct_substr[pos]) return dstnct_substr[pos];
     int res = 1;
     for(int i = 0; i < alphabetSize; i++) if(St[pos].Next[i]) res += dfs_sam(St[pos].Next[i]);
     return dstnct_substr[pos] = res;
 }
 
-int distinctSubstring(char * s)
-{
+int distinctSubstring(char * s){
     init();
     int len = strlen(s);
     for(int i = 0; i < len; i++) SAM(s[i]);
