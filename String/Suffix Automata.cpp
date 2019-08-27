@@ -3,19 +3,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 const int alphabetSize = 28;
-const int MAXLEN = 400005;
+const int MAXLEN = 300005;
 
-int TotalLen, Size;
-int Root, Last;
+int TotalLen,Size;
+int Root,Last;
 
 struct Node{
-    int Link, Len;
+    int Link,Len;
+    long long Occurrence; ///How many times each state(endpos) occurs
+    long long Word;     ///How many substrings can be reached from this node
+    long long Dstnct_substr; ///How many distinct substrings can be reached from this node
+    int FirstPos,version,baseID;
     int Next[alphabetSize];
-    int FirstPos, version, baseID;
     void Clear(){
-        Len = 0; Link = -1;
-        memset(Next, 0, sizeof(Next));
-        baseID = FirstPos = version = -1;
+        Len = Occurrence = Word = Dstnct_substr = 0; Link = baseID = FirstPos = version = -1;
+        memset(Next,0,sizeof(Next));
     }
 };
 
@@ -24,12 +26,12 @@ bool isValid[MAXLEN*2];
 vector<int>CurrList;
 vector<int>LastList;
 
+
 inline void CreateNode(int dep){
     St[Size].Clear();
     St[Size].Len = dep;
     St[Size].FirstPos = dep;
     St[Size].baseID = Size;
-
     isValid[Size] = true;
 }
 
@@ -109,36 +111,81 @@ int FindSmallest(int len,int idx){
     }
     return St[cur].FirstPos - len + 1;
 }
-
-// Returns longest common substring of 2 strings
-int LCS(char * s1,char * s2){
+///Returns longest common substring of 2 strings
+int LCS(char * s1, char * s2)
+{
     int len1 = strlen(s1), len2 = strlen(s2);
     init();
-    for(int i = 0; i < len1; i++) SAM(s1[i] - 'a' + 1);
+    for(int i = 0; i < len1; i++) SAM(s1[i] - 'a');
     int curNode = 0, curLen = 0, ans = 0;
     for(int i = 0; i < len2; i++){
-        int ch = s2[i] - 'a' + 1;
-        while(curNode > -1 && St[curNode].Next[ch] == 0) curNode = St[curNode].Link, curLen = St[curNode].Len;
+        while(curNode > -1 && St[curNode].Next[s2[i] - 'a'] == 0) curNode = St[curNode].Link, curLen = St[curNode].Len;
         if(curNode == -1) curNode = 0;
-        if(St[curNode].Next[ch]) curNode = St[curNode].Next[ch], curLen++;
+        if(St[curNode].Next[s2[i] - 'a']) curNode = St[curNode].Next[s2[i] - 'a'], curLen++;
         ans = max(ans, curLen);
     }
     return ans;
 }
 
-// Returns number of distinct substring of a string 
-int dstnct_substr[2 * MAXLEN];
-int dfs_sam(int pos){
-    if(dstnct_substr[pos]) return dstnct_substr[pos];
-    int res = 1;
-    for(int i = 0; i < alphabetSize; i++) 
-        if(St[pos].Next[i]) res += dfs_sam(St[pos].Next[i]);
-    return dstnct_substr[pos] = res;
+///finds number of distinct substring
+///finds number of occurrence of every state(endpos class)
+///finds number of substring which can be reached from this node
+///must call findAllTerminal Before
+void dfs_sam(int pos)
+{
+    if(St[pos].Dstnct_substr) return;
+    int resDstnct = 1;
+    for(int i = 0; i < alphabetSize; i++) if(St[pos].Next[i]) {
+        int to = St[pos].Next[i];
+        dfs_sam(to);
+        resDstnct += St[to].Dstnct_substr;
+        St[pos].Occurrence += St[to].Occurrence;
+        St[pos].Word += St[to].Word;
+    }
+    St[pos].Dstnct_substr = resDstnct;
+    St[pos].Word += St[pos].Occurrence;
 }
 
-int distinctSubstring(char * s){
-    init();
-    int len = strlen(s);
-    for(int i = 0; i < len; i++) SAM(s[i]);
-    return dfs_sam(Root) - 1;
+void findAllTerminal()
+{
+    int cur = Last;
+    while(cur > Root) St[cur].Occurrence++, cur = St[cur].Link;
+}
+
+void PrintKthLexSubstr(int k)
+{
+    ///must call dfs_sam before
+    int cur = Root;
+    while(k > 0){
+        int tmp = 0;
+        for(int i = 0; i < 26; i++){
+            if(St[cur].Next[i] == 0) continue;
+            int to = St[cur].Next[i];
+            if(tmp + St[to].Word >= k){
+                k -= (tmp + St[to].Occurrence), cur = to;
+                printf("%c", 'a' + i);
+                break;
+            }
+            tmp += St[to].Word;
+        }
+    }
+}
+
+void PrintKthLexDstSubstr(int k)
+{
+    ///must call dfs_sam before
+    int cur = Root;
+    while(k > 0){
+        int tmp = 0;
+        for(int i = 0; i < 26; i++){
+            if(St[cur].Next[i] == 0) continue;
+            int to = St[cur].Next[i];
+            if(tmp + St[to].Dstnct_substr >= k){
+                k -= (tmp + 1), cur = to;
+                printf("%c", 'a' + i);
+                break;
+            }
+            tmp += St[to].Dstnct_substr;
+        }
+    }
 }
