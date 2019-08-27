@@ -6,8 +6,8 @@ using namespace std;
 const int ALPHA = 28;
 const int MAXLEN = 300005;
 
-int TotalLen,Size;
-int Root,Last;
+int TotalLen, Size;
+int Root, Last;
 
 struct Node{
     int Link, Len;
@@ -17,15 +17,16 @@ struct Node{
     int FirstPos, version, baseID;
     int Next[ALPHA];
     void Clear(){
-        Len = Occurrence = Word = Dstnct_substr = 0; Link = baseID = FirstPos = version = -1;
-        memset(Next,0,sizeof(Next));
+        Len = Occurrence = Word = Dstnct_substr = 0; 
+        Link = baseID = FirstPos = version = -1;
+        memset(Next, 0, sizeof(Next));
     }
 };
 
 Node St[MAXLEN*2];
 bool isValid[MAXLEN*2];
-vector<int>CurrList;
-vector<int>LastList;
+vector<int> CurrList;
+vector<int> LastList;
 
 inline void CreateNode(int dep){
     St[Size].Clear();
