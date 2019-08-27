@@ -100,14 +100,16 @@ namespace Polynom{
     vector<ll> operator / (vector<ll> f, vector<ll> g) {
         if (f == dvf && g == dvg) return dvr;
         dvf = f; dvg = g;
-        ll n = (ll) f.size(), m = (ll) g.size(); n = n - m + 1;
-        reverse(f.begin(), f.end()); reverse(g.begin(), g.end());
-        f.resize(n); g.resize(n); dvr = f * (~g); dvr.resize(n);
-        reverse(dvr.begin(), dvr.end()); return dvr;
+        ll n = f.size(), m = g.size(); n = n - m + 1;
+        reverse(f.begin(), f.end()); f.resize(n);
+        reverse(g.begin(), g.end()); g.resize(n);
+        dvr = f * (~g); dvr.resize(n); reverse(dvr.begin(), dvr.end());
+        return dvr;
     }
 
     vector<ll> operator % (vector<ll> f, vector<ll> g) {
-        ll n = (ll) g.size() - 1; f = f - f / g * g;
+        ll n = (ll) g.size() - 1;
+        f = f - f / g * g;
         f.resize(n - 1); return f;
     }
 
@@ -115,21 +117,21 @@ namespace Polynom{
     void getFacInv(ll n){
         if (n <= fac.size()) { return; }
         fac.resize(n); inv.resize(n);
-        for (ll i = fac[0] = 1; i < n; i++) { fac[i] = fac[i - 1] * i % p; }
+        for (ll i = fac[0] = 1; i < n; i++) fac[i] = mul(fac[i - 1], i);
         inv[n - 1] = Pow(fac[n - 1], p - 2);
-        for (ll i = n - 1; i; i--) { inv[i - 1] = inv[i] * i % p; }
+        for (ll i = n - 1; i; i--) inv[i - 1] = mul(inv[i], i);
     }
 
     vector<ll> operator >> (vector<ll> f, ll m){
         ll n = (ll) f.size(); m = min(n, m); getFacInv(n);
-        for (ll i = m; i < n; i++) { f[i - m] = f[i] * fac[i] % p * inv[i - m] % p; }
+        for (ll i = m; i < n; i++) f[i - m] = mul(mul(f[i], fac[i]), inv[i - m]);
         f.resize(n - m);
         return f;
     }
 
-    vector<ll> operator <<(vector<ll> f, ll m) {
+    vector<ll> operator << (vector<ll> f, ll m) {
         ll n = f.size(); f.resize(n + m); getFacInv(n + m);
-        for (ll i = n + m - 1; i >= m; i--) { f[i] = f[i - m] * fac[i - m] % p * inv[i] % p; }
+        for (ll i = n + m - 1; i >= m; i--) f[i] = mul(mul(f[i - m], fac[i - m]), inv[i]);
         fill(f.begin(), f.begin() + m, 0);
         return f;
     }
@@ -165,9 +167,9 @@ namespace Polynom{
 using namespace Polynom;
 
 int main(){
-    std :: vector<ll> a{43431,1231,435,43340,430,10};
-    std :: vector<ll> b = ~a;
+    vector<ll> a{43431,1231,435,43340,430,10};
+    vector<ll> b = ~a;
 
-    std :: vector<ll> c = a * b * a;
+    vector<ll> c = a * b * a;
     for(ll x : c) cout<<x<<" ";
 }
