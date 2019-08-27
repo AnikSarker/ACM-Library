@@ -79,7 +79,7 @@ namespace Polynom{
 
         ll n = m << 1, invN = Pow(n, p - 2);
         g.resize(m); h.resize(m);
-        for(ll i = (m >> 1) - 1; ~i; i--) h[i] = (g[i] << 1) % p;
+        for(ll i = (m >> 1) - 1; ~i; i--) h[i] = add(g[i], g[i]);
 
         getRevRoot(n);
         ntransform(f, n, false); ntransform(g, n, false);
