@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+const int alphabetSize = 28;
 const int MAXLEN = 400005;
 
 int TotalLen,Size;
@@ -8,7 +9,7 @@ int Root,Last;
 struct Node{
     int Link,Len;
     int FirstPos,version,baseID;
-    int Next[27];
+    int Next[alphabetSize];
     void Clear(){
         Len = 0; Link = baseID = FirstPos = version = -1;
         memset(Next,0,sizeof(Next));
@@ -97,7 +98,7 @@ int FindSmallest(int len,int idx){
     int cur = Root;
     for(int i= 0; i< len; i++){
         if(cur > Root && St[cur].version == idx) return TotalLen - i + 1;
-        for(int ch = 0; ch < 26; ch++){
+        for(int ch = 0; ch < alphabetSize; ch++){
             if(!has(cur, ch )) continue;
             cur = St[cur].Next[ch];
             break;
@@ -120,4 +121,20 @@ int LCS(char * s1, char * s2)
     }
     return ans;
 }
-/// Always be careful of the alphabet size
+int dstnct_substr[2 * MAXLEN + 10];
+int dfs_sam(int pos)
+{
+    if(dstnct_substr[pos]) return dstnct_substr[pos];
+    int res = 1;
+    for(int i = 0; i < alphabetSize; i++) if(St[pos].Next[i]) res += dfs_sam(St[pos].Next[i]);
+    return dstnct_substr[pos] = res;
+}
+
+int distinctSubstring(char * s)
+{
+    init();
+    int len = strlen(s);
+    for(int i = 0; i < len; i++) SAM(s[i]);
+    return dfs_sam(Root) - 1;
+}
+/// Always be careful of the alphabetSize
