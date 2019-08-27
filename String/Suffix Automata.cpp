@@ -2,6 +2,7 @@
 
 #include<bits/stdc++.h>
 using namespace std;
+#define ll long long int
 const int alphabetSize = 28;
 const int MAXLEN = 300005;
 
@@ -9,11 +10,11 @@ int TotalLen,Size;
 int Root,Last;
 
 struct Node{
-    int Link,Len;
-    long long Occurrence; ///How many times each state(endpos) occurs
-    long long Word;     ///How many substrings can be reached from this node
-    long long Dstnct_substr; ///How many distinct substrings can be reached from this node
-    int FirstPos,version,baseID;
+    int Link, Len;
+    ll Occurrence; ///How many times each state(endpos) occurs
+    ll Word;     ///How many substrings can be reached from this node
+    ll Dstnct_substr; ///How many distinct substrings can be reached from this node
+    int FirstPos, version, baseID;
     int Next[alphabetSize];
     void Clear(){
         Len = Occurrence = Word = Dstnct_substr = 0; Link = baseID = FirstPos = version = -1;
