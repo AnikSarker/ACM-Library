@@ -13,7 +13,7 @@ so that Count(X)-Count(Y)>=0 in any prefix (Non-negative Partial Sum) :
 ans =  C(n+k,k) - C(n+k, k-1)
 
 * Catalan trapezoid : Total number of permutation having n X and k Y 
-so that Count(Y)-Count(X) < m in any prefix, then :
+so that Count(Y) - Count(X) < m in any prefix, then :
 when 0 <= k < m, ans = C(n+k,k)
 when m <= k <= n+m-1, ans = C(n+k,k) - C(n+k,k-m)
 when k > n+m-1, ans = 0
