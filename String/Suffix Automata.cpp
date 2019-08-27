@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long int
-const int alphabetSize = 28;
+const int ALPHA = 28;
 const int MAXLEN = 300005;
 
 int TotalLen,Size;
@@ -15,7 +15,7 @@ struct Node{
     ll Word;           // How many substrings can be reached from this node
     ll Dstnct_substr;  // How many distinct substrings can be reached from this node
     int FirstPos, version, baseID;
-    int Next[alphabetSize];
+    int Next[ALPHA];
     void Clear(){
         Len = Occurrence = Word = Dstnct_substr = 0; Link = baseID = FirstPos = version = -1;
         memset(Next,0,sizeof(Next));
@@ -103,7 +103,7 @@ int FindSmallest(int len,int idx){
     int cur = Root;
     for(int i= 0; i< len; i++){
         if(cur > Root && St[cur].version == idx) return TotalLen - i + 1;
-        for(int ch = 0; ch < alphabetSize; ch++){
+        for(int ch = 0; ch < ALPHA; ch++){
             if(!has(cur, ch )) continue;
             cur = St[cur].Next[ch];
             break;
@@ -133,7 +133,7 @@ int LCS(char * s1, char * s2){
 void dfs_sam(int pos){
     if(St[pos].Dstnct_substr) return;
     int resDstnct = 1;
-    for(int i = 0; i < alphabetSize; i++) if(St[pos].Next[i]) {
+    for(int i = 0; i < ALPHA; i++) if(St[pos].Next[i]) {
         int to = St[pos].Next[i];
         dfs_sam(to);
         resDstnct += St[to].Dstnct_substr;
