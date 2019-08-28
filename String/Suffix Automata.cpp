@@ -16,7 +16,7 @@ int Root, Last;
 
 struct Node{
     int Link, Len;
-    ll Occurrence;    // How many times each state(endpos) occurs
+    ll Occurrence;    // How many times each state (endpos) occurs
     ll Word;          // How many substrings can be reached from this node
     ll Dstnct_substr; // How many distinct substrings can be reached from this node
     int FirstPos, version, baseID;
