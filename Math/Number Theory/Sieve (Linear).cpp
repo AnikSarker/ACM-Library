@@ -3,9 +3,7 @@ using namespace std;
 const int MAX = 10000005;
 
 int phi[MAX];
-int sigma[MAX];
 int least[MAX];
-int lstCnt[MAX];
 vector<int> primes;
 
 void RunLinearSieve(int n) {
