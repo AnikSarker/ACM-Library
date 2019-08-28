@@ -8,7 +8,7 @@ vector<int> primes;
 
 void RunLinearSieve(int n) {
     n = max(n, 1);
-    for(int i=0;i<=n;i++) least[i] = lstCnt[i] = lstSum[i] = 0;
+    for(int i = 0; i <= n; i++) least[i] = lstCnt[i] = lstSum[i] = 0;
 
     primes.clear();
     phi[1] = dvc[1] = sig[1] = mob[1] = 1;
