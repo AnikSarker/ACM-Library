@@ -1,3 +1,4 @@
 * if x and m coprime, x ^ phi(m) = 1                    (mod m)
 * if x and m coprime, x ^ n = x ^ (n mod phi(m))        (mod m)
 * if n >= log2(m), x ^ n = x ^ (phi(m) + n mod phi(m))  (mod m)
+* phi( phi(m) ) <= m / 2
