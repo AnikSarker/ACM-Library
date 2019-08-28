@@ -100,7 +100,7 @@ inline void del(int len){
 }
 
 inline void MarkTerminal(int u,int v = 1){
-    while(u != -1) St[u].version = v,  u = St[u].Link, St[u].Occurrence++;
+    while(u != -1) St[u].version = v,  u = St[u].Link, St[u].Occurrence = 1;
 }
 
 int FindSmallest(int len,int idx){
