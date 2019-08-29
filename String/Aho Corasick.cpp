@@ -14,12 +14,22 @@ int Link[MAX];           //failure links
 pii Level[MAX];          //Level[i] = Depth of node i
 int Len[MAX];            //Len[i] = length of i-th query string
 vector<int>End[MAX];     //End[i] = indices of strings those end in node i
-vector<int>Occ[MAX];     //Occ[i] = occurrences of i-th query string
+//vector<int>Occ[MAX];     //Occ[i] = occurrences of i-th query string
+vector < int > edgeslink[MAX];
+vector < int > perNodeText[MAX];
+
+int in[MAX], out[MAX];
+int euler[MAX];
+int momentCur;
 
 void init(){
     Root=0;
     Nnode=0;
+    momentCur = 0;
+
+    edgeslink[Root].clear();
     node[Root].clear();
+    perNodeText[Root].clear();
 }
 
 void insertword(string p,int ind){
@@ -31,6 +41,8 @@ void insertword(string p,int ind){
             Level[Nnode]=make_pair(Level[now].first+1,Nnode);
             node[Nnode].clear();
             End[Nnode].clear();
+            edgeslink[Nnode].clear();
+            perNodeText[Nnode].clear();
         }
         now=node[now][p[i]];
     }
@@ -54,7 +66,8 @@ void push_links(){
             else Link[v]=0;
 
             q.push(v);
-            for(int x : End[Link[v]]) End[v].push_back(x);
+            edgeslink[Link[v]].push_back(v);
+//            for(int x : End[Link[v]]) End[v].push_back(x);
         }
     }
 }
@@ -66,15 +79,23 @@ void traverse(string s){
         while(now!=-1 && !node[now][s[i]]) now=Link[now];
         if(now!=-1) now=node[now][s[i]];
         else now=0;
-        for(int x=0;x<End[now].size();x++) Occ[End[now][x]].push_back(i);
+        perNodeText[now].push_back(i + 1); /// using 1 based indexing for text
+//        for(int x=0;x<End[now].size();x++) Occ[End[now][x]].push_back(i);
     }
+}
+///After dfs, the occurence of ith query string will be the sum of all the occurrence of the subtree under the endNode of ith string
+void dfs(int pos)
+{
+    in[pos] = momentCur + 1;
+    for(int val : perNodeText[pos]) euler[++momentCur] = val;
+    for(int to : edgeslink[pos]) dfs(to);
+    out[pos] = momentCur;
 }
 
 int main(){
-    //init();
-    //Must clear Occ vector before starting every test case
-    //insert identical query strings only once and handle others keeping map
-    //push_links();
-    //traverse(s);
-    //Find the occurrences from Occ array and use them.
+    ///init();
+    ///push_links();
+    ///traverse(s);
+    ///dfs(Root);
+
 }
