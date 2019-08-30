@@ -12,7 +12,7 @@ int Nnode;               // Total node count
 int Link[MAX];           // failure links
 int Len[MAX];            // Len[i] = length of i-th pattern
 vector<int> End[MAX];    // End[i] = indices of patterns those end in node i
-//vector<int> Occ[MAX];  // Occ[i] = occurrences of i-th pattern
+// vector<int> Occ[MAX]; // Occ[i] = occurrences of i-th pattern
 vector<int> edgeLink[MAX];
 vector<int> perNodeText[MAX];
 
@@ -29,9 +29,8 @@ void Clear(int node){
 }
 
 void init(){
-    Root=0;
-    Nnode=0;
     Time = 0;
+    Root = Nnode = 0;
     Clear(Root);
 }
 
@@ -60,8 +59,8 @@ void push_links(){
             int v = edge.second;
             int j = Link[u];
 
-            while(j!=-1 && !Next[j][ch]) j = Link[j];
-            if(j!=-1) Link[v] = Next[j][ch];
+            while(j != -1 && !Next[j][ch]) j = Link[j];
+            if(j != -1) Link[v] = Next[j][ch];
             else Link[v] = 0;
 
             q.push(v);
@@ -72,10 +71,10 @@ void push_links(){
 }
 
 void traverse(string s){
-    int len=s.size();
-    int now=Root;
-    for(int i=0;i<len;i++)    {
-        while(now!=-1 && !Next[now][s[i]]) now = Link[now];
+    int len = s.size();
+    int now = Root;
+    for(int i = 0; i < len; i++)    {
+        while(now != -1 && !Next[now][s[i]]) now = Link[now];
         if(now!=-1) now = Next[now][s[i]];
         else now = 0;
         perNodeText[now].push_back(i+1);  // using 1 based indexing for text indices
