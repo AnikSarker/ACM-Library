@@ -20,14 +20,19 @@ int in[MAX], out[MAX];
 int euler[MAX];
 int Time;
 
+
+void Clear(int node){
+    Next[node].clear();
+    End[node].clear();
+    edgeLink[node].clear();
+    perNodeText[node].clear();
+}
+
 void init(){
     Root=0;
     Nnode=0;
     Time = 0;
-
-    edgeLink[Root].clear();
-    Next[Root].clear();
-    perNodeText[Root].clear();
+    Clear(Root);
 }
 
 void insertword(string p,int ind){
@@ -36,10 +41,7 @@ void insertword(string p,int ind){
     for(int i=0; i<len; i++){
         if(!Next[now][p[i]]){
             Next[now][p[i]] = ++Nnode;
-            Next[Nnode].clear();
-            End[Nnode].clear();
-            edgeLink[Nnode].clear();
-            perNodeText[Nnode].clear();
+            Clear(Nnode);
         }
         now = Next[now][p[i]];
     }
