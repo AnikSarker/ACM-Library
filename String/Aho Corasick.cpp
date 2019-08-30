@@ -22,7 +22,6 @@ int in[MAXQ], out[MAXQ];
 int euler[MAXT];
 int Time;
 
-
 void Clear(int node){
     Next[node].clear();
     End[node].clear();
