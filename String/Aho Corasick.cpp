@@ -3,21 +3,23 @@
 // if occurrence positions needed, Worst Case Complexity : (SumLen) Root (SumLen)
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX 1000005  // Sun of all |Pattern|
+const int MAXT = 1000005;  // Length of Text
+const int MAXP = 1000005;  // Sun of all |Pattern|
+const int MAXQ = 1000005;  // Number of Patterns
 
 int n;
-map<char,int> Next[MAX];
+map<char,int> Next[MAXP];
 int Root;                // AC automaton Root
 int Nnode;               // Total node count
-int Link[MAX];           // failure links
-int Len[MAX];            // Len[i] = length of i-th pattern
-vector<int> End[MAX];    // End[i] = indices of patterns those end in node i
+int Link[MAXP];           // failure links
+int Len[MAXP];            // Len[i] = length of i-th pattern
+vector<int> End[MAXP];    // End[i] = indices of patterns those end in node i
 // vector<int> Occ[MAX]; // Occ[i] = occurrences of i-th pattern
-vector<int> edgeLink[MAX];
-vector<int> perNodeText[MAX];
+vector<int> edgeLink[MAXP];
+vector<int> perNodeText[MAXP];
 
-int in[MAX], out[MAX];
-int euler[MAX];
+int in[MAXQ], out[MAXQ];
+int euler[MAXT];
 int Time;
 
 
@@ -85,10 +87,10 @@ void traverse(string s){
 // After dfs, the occurence of ith query string will be the count of
 // all the occurrence of the subtree under the endNode of ith string
 void dfs(int pos){
-    in[pos] = Time + 1;
+    for(int q : End[pos]) in[q] = Time + 1;
     for(int val : perNodeText[pos]) euler[++Time] = val;
     for(int to : edgeLink[pos]) dfs(to);
-    out[pos] = Time;
+    for(int q : End[pos]) out[q] = Time;
 }
 
 int main(){
