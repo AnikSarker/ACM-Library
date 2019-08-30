@@ -9,12 +9,12 @@ const int MAXQ = 1000005;  // Number of Patterns
 
 int n;
 map<char,int> Next[MAXP];
-int Root;                // AC automaton Root
-int Nnode;               // Total node count
+int Root;                 // AC automaton Root
+int Nnode;                // Total node count
 int Link[MAXP];           // failure links
 int Len[MAXP];            // Len[i] = length of i-th pattern
 vector<int> End[MAXP];    // End[i] = indices of patterns those end in node i
-// vector<int> Occ[MAX]; // Occ[i] = occurrences of i-th pattern
+// vector<int> Occ[MAX];  // Occ[i] = occurrences of i-th pattern
 vector<int> edgeLink[MAXP];
 vector<int> perNodeText[MAXP];
 
