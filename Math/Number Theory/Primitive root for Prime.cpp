@@ -16,15 +16,15 @@ int primitive_root(int p){
     int php = phi(p);
 
     int tmp = php;
-    for(int i = 2; i * i <= tmp; ++i)    {
-        if (tmp%i==0){
+    for(int i = 2; i * i <= tmp; i++){
+        if(tmp % i == 0){
             factor.push_back(i);
             while (tmp % i == 0) tmp /= i;
         }
     }
-    if(tmp!=1) factor.push_back(tmp);
+    if(tmp != 1) factor.push_back(tmp);
 
-    for(int root = 1; ; ++root)    {
+    for(int root=1; ; root++){
         bool flag = true;
         for(int i = 0; i < factor.size(); ++i){
             if(bigMod(root, php / factor[i], p) == 1){
