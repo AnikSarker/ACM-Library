@@ -73,6 +73,19 @@ the maximum matching is equal to the vertex cover number for a bipartite graph.
 ***************************************************************************************
 ***************************************************************************************
 
+Minimum Vertex Cover in bipartite graph
+Let's say the maximum matching is M.
+
+And orientation of edges will be :
+Those edges that belong to M will go from right to left, 
+all other edges will go from left to right.
+Now run DFS starting at all left vertices that are not incident to edges in M. 
+Some vertices of the graph will become visited during this DFS and some not-visited.
+To get minimum vertex cover you take all visited right vertices of M, and all not-visited left vertices of M.
+
+***************************************************************************************
+***************************************************************************************
+
 Minimum Path cover in a Directed Acyclic Graph :
 
 find the minimum number of vertex-disjoint paths to cover each vertex in V.
