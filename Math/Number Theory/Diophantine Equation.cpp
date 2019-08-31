@@ -9,6 +9,7 @@ using namespace std;
 // Note: computed value g can be negative.
 // Given one solution (x0, y0), other solutions have form :
 // xk = x0 + k * b / g and yk = y0 - k * a / g
+
 ll egcd(ll a,ll b,ll &x,ll &y){
     if(a == 0) {x = 0; y = 1; return b;}
     ll x1,y1;
