@@ -161,13 +161,27 @@ namespace Polynom{
     }
 
     vector<ll> operator ^ (vector<ll> f, ll x){
-        ll n = f.size();
-        ll inv = Pow(f[0], p-2), ext = Pow(f[0], x);
-        for(ll i = 0; i < n; i++) f[i] = mul(f[i], inv);
-        f = polyLn(f);
-        for(ll i = 0; i < n; i++) f[i] = mul(f[i], x);
-        f = polyExp(f);
-        for(ll i = 0; i < n; i++) f[i] = mul(f[i], ext);
+        int idx = 0;
+        while(idx < f.size() && f[idx] == 0) idx++;
+        if(idx == f.size()) return f;
+
+        vector<ll> g;
+        for(int i = idx; i < f.size(); i++) g.push_back(f[i]);
+
+        ll n = g.size();
+        ll inv = Pow(g[0], p-2), ext = Pow(g[0], x);
+        for(ll i = 0; i < n; i++) g[i] = mul(g[i], inv);
+        g = polyLn(g);
+        for(ll i = 0; i < n; i++) g[i] = mul(g[i], x);
+        g = polyExp(g);
+        for(ll i = 0; i < n; i++) g[i] = mul(g[i], ext);
+
+        f.clear();
+        for(ll i = 0; i < idx * x; i++) f.push_back(0);
+        for(ll i = 0; i < n; i++){
+            if(f.size() == n + idx) break;
+            f.push_back(g[i]);
+        }
         return f;
     }
 }
