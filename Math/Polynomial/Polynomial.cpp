@@ -161,7 +161,7 @@ namespace Polynom{
     }
 
     vector<ll> operator ^ (vector<ll> f, ll x){
-        int idx = 0;
+        ll idx = 0;
         while(idx < f.size() && f[idx] == 0) idx++;
         if(idx == f.size()) return f;
 
