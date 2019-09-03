@@ -161,9 +161,14 @@ namespace Polynom{
     }
 
     vector<ll> operator ^ (vector<ll> f, ll x){
-        ll n = (ll) f.size(); f = polyLn(f);
-        for(ll i = 0; i < n; i++) { f[i] = (long long) f[i] * x % p; }
-        return polyExp(f);
+        ll n = f.size();
+        ll inv = Pow(f[0], p-2), ext = Pow(f[0], x);
+        for(ll i = 0; i < n; i++) f[i] = mul(f[i], inv);
+        f = polyLn(f);
+        for(ll i = 0; i < n; i++) f[i] = mul(f[i], x);
+        f = polyExp(f);
+        for(ll i = 0; i < n; i++) f[i] = mul(f[i], ext);
+        return f;
     }
 }
 using namespace Polynom;
