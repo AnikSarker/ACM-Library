@@ -58,6 +58,8 @@ namespace Polynom{
         }
     }
 
+    // Given a n-degree polynomial f and m-degree polynomial g
+    // returns a (n + m) degree polynomial f * g (not in modular field)
     vector<ll> operator * (vector<ll> f, vector<ll> g) {
         ll n = 1, m = f.size() + g.size() - 1;
         while (n < m) n <<= 1;
@@ -89,7 +91,10 @@ namespace Polynom{
         return h;
     }
 
+    // given a n-degree polynomials f
+    // returns w such that f * w = 1 (mod z^n)
     vector<ll> operator ~ (vector<ll> f){
+        assert(f[0] != 0);
         ll n = 1, m = (ll) f.size();
         while(n < m) n <<= 1;
         if(n == 1) f[0] = Pow(f[0], p - 2);
@@ -99,6 +104,8 @@ namespace Polynom{
     }
 
     vector<ll> dvf, dvg, dvr;
+    // given 2 n-degree polynomials f and g
+    // returns w such that g * w = f (mod z^n)
     vector<ll> operator / (vector<ll> f, vector<ll> g) {
         if (f == dvf && g == dvg) return dvr;
         dvf = f; dvg = g;
@@ -107,12 +114,6 @@ namespace Polynom{
         reverse(g.begin(), g.end()); g.resize(n);
         dvr = f * (~g); dvr.resize(n); reverse(dvr.begin(), dvr.end());
         return dvr;
-    }
-
-    vector<ll> operator % (vector<ll> f, vector<ll> g) {
-        ll n = g.size() - 1;
-        f = f - f / g * g;
-        f.resize(n - 1); return f;
     }
 
     vector<ll> fac, inv, one = {1};
@@ -125,7 +126,7 @@ namespace Polynom{
     }
 
     vector<ll> operator >> (vector<ll> f, ll m){
-        ll n = (ll) f.size(); m = min(n, m); getFacInv(n);
+        ll n = f.size(); m = min(n, m); getFacInv(n);
         for(ll i = m; i < n; i++) f[i - m] = mul(mul(f[i], fac[i]), inv[i - m]);
         f.resize(n - m);
         return f;
@@ -155,11 +156,14 @@ namespace Polynom{
 
     vector<ll> polyExp(vector<ll> f){
         ll n = 1, m = (ll) f.size();
-        while (n < m) { n <<= 1; } f = polyExp(f, n);
+        while(n < m) n <<= 1;
+        f = polyExp(f, n);
         f.resize(m);
         return f;
     }
 
+    // Given a n-degree polynomial f
+    // returns w such that w = f ^ x (mod z^n)
     vector<ll> operator ^ (vector<ll> f, ll x){
         ll idx = 0;
         while(idx < f.size() && f[idx] == 0) idx++;
@@ -190,7 +194,16 @@ using namespace Polynom;
 int main(){
     vector<ll> a{43431,1231,435,43340,430,10};
     vector<ll> b = ~a;
-
     vector<ll> c = a * b * a;
-    for(ll x : c) cout<<x<<" ";
+    for(ll x : c) cout<<x<<" "; cout<<endl;
+
+    vector<ll> d = a^3;
+    vector<ll> e = a * a * a;
+    for(ll x : d) cout<<x<<" "; cout<<endl;
+    for(ll x : e) cout<<x<<" "; cout<<endl;
+    e.resize(a.size());
+
+    vector<ll> f = e / d;
+    vector<ll> g = f * d;
+    for(ll x : g) cout<<x<<" ";
 }
