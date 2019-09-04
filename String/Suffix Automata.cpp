@@ -6,6 +6,7 @@ using namespace std;
 #define ll long long int
 const int ALPHA = 28;
 const int MAXLEN = 300005;
+const int LOG = 20;
 int TotalLen, Size;
 int Root, Last;
 
@@ -32,6 +33,9 @@ Node St[MAXLEN*2];
 bool isValid[MAXLEN*2];
 vector<int>CurrList;
 vector<int>LastList;
+vector < int > linkTree[2 * MAXLEN];
+int Par[2 * MAXLEN], P[2 * MAXLEN][LOG];
+int perPrefNode[MAXLEN]; ///[i] = node created after inserting ith position in SAM
 
 inline void CreateNode(int dep){
     St[Size].Clear();
@@ -47,6 +51,7 @@ inline void init(){
     St[Root].Clear();
     CurrList.clear();
     LastList.clear();
+    for(int i = 0; i < 2 * MAXLEN; i++) linkTree[i].clear();
 }
 
 inline bool has(int u, int ch){
@@ -54,7 +59,7 @@ inline bool has(int u, int ch){
     return isValid[St[x].baseID];
 }
 
-inline void SAM(int ch){
+inline void SAM(int pos, int ch){
     TotalLen++;
     int Curr = ++Size;
     CreateNode(St[Last].Len + 1);
@@ -65,7 +70,9 @@ inline void SAM(int ch){
         p = St[p].Link;
     }
 
-    if(p == -1) St[Curr].Link = Root;
+    if(p == -1) {
+        St[Curr].Link = Root;
+    }
     else{
         int q = St[p].Next[ch];
         if(St[q].Len == St[p].Len + 1) St[Curr].Link = q;
@@ -80,8 +87,13 @@ inline void SAM(int ch){
             St[q].Link = St[Curr].Link = Clone;
 
             while(p != -1 && St[p].Next[ch] == q) St[p].Next[ch] = Clone, p = St[p].Link;
+            linkTree[St[Clone].Link].push_back(Clone);
+            Par[Clone] = St[Clone].Link;
         }
     }
+    perPrefNode[pos] = Curr; //pass pos as parameter
+    linkTree[St[Curr].Link].push_back(Curr);
+    Par[Curr] = St[Curr].Link;
     CurrList.push_back(Curr);
     LastList.push_back(Last);
     Last = Curr;
@@ -124,7 +136,7 @@ int LexSmallestSubStr(int len, int idx){
 int LCS(char * s1, char * s2){
     int len1 = strlen(s1), len2 = strlen(s2);
     init();
-    for(int i = 0; i < len1; i++) SAM(s1[i] - 'a');
+    for(int i = 0; i < len1; i++) SAM(i, s1[i] - 'a');
 
     int curNode = 0, curLen = 0, ans = 0;
     for(int i = 0; i < len2; i++){
@@ -189,3 +201,33 @@ void PrintKthLexDstSubstr(int k){
         }
     }
 }
+
+void BuildSparse(int n){
+    //Using 0 for uninitialized parent (Remember and use carefully)
+    for(int i=1; i<=n; i++) for(int j=0; j<LOG; j++) P[i][j] = 0;
+
+    for(int i=1; i<=n; i++) P[i][0] = Par[i];
+    for(int j=1; j<LOG; j++){
+        for(int i=1; i<=n; i++){
+             if(P[i][j-1] != 0){
+                 int x = P[i][j-1];
+                 P[i][j] = P[x][j-1];
+             }
+        }
+    }
+}
+
+int getNodeSubstring(int l, int r)
+{
+    int cur = perPrefNode[r], curLen = r - l + 1;
+    if(St[St[cur].Link].Len + 1 <= curLen) return cur;
+
+    for(int i = LOG - 1; i >= 0; i--){
+        if(P[cur][i] == 0) continue;
+        int ncur = P[cur][i];
+        if(St[St[ncur].Link].Len + 1 <= curLen && St[ncur].Len >= curLen) return ncur;
+        cur = ncur;
+    }
+
+}
+///must call init() at the start
