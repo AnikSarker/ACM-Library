@@ -13,7 +13,7 @@ namespace MO{
         Query(int x,int y,int i){L=x;R=y;id=i;}
         bool operator<(const Query other) const{
             int a = blkId[L]; int b = blkId[other.L];
-            return a == b ? ((R < other.R) ^ (a & 1)) : a < b;
+            return a == b ? (a & 1 ? (R > other.R) : (R < other.R)) : a < b;
         }
     }qry[MAXQ];
     int perQ[MAXQ];
