@@ -21,7 +21,7 @@ namespace MO{
     int MaxFreq = 0;
     int CoC[MAXN];
     int Count[MAXN];
-    bool Check(int x){
+    void Check(int x){
         if(!vis[x]){
             vis[x]=1;
             if(Count[A[x]]) CoC[Count[A[x]]]--;
