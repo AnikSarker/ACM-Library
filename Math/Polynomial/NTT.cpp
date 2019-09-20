@@ -22,18 +22,18 @@ struct NTT{
     ll P,M,G;
 
     NTT(ll mod) {P = mod; G = 10;}
-    void init(ll n){
+    void init(int n){
         M = 1; int z = 0;
         while(M < n) M <<= 1, z++;
         M <<= 1; z++;
 
         A.resize(M); B.resize(M);
         root.resize(M); rev.resize(M);
-        for(ll i = 1; i < M; i++) rev[i] = rev[i >> 1] >> 1 | (i & 1) << (z - 1);
+        for(int i = 1; i < M; i++) rev[i] = rev[i >> 1] >> 1 | (i & 1) << (z - 1);
 
-        ll x = Pow(G, (P-1) / M);
+        int x = Pow(G, (P-1) / M);
         root[0] = 1;
-        for(ll i = 1; i < M; i++) root[i] = (root[i-1] * x) % P;
+        for(int i = 1; i < M; i++) root[i] = mul(root[i-1], x);
     }
 
     void ntransform(vector<ll> &a,ll f){
