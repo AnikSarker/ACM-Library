@@ -13,9 +13,9 @@ ll bigMod(ll n, ll r) {
 ll Point[MAXN];
 ll Fact[MAXN];
 
-// Calculate first k + 1 points on the polynomial
+// Calculate first k + 1 points (0 to k) on the polynomial
 // where k = degree of the polynomial
-// Then find f(x) for any x using interpolation
+// Then find f(x) for any x using interpolation in O(n log(MOD))
 
 ll interpolate(int n,ll x) {
     if(x <= n) return Point[x];
