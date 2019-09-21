@@ -203,7 +203,7 @@ void PrintKthLexDstSubstr(int k){
 }
 
 void BuildSparse(int n){
-    //Using 0 for uninitialized parent (Remember and use carefully)
+    // Using 0 for uninitialized parent (Remember and use carefully)
     for(int i=1; i<=n; i++) for(int j=0; j<LOG; j++) P[i][j] = 0;
 
     for(int i=1; i<=n; i++) P[i][0] = Par[i];
@@ -217,8 +217,7 @@ void BuildSparse(int n){
     }
 }
 
-int getNodeSubstring(int l, int r)
-{
+int getNodeSubstring(int l, int r){
     int cur = perPrefNode[r], curLen = r - l + 1;
     if(St[St[cur].Link].Len + 1 <= curLen) return cur;
 
@@ -228,4 +227,4 @@ int getNodeSubstring(int l, int r)
         if(St[ncur].Len >= curLen) cur = ncur;
     }
 }
-///must call init() at the start
+// must call init() at the start
