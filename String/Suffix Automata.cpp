@@ -226,7 +226,6 @@ int getNodeSubstring(int l, int r)
         if(P[cur][i] == 0) continue;
         int ncur = P[cur][i];
         if(St[ncur].Len >= curLen) cur = ncur;
-        cur = ncur;
     }
 }
 ///must call init() at the start
