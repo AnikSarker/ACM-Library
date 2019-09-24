@@ -303,7 +303,8 @@ namespace Polygonal {
         return c / scale;
     }
 
-    //Call prepare on the convex hull of the set of points (Only once)
+    // Tested : https://www.spoj.com/problems/INOROUT
+    // Call prepare on the convex hull of the set of points (Only once)
     vector<Point> pt;
     vector<Point> seq;
     void prepare(Point* p, int n){
