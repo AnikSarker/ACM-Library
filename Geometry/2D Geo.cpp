@@ -304,9 +304,12 @@ namespace Polygonal {
     }
 
     //Call prepare on the convex hull of the set of points (Only once)
+    vector<Point> pt;
     vector<Point> seq;
-    void prepare(vector<Point> pt){
-        int n = pt.size();
+    void prepare(Point* p, int n){
+        pt.clear();
+        for(int i=0; i<n; i++) pt.push_back(p[i]);
+
         int pos = 0;
         for(int i = 1; i < n; i++) if(pt[i] < pt[pos]) pos = i;
         rotate(pt.begin(), pt.begin() + pos, pt.end());
@@ -316,7 +319,8 @@ namespace Polygonal {
         for(int i = 0; i < n; i++) seq[i] = pt[i + 1] - pt[0];
     }
 
-    bool pointInConvexPolygon(Point p){  //Query p - pt[0]
+    bool pointInConvexPolygon(Point p){
+        p = p - pt[0];
         int n = seq.size();
         if(dcmp(seq[0] * p) != 0 && dcmp(seq[0] * p) != dcmp(seq[0] * seq[n - 1])) return false;
         if(dcmp(seq[n - 1] * p) != 0 && dcmp(seq[n - 1] * p) != dcmp(seq[n - 1] * seq[0])) return false;
