@@ -45,6 +45,11 @@ int main(){
                     cur2 = getPos(i, anss);
                 }
             }
+            if(cur1.first >= cur2.first){
+                anss++;
+                continue;
+            }
+
 
             ll x = cur1.first;
             ll y = h[i] - cur2.first;
@@ -53,7 +58,7 @@ int main(){
 
 
             if(cur1.second == -1 && cur2.second == 1){
-                p = (x - y) + (z + 1) / 2;
+                p = abs(x - y) + (z + 1) / 2;
             }
             else if(cur1.second == 1 && cur2.second == 1){
                 p = y + (z + 1) / 2;
@@ -66,7 +71,10 @@ int main(){
             }
             else assert(false);
 
-            anss += p;
+            anss += p + 1;
+
+//            cout << "yo : " << i << ' ' << x << ' ' << y << ' ' << z << ' ' << p << endl;
+//            cout << "yo : " << i << ' ' << cur1.first << ' ' << cur1.second << ' ' << cur2.first << ' ' << cur2.second << endl;
 
 //            cout << i << ' ' << anss << endl;
 
