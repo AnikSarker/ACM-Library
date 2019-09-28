@@ -24,7 +24,6 @@ int main(){
 
         for(ll i = 2; i <= n; i++){
 
-            cout << i << ' ' << anss << endl;
 
             pair < ll , ll > cur1 = getPos(i - 1, anss);
             pair < ll , ll > cur2 = getPos(i, anss);
@@ -34,12 +33,24 @@ int main(){
                 continue;
             }
 
-//            cout << "yo : " << cur1.first << ' ' << cur2.first << endl;
+            if(h[i - 1] < h[i]){
+                if(cur2.second == 1){
+                    anss += h[i] - cur2.first + h[i] - h[i - 1];
+                    cur1 = getPos(i - 1, anss);
+                    cur2 = getPos(i, anss);
+                }
+                else if(cur2.second == -1 && cur1.first > h[i - 1]){
+                    anss += cur1.first - h[i - 1];
+                    cur1 = getPos(i - 1, anss);
+                    cur2 = getPos(i, anss);
+                }
+            }
 
             ll x = cur1.first;
             ll y = h[i] - cur2.first;
             ll z = cur2.first - x;
             ll p;
+
 
             if(cur1.second == -1 && cur2.second == 1){
                 p = (x - y) + (z + 1) / 2;
