@@ -10,12 +10,12 @@ using namespace std;
 const int MAX = 5005;
 
 int ara[MAX];
-ll C[MAX][MAX];
 ll dp[2][MAX];
+ll C[MAX][MAX];
 
 void compute(int K, int L, int R, int OptL, int OptR){
     if(L > R) return;
-    int mid = (L+R)/2;
+    int mid = (L + R) / 2;
 
     int optNow = -1;
     dp[K & 1][mid] = 0;
@@ -48,6 +48,6 @@ int main(){
 
         for(int i=1; i<=n; i++) dp[1][i] = C[1][i];
         for(int i=2; i<=K; i++) compute(i, 1, n, 1, n);
-        printf("%lld\n",dp[K & 1][n]);
+        printf("%lld\n", dp[K & 1][n]);
     }
 }
