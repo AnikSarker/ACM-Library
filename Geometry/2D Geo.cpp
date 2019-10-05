@@ -304,38 +304,24 @@ namespace Polygonal {
     }
 
     // Tested : https://www.spoj.com/problems/INOROUT
-    // Call prepare on the convex hull of the set of points (Only once)
-    vector<Point> pt;
-    vector<Point> seq;
-    void prepare(Point* p, int n){
-        pt.clear();
-        for(int i=0; i<n; i++) pt.push_back(p[i]);
-
-        int pos = 0;
-        for(int i = 1; i < n; i++) if(pt[i] < pt[pos]) pos = i;
-        rotate(pt.begin(), pt.begin() + pos, pt.end());
-
-        n--;
-        seq.resize(n);
-        for(int i = 0; i < n; i++) seq[i] = pt[i + 1] - pt[0];
-    }
-
-    bool pointInConvexPolygon(Point p){
-        p = p - pt[0];
-        int n = seq.size();
-        if(dcmp(seq[0] * p) != 0 && dcmp(seq[0] * p) != dcmp(seq[0] * seq[n - 1])) return false;
-        if(dcmp(seq[n - 1] * p) != 0 && dcmp(seq[n - 1] * p) != dcmp(seq[n - 1] * seq[0])) return false;
-        if(dcmp(seq[0] * p) == 0) return getPLength(seq[0]) >= getPLength(p);
-
-        int l = 0, r = n - 1;
-        while(r - l > 1){
-            int mid = (l + r)/2;
-            int pos = mid;
-            if(seq[pos] * p >= 0)l = mid;
-            else r = mid;
+    // pt must be in ccw order with no three collinear points
+    // returns inside = 1, on = 0, outside = -1
+    int pointInConvexPolygon(Point* pt, int n, Point p){
+        assert(n >= 3);
+        int lo = 1 , hi = n - 1 ;
+        while(hi - lo > 1){
+            int mid = (lo + hi) / 2;
+            if(getCross(pt[mid] - pt[0], p - pt[0]) > 0) lo = mid;
+            else hi = mid;
         }
-        int pos = l;
-        return pointInTriangle(seq[pos], seq[pos + 1], Point(0, 0), p);
+
+        bool in = pointInTriangle(pt[0], pt[lo], pt[hi], p);
+        if(!in) return -1;
+
+        if(lo == 1 && getCross(pt[lo] - pt[0], p - pt[0]) == 0) return 0;
+        if(getCross(pt[hi] - pt[lo], p - pt[lo]) == 0) return 0;
+
+        return 1;
     }
 };
 
