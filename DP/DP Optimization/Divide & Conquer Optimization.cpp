@@ -1,5 +1,5 @@
 // Complexity : O(n log n)
-// dp[i][j] = min(dp[i-1][k] + C[k][j]) [ k < j ]
+// dp[i][j] = min(dp[i-1][k-1] + C[k][j]) [ k <= j ]
 // To use D&Q, its sufficient to prove the following :
 // Cost(L + 1 , j + 1) - Cost(L + 1, j) <= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(L < k < j) For Max Query
 // Cost(L + 1 , j + 1) - Cost(L + 1, j) >= Cost(k + 1, j + 1) - Cost(k + 1, j) for any(L < k < j) For Min Query
