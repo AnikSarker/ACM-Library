@@ -318,8 +318,11 @@ namespace Polygonal {
         bool in = pointInTriangle(pt[0], pt[lo], pt[hi], p);
         if(!in) return -1;
 
-        if(lo == 1 && getCross(pt[lo] - pt[0], p - pt[0]) == 0) return 0;
+        
+        if(getCross(pt[lo] - pt[lo-1], p - pt[lo-1]) == 0) return 0;
         if(getCross(pt[hi] - pt[lo], p - pt[lo]) == 0) return 0;
+        if(getCross(pt[hi] - pt[(hi+1)%n], p - pt[(hi+1)%n]) == 0) return 0;
+
      
         return 1;
     }
