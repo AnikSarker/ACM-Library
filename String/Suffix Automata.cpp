@@ -13,7 +13,8 @@ int Root, Last;
 // Dstnct_substr can be calculated online as St[pos].Dstnct_substr = St[pos].Len - St[St[pos].link].Len
 // Occurrence can be calculated online,
 // First, Every node pos except a clone node, St[pos].Occurrence = 1
-// then, St[pos].Occurence = sum of St[i].Occurrence where St[i].Link = pos
+// then, St[pos].Occurence = sum of St[i].Occurrence where St[i].Link = pos|
+// Must make isvlid array 0 for more than one test case
 
 struct Node{
     int Link, Len;
