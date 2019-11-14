@@ -4,22 +4,19 @@ const int N = 200555, K = 2;
 typedef long long ll;
 #define sqr(x) ((x) * (x))
 
-int k = 2, idx; ///idx = current dimension, k = total dimension
-struct Point{
+int k = 2, idx; 
+// idx = current dimension, k = total dimension
 
+struct Point{
     int pr, id;
     ll x[K];
-    bool operator < (const Point &u) const
-    {
-        return x[idx] < u.x[idx];
-    }
+    bool operator < (const Point &u) const {return x[idx] < u.x[idx];}
 }po[N];
 
 typedef pair < ll , Point > tp;
 priority_queue < tp > nq;
 
-struct KDtree
-{
+struct KDtree{
     Point pt[N<<2];
     int son[N<<2], mn[N<<2];
 
@@ -27,8 +24,8 @@ struct KDtree
         memset(son, 0, sizeof(son));
         memset(mn, 0, sizeof(mn));
     }
-    void build(int l, int r, int node = 1, int dep = 0)
-    {
+    
+    void build(int l, int r, int node = 1, int dep = 0)    {
         if(l > r) return;
         son[node] = r - l;
         son[node * 2] = son[node * 2 + 1] = -1;
@@ -44,9 +41,7 @@ struct KDtree
         mn[node] = min(mn[node], min(mn[node * 2], mn[node * 2 + 1]));
     }
 
-
-    void query(Point p, int m, int node = 1, int dep = 0)
-    {
+    void query(Point p, int m, int node = 1, int dep = 0){
         if(son[node] == -1) return;
         tp nd(0, pt[node]);
         for(int i = 0; i < k; i++) nd.first += sqr(nd.second.x[i] - p.x[i]);
@@ -64,19 +59,14 @@ struct KDtree
             if(sqr(p.x[dim] - pt[node].x[dim]) <= nq.top().first) fg = 1;
         }
         if(~son[rgh] && fg && mn[rgh] <= p.pr) query(p, m, rgh, dep + 1);
-
     }
-
-} kdt;
-
+}kdt;
 int T, n, m, root;
 
-int main()
-{
+int main(){
     cin >> T;
 
     while(T--){
-
         scanf("%d %d", &n, &m);
         for(int i = 1; i <= n; i++){
             scanf("%lld %lld %lld", &po[i].x[0], &po[i].x[1], &po[i].pr);
@@ -96,16 +86,4 @@ int main()
             while(!nq.empty()) nq.pop();
         }
     }
-
-    return 0;
 }
-/*
-
-2
-3 3
-1 1 1
-3 2 3
-2 3 2
-
-2 2 3
-*/
