@@ -1,3 +1,14 @@
+/*
+ * Description: Given N and a real number x >= 0
+ * finds the closest rational approximation p/q with p, q <= N.
+ * It will obey |p/q - x| <= 1 / qN.
+ * For consecutive convergents, p_{k+1} * q_k - q_{k+1} * p_k = (-1)^k
+ * (p_k / q_k alternates between > x and < x)
+ * If x is rational, y eventually becomes \infty;
+ * if x is the root of a degree 2 polynomial the a's eventually become cyclic.
+ * Time: O(\log N)
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
