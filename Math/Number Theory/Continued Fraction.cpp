@@ -6,7 +6,7 @@
  * (p_k / q_k alternates between > x and < x)
  * If x is rational, y eventually becomes \infty;
  * if x is the root of a degree 2 polynomial the a's eventually become cyclic.
- * Time: O(\log N)
+ * Time: O(log N)
 */
 
 #include <bits/stdc++.h>
