@@ -6,6 +6,13 @@
 */
  
 int ta[N], tb[N], tc[N];
+void prepare(int n) { init(n >> 1); }
+void ntt(int *a, int n, ll f){
+    for(int i=0; i<n; i++) A[i] = a[i];
+    ntransform(A, f);
+    for(int i=0; i<n; i++) a[i] = A[i];
+}
+
 void polyinv(int *a, int *b, int n) { 
 	if(n == 1) return void(b[0] = Pow(a[0], mod - 2)); 
 	polyinv(a, b, n >> 1); 
