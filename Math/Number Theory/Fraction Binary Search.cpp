@@ -1,7 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long int
-
 /*
  * Given f and N, finds the smallest fraction p/q in [0, 1]
  * such that f(p/q) is true, and p, q <= N.
@@ -10,10 +6,11 @@ using namespace std;
  * Time: O(log(N))
 */
 
-struct Frac{
-    ll p, q;
-};
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
 
+struct Frac{ ll p, q;};
 template<class F> Frac fracBS(F f, ll N){
 	bool dir = 1, A = 1, B = 1;
 	Frac lo{0, 1}, hi{1, 1}; // Set hi to 1/0 to search (0, N]
