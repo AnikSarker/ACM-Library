@@ -1,6 +1,6 @@
-###### This team library is not only a collection of C++ codes, but this is a memoir of
-###### our sleepless nights, a silent witness of our stuggles and excitements, a loyal
-###### companion in our difficult fights and a homage to all those who helped us learn.
+#### This team library is not only a collection of C++ codes, but this is a memoir of
+#### our sleepless nights, a silent witness of our stuggles and excitements, a loyal
+#### companion in our difficult fights and a homage to all those who helped us learn.
 
 
 # Contributors: 
